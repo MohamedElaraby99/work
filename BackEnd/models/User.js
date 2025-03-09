@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema(
     },
     subject: {
       type: String,
-      enum: ["تاريخ وجغرافيا","جغرافيا", "تاريخ"],
+      enum: ["فرنسي","انجليزي", "تاريخ" , "رياضيات"],
     },
     submath: {
       type: String,
