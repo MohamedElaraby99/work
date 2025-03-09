@@ -69,9 +69,7 @@
   background-color: #e2e8f0;
 }
 
-.delete-button {
-  padding: 8px 12px;
-  font-size: 0.9rem;
+.deletee-button {
   color: white;
   background-color: #e53e3e;
   border: none;
@@ -80,14 +78,13 @@
   transition: all 0.2s ease;
 }
 
-.delete-button:hover {
+.deletee-button:hover {
   background-color: #c53030;
 }
 
-.delete-button:active {
+.deletee-button:active {
   transform: scale(0.95);
 }
-
 
 .exam-status {
   padding: 5px 10px;
@@ -212,7 +209,6 @@
   background-color: #c0392b;
 }
 
-
 .view-students-button {
   background-color: #3498db;
   color: white;
@@ -234,33 +230,55 @@
 }
 
 @media screen and (max-width: 768px) {
+  .exams-table {
+    font-size: 0.9rem;
+  }
   .exams-table th,
   .exams-table td {
-    font-size: 0.8rem;
-  }
-
-  .modal-content {
-    width: 80%;
-  }
-
-  .exams-table {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
   }
 }
 
-@media  screen and (max-width: 480px) {
+@media (max-width: 480px) and (min-width: 320px) {
+  .exams-table {
+    font-size: 0.4rem;
+  }
   .exams-table th,
   .exams-table td {
-    font-size: 0.6rem;
+    font-size: 0.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .all-exams-container {
+    margin: 10px;
+    padding: 10px;
+    gap: 15px;
+    border-radius: 8px;
+  }
+  .actionss {
+    flex-direction: column;
   }
 
-  .modal-content {
-    width: 80%;
+  .students-container {
+    padding: 10px;
   }
 
-  .exams-table {
-    font-size: 0.6rem;
+  .students-table {
+    font-size: 0.8rem;
   }
 
-  
+  .students-table th,
+  .students-table td {
+    padding: 5px;
+  }
+
+  .search-input {
+    padding: 5px;
+  }
+
+  .exams-table td,
+  .exams-table th {
+    padding: 4px;
+  }
 }

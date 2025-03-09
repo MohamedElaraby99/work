@@ -23,7 +23,7 @@ const ResultComponent = ({ questionsArray, answers, submissionResult }) => {
   ).toFixed(0);
 
   const handleBackToExams = () => {
-    navigate("/exams");
+    navigate("/home");
   };
 
   return (
@@ -80,7 +80,7 @@ const ResultComponent = ({ questionsArray, answers, submissionResult }) => {
       </ul>
 
       <button onClick={handleBackToExams} className="back-to-exams-button">
-        العودة إلى صفحة الامتحانات
+        العودة إلى صفحة الرئيسية
       </button>
     </div>
   );

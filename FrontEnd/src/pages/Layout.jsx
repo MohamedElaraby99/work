@@ -13,7 +13,6 @@ const Layout = ({ children, role }) => {
 
   // إدارة حالة التمرير
   useEffect(() => {
-    
     if (isSidebarOpen) {
       document.body.classList.add("menu-open");
     } else {
@@ -90,16 +89,38 @@ const Layout = ({ children, role }) => {
             </li>
             <li className={location.pathname === "/history" ? "active" : ""}>
               <Link to="/history">
-                <span class="material-icons">history_edu</span>
+                <span className="material-icons">history_edu</span>
                 التاريخ
               </Link>
             </li>
-            <li className={location.pathname === "/geog" ? "active" : ""}>
-              <Link to="/geog">
-                <span class="material-icons">public</span>
-                الجغرافيا
+            <li
+              className={
+                location.pathname === "/math" ||
+                location.pathname === "/select-math"
+                  ? "active"
+                  : ""
+              }
+            >
+              <Link to="/math">
+                <span className="material-icons">calculate</span>
+                الرياضيات
               </Link>
             </li>
+            <li className={location.pathname === "/french" ? "active" : ""}>
+              <Link to="/french">
+                <span className="material-symbols-outlined">
+                  language_french
+                </span>
+                اللغة الفرنسية
+              </Link>
+            </li>
+            <li className={location.pathname === "/english" ? "active" : ""}>
+              <Link to="/english">
+                <span className="material-icons">g_translate</span>
+                اللغة الانجليزية
+              </Link>
+            </li>
+
             {role === "admin" && (
               <li
                 className={
@@ -107,7 +128,7 @@ const Layout = ({ children, role }) => {
                 }
               >
                 <Link to="/dashboard">
-                  <span className="material-icons">settings</span>  التحكم
+                  <span className="material-icons">settings</span> التحكم
                 </Link>
               </li>
             )}

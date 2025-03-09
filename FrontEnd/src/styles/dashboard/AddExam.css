@@ -311,3 +311,35 @@
 .submit-exam-button:hover { 
   background-color: #0056b3;
 }
+
+.correct-answer {
+  color: green;
+  font-weight: bold;
+}
+
+.question-details {
+  margin-bottom: 10px;
+}
+
+.question-image {
+  max-width: 100%;
+  margin-bottom: 10px;
+}
+
+.options-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.option-item {
+  margin: 5px 0;
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 90%;
+  }
+  .exam-detailss {
+    flex-direction: column;
+  }
+}

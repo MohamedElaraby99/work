@@ -213,6 +213,18 @@ const Dashboard = () => {
             <span className="add-text"> إضافة إعلان جديد </span>
           </button>
         </div>
+
+        <div className="quick-actions">
+          <h3>المساعد الشخصي </h3>
+          <button
+            className="Ai-ChatBot-btn"
+            onClick={() => navigate("/AiChat")}
+          >
+            <span className="fas fa-robot"></span>
+            <span className="invisible-char">هلا</span>
+            <span className="add-text">تكلم مع المساعد الشخصي </span>
+          </button>
+        </div>
       </div>
     </div>
   );

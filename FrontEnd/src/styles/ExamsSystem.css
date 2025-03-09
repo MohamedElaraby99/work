@@ -1,5 +1,6 @@
 /* Main container for the exam system */
 .exam-system-container {
+  position: relative;
   max-width: 900px;
   margin: 20px auto;
   padding: 20px;
@@ -266,4 +267,44 @@
   color: #000000;
   font-weight: bold;
   font-family: "cairo", sans-serif;
+}
+
+/* أضف هذا الكود إلى ملف CSS الخاص بك */
+/* أضف هذا الكود إلى ملف CSS الخاص بك */
+.timer-display {
+  position: fixed; /* يجعل العنصر ثابتًا في الشاشة */
+  top: 90px; /* يضبط المسافة من أعلى الشاشة، يمكنك تعديلها حسب الحاجة */
+  left: 50%;
+  transform: translateX(-50%); /* يوسط العنصر أفقيًا */
+  font-family: 'Cairo', sans-serif; /* يمكنك استخدام خط مخصص */
+  font-size: 0.9rem;
+  color: #ffffff;
+  background: linear-gradient(90deg, #2575fc 0%, #0d0811 50%);
+  padding: 5px 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 200px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* يضمن أن التايمر يظهر فوق المحتوى الآخر */
+}
+
+.timer {
+  font-family: 'Orbitron', sans-serif; /* يمكنك استخدام خط مخصص */
+  font-size: 1.5rem;
+  color: #ffffff;
+  padding: 5px 10px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.exam-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }

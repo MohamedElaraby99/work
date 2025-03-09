@@ -95,3 +95,56 @@
   justify-content: center;
   gap: 10px;
 }
+
+@media  (max-width: 768px) {
+  .pdfs-table th,
+  .pdfs-table td {
+    padding: 10px;
+  }
+
+  .pdfs-table th {
+    font-size: 0.9rem;
+  }
+
+  .pdfs-table tr:nth-child(even) {
+    background-color: white;
+  }
+
+  .actions-cell {
+    flex-direction: column;
+  }
+
+  .delete-button {
+    width: 100%;
+  }
+  
+}
+
+@media screen and (max-width: 600px) {
+  .search-input {
+    width: 100%;
+  }
+
+  .pdfs-table th,
+  .pdfs-table td {
+    padding: 8px;
+  } 
+  
+}
+
+@media screen and (max-width: 480px) {
+  .pdfs-table th {
+    font-size: 0.8rem;
+  }
+
+  .pdfs-table th,
+  .pdfs-table td {
+    padding: 6px;
+  }
+
+  .delete-button {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+  
+}

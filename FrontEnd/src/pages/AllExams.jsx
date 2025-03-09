@@ -133,15 +133,18 @@ const AllExams = () => {
                     <td>{exam.duration}</td>
                     <td>{exam.exam_status}</td>
                     <td className="actionss">
-                      <button
-                        className="view-students-button"
-                        onClick={() => handleViewSubmissions(exam)}
-                      >
-                        النتائج
-                      </button>
+                      {/* إظهار زر النتائج فقط إذا لم يكن نوع الامتحان تدريب */}
+                      {exam.exam.toLowerCase() !== "تدريب" && (
+                        <button
+                          className="view-students-button"
+                          onClick={() => handleViewSubmissions(exam)}
+                        >
+                          النتائج
+                        </button>
+                      )}
                       <button
                         onClick={() => handleDelete(exam.examId)}
-                        className="delete-button"
+                        className="deletee-button"
                       >
                         حذف
                       </button>

@@ -65,22 +65,22 @@
   background-color: #e2e8f0;
 }
 
-.delete-button {
-  padding: 8px 12px;
-  font-size: 0.9rem;
+.deletee-button {
+  width: 90%;
+  padding: 5px;
   color: white;
+  margin: 5px 0;
   background-color: #e53e3e;
   border: none;
-  border-radius: 6px;
+  border-radius: 4px;
   cursor: pointer;
-  transition: all 0.2s ease;
 }
 
-.delete-button:hover {
+.deletee-button:hover {
   background-color: #c53030;
 }
 
-.delete-button:active {
+.deletee-button:active {
   transform: scale(0.95);
 }
 
@@ -167,8 +167,10 @@
   gap: 10px;
 }
 
-
 @media screen and (max-width: 768px) {
+  .videos-table {
+    font-size: 0.8rem;
+  }
   .videos-table th,
   .videos-table td {
     padding: 10px;
@@ -181,5 +183,24 @@
 
   .all-videos-container {
     padding: 10px;
+  }
+}
+
+@media screen and (max-width: 480px) and (min-width: 320px) {
+  .videos-table {
+    font-size: 0.6rem;
+  }
+  .videos-table th,
+  .videos-table td {
+    padding: 5px;
+    font-size: 0.6rem;
+  }
+
+  .all-videos-container h2 {
+    font-size: 1.2rem;
+  }
+
+  .all-videos-container {
+    padding: 5px;
   }
 }

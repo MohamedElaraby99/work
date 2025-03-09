@@ -4,29 +4,29 @@ import "./ManualInputComponent.css";
 
 const ManualInputComponent = ({ onAddQuestions }) => {
   const [question, setQuestion] = useState("");
-  const [why, setWhy] = useState(""); // حقل التعليل الجديد
+  const [why, setWhy] = useState(""); // حقل التعليل
   const [options, setOptions] = useState(["", "", "", ""]);
   const [correctAnswer, setCorrectAnswer] = useState(null);
-  const [image, setImage] = useState(null); // لحفظ الصورة المرفوعة
+  const [image, setImage] = useState(null); // لتخزين الصورة المرفوعة
 
   const handleAddQuestion = () => {
     if (!question.trim()) {
-      toast.error("يرجى إدخال نص السؤال!");
+      toast.error("الرجاء إدخال نص السؤال!");
       return;
     }
 
     if (options.some((option) => !option.trim())) {
-      toast.error("يرجى إدخال جميع الخيارات!");
+      toast.error("الرجاء إدخال جميع الخيارات!");
       return;
     }
 
     if (correctAnswer === null) {
-      toast.error("يرجى تحديد الإجابة الصحيحة!");
+      toast.error("الرجاء تحديد الإجابة الصحيحة!");
       return;
     }
 
     if (!why.trim()) {
-      toast.error("يرجى إدخال التعليل!");
+      toast.error("الرجاء إدخال التعليل!");
       return;
     }
 
@@ -44,7 +44,7 @@ const ManualInputComponent = ({ onAddQuestions }) => {
     setOptions(["", "", "", ""]);
     setCorrectAnswer(null);
     setImage(null); // إعادة تعيين الصورة
-    toast.success("تم إضافة السؤال بنجاح!");
+    toast.success("تمت إضافة السؤال بنجاح!");
   };
 
   const handleImageChange = (e) => {
@@ -52,7 +52,10 @@ const ManualInputComponent = ({ onAddQuestions }) => {
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
-        setImage(reader.result); // حفظ الصورة بصيغة base64
+        setImage(reader.result); // حفظ الصورة بتنسيق base64
+      };
+      reader.onerror = () => {
+        toast.error("فشل في قراءة ملف الصورة.");
       };
       reader.readAsDataURL(file);
     }
@@ -60,14 +63,14 @@ const ManualInputComponent = ({ onAddQuestions }) => {
 
   return (
     <div className="manual-input-container">
-      <h3>إضافة سؤال يدوي</h3>
+      <h3>إضافة سؤال يدويًا</h3>
       <label>
         نص السؤال:
         <input
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
           placeholder="أدخل نص السؤال"
-        ></input>
+        />
       </label>
       <label>
         التعليل:
@@ -75,7 +78,7 @@ const ManualInputComponent = ({ onAddQuestions }) => {
           value={why}
           onChange={(e) => setWhy(e.target.value)}
           placeholder="أدخل التعليل لهذا السؤال"
-        ></input>
+        />
       </label>
       <label>
         إضافة صورة:
@@ -84,7 +87,7 @@ const ManualInputComponent = ({ onAddQuestions }) => {
           <div style={{ marginTop: "10px" }}>
             <img
               src={image}
-              alt="معاينة الصورة"
+              alt="معاينة"
               style={{
                 maxWidth: "100%",
                 maxHeight: "150px",

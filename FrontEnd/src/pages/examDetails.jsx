@@ -4,7 +4,7 @@ import "./../styles/examDetails.css";
 
 const ExamDetails = () => {
   const { id } = useParams(); // استلام id من الرابط
- 
+
   const location = useLocation();
   const navigate = useNavigate(); // لاستخدام التنقل
   const exam = location.state?.exam; // البيانات الإضافية الممررة
@@ -24,7 +24,7 @@ const ExamDetails = () => {
 
   return (
     <div>
-      <h2 className="exam-detailss">تفاصيل الامتحان</h2>
+      <h2 className="exam-detailss">تفاصيل الـ{exam.type}</h2>
 
       {exam ? (
         <div className="exam-detailss">
@@ -34,20 +34,27 @@ const ExamDetails = () => {
           {exam.status === "انتهى" ? (
             <>
               <p>الحالة: انتهى</p>
-              <p>النتيجة: {exam.userScore}</p>
-              {/* إخفاء المدة إذا كان الامتحان منتهيًا */}
+              {exam?.userScore >= 0 && exam.type !== "تدريب" && (
+                <p>النتيجة: {exam.userScore}</p>
+              )}
             </>
           ) : (
             <>
               <p>الحالة: {exam.status}</p>
               <p>مدة الامتحان: {exam.duration} دقيقة</p>
-              {exam?.userScore >= 0 && <p>النتيجة: {exam.userScore}</p>}
-              {exam.status === "متاح" ? (
-                exam?.attendance !== "حضر" && <button className="start-exam-button" onClick={handleStartExam}>
-                   بدء الامتحان
+              {exam?.type === "امتحان"  && exam?.userScore >= 0 && (<p>النتيجة: {exam.userScore}</p>
+              )}
+              {exam.type === "تدريب" ? (
+                // إظهار زر بدء الامتحان عند التدريب دائمًا
+                <button className="start-exam-button" onClick={handleStartExam}>
+                  بدء التدريب
+                </button>
+              ) : exam.status === "متاح" && exam?.attendance !== "حضر" ? (
+                <button className="start-exam-button" onClick={handleStartExam}>
+                  بدء الامتحان
                 </button>
               ) : (
-                <p style={{ color: "red" }}>الامتحان غير متاح حاليًا.</p>
+                <p style={{ color: "white" }}>الامتحان غير متاح حاليًا.</p>
               )}
             </>
           )}

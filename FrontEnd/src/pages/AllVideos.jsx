@@ -251,7 +251,7 @@ const AllVideos = () => {
                       </button>
                       <button
                         onClick={() => handleDelete(video._id)}
-                        className="delete-button"
+                        className="deletee-button"
                       >
                         حذف
                       </button>

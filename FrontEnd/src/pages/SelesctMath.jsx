@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import {
   FaFilePdf,
   FaVideo,
-  FaBook,
   FaClipboardList,
   FaChevronDown,
   FaChevronUp,
@@ -10,7 +9,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import "./../styles/Math.css";
 
-const History = () => {
+const SelectMath = () => {
   const navigate = useNavigate();
   const [expandedSections, setExpandedSections] = useState({
     videos: false,
@@ -29,7 +28,7 @@ const History = () => {
   useEffect(() => {
     if (
       role === "student" &&
-      subject !== "تاريخ" &&
+      subject !== "جغرافيا" &&
       subject !== "تاريخ وجغرافيا"
     ) {
       setIsSubscribed(false);
@@ -38,41 +37,29 @@ const History = () => {
 
   // بيانات الوحدات مع روابط الصفحات
   const courseUnits = {
-    videos: Array.from(
-      { length: stage === "ثالثة ثانوي" || role === "admin" ? 8 : 4 },
-      (_, i) => ({
-        id: i + 1,
-        title: `الوحدة ${i + 1}`,
-        path: `/history/unit/${i + 1}/videos`,
-      })
-    ),
+    videos: Array.from({ length: 8 }, (_, i) => ({
+      id: i + 1,
+      title: `الوحدة ${i + 1}`,
+      path: `/history/unit/${i + 1}/videos`,
+    })),
 
-    exams: Array.from(
-      { length: stage === "ثالثة ثانوي" || role === "admin" ? 8 : 4 },
-      (_, i) => ({
-        id: i + 1,
-        title: `الوحدة ${i + 1}`,
-        path: `/history/unit/${i + 1}/exams`,
-      })
-    ),
+    exams: Array.from({ length: 8 }, (_, i) => ({
+      id: i + 1,
+      title: `الوحدة ${i + 1}`,
+      path: `/history/unit/${i + 1}/exams`,
+    })),
 
-    assignments: Array.from(
-      { length: stage === "ثالثة ثانوي" || role === "admin" ? 8 : 4 },
-      (_, i) => ({
-        id: i + 1,
-        title: `الوحدة ${i + 1}`,
-        path: `/history/unit/${i + 1}/assignments`,
-      })
-    ),
+    assignments: Array.from({ length: 8 }, (_, i) => ({
+      id: i + 1,
+      title: `الوحدة ${i + 1}`,
+      path: `/history/unit/${i + 1}/assignments`,
+    })),
 
-    pdfs: Array.from(
-      { length: stage === "ثالثة ثانوي" || role === "admin" ? 8 : 4 },
-      (_, i) => ({
-        id: i + 1,
-        title: `الوحدة ${i + 1}`,
-        path: `/history/unit/${i + 1}/pdfs`,
-      })
-    ),
+    pdfs: Array.from({ length: 8 }, (_, i) => ({
+      id: i + 1,
+      title: `الوحدة ${i + 1}`,
+      path: `/history/unit/${i + 1}/pdfs`,
+    })),
   };
 
   const toggleSection = (section) => {
@@ -84,10 +71,9 @@ const History = () => {
 
   if (!isSubscribed) {
     return (
-      <div className="history-container">
-        <header className="history-header expandable-section">
-          <h1>مادة التاريخ</h1>
-          <h2> مستر : احمد سعيد </h2>
+      <div className="history-container centerrr">
+        <header className="history-header">
+          <h1>مادة الجغرافيا</h1>
         </header>
         <p className="about-imag ">
           <img
@@ -96,19 +82,18 @@ const History = () => {
             className="Not-Image"
           />
         </p>
-
         <p className="Errorr">عذرًا، أنت غير مشترك في هذه المادة.</p>
       </div>
     );
   }
 
   return (
-    <div className="history-container centerrr">
+    <div className="history-container">
       <header className="history-header">
         <h1>
-          <FaBook /> مادة التاريخ
+          <span class="material-icons iconnn">calculate</span>
+          مادة الرياضيات
         </h1>
-        <h2> مستر : احمد سعيد </h2>
       </header>
 
       {/* قسم الفيديوهات */}
@@ -125,7 +110,7 @@ const History = () => {
                 className="unit-item"
                 onClick={() =>
                   navigate("/courses", {
-                    state: { subject: "تاريخ", unit: unit.id },
+                    state: { subject: "جغرافيا", unit: unit.id },
                   })
                 }
               >
@@ -150,7 +135,11 @@ const History = () => {
                 className="unit-item"
                 onClick={() =>
                   navigate("/exams", {
-                    state: { subject: "تاريخ", unit: unit.id, type: "امتحان" },
+                    state: {
+                      subject: "جغرافيا",
+                      unit: unit.id,
+                      type: "امتحان",
+                    },
                   })
                 }
               >
@@ -175,7 +164,11 @@ const History = () => {
                 className="unit-item"
                 onClick={() =>
                   navigate("/exams", {
-                    state: { subject: "تاريخ", unit: unit.id, type: "تدريب" },
+                    state: {
+                      subject: "جغرافيا",
+                      unit: unit.id,
+                      type: "تدريب",
+                    },
                   })
                 }
               >
@@ -200,7 +193,10 @@ const History = () => {
                 className="unit-item"
                 onClick={() =>
                   navigate("/pdf", {
-                    state: { subject: "تاريخ", unit: unit.id },
+                    state: {
+                      subject: "جغرافيا",
+                      unit: unit.id,
+                    },
                   })
                 }
               >
@@ -214,4 +210,4 @@ const History = () => {
   );
 };
 
-export default History;
+export default SelectMath;

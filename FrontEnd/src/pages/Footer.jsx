@@ -98,12 +98,12 @@ const Footer = () => {
         </p>
         <p>
           <a
-            href="https://www.facebook.com/profile.php?id=100004214012271&mibextid=ZbWKwL"
+            href="https://www.facebook.com/share/15yTFSwF4n/"
             target="_blank"
             rel="noopener noreferrer"
             className="footer-link developer-link"
           >
-            تصميم وتطوير بواسطة المطور
+            تصميم وتطوير فكرة - Fikra Software
           </a>
         </p>
       </div>
