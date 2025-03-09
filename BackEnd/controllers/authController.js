@@ -12,7 +12,7 @@ const register = async (req, res) => {
         .status(400)
         .json({ message: "المرحلة الدراسية مطلوبة اذا لم تكن مشرف" });
     }
-    if (!subject) {
+    if (subject.length > 0) {
       return res
         .status(400)
         .json({ message: "المادة الدراسية مطلوبة اذا لم تكن مشرف" });
@@ -32,7 +32,7 @@ const register = async (req, res) => {
     stage,
     password,
     role,
-    subject
+    subject,
   });
 
   const accessToken = jsonWebToken.sign(
@@ -78,8 +78,6 @@ const register = async (req, res) => {
 };
 
 const registerUsers = async (req, res) => {
-
-
   // const hashedPassword = await bcrypt.hash(password, 10);
 
   // const users = await User.create({
@@ -93,9 +91,7 @@ const registerUsers = async (req, res) => {
 
   if (req.body.length === 0) {
     return res.status(400).json({ message: "لا يوجد مستخدمين" });
-    
   }
-  
 
   const newUsers = await User.insertMany(req.body);
   res.json({

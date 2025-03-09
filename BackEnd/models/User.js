@@ -26,11 +26,16 @@ const userSchema = new mongoose.Schema(
     },
     subject: {
       type: String,
-      enum: ["فرنسي","انجليزي", "تاريخ" , "رياضيات"],
-    },
-    submath: {
-      type: String,
-      enum: ["هندسه", "جبر" , "مثلثات" , "احصاء" , "تفاضل"],
+      enum: [
+        "فرنسي",
+        "انجليزي",
+        "تاريخ",
+        "إحصاء",
+        "تفاضل",
+        "مثلثات",
+        "هندسة",
+        "جبر",
+      ],
     },
   },
   { timestamps: true }
