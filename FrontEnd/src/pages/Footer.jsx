@@ -15,7 +15,7 @@ const Footer = () => {
               </a>
             </li>
             <li>
-              <a href="tel:01023607948" className="footer-link">
+              <a href="tel:201227245533" className="footer-link">
                 الاتصال بنا
               </a>
             </li>
@@ -35,7 +35,7 @@ const Footer = () => {
         <div className="footer-section">
           <h3 className="footer-title">قنوات التواصل</h3>
           <div className="social-links">
-            <a
+            {/* <a
               href="https://www.tiktok.com/@mahmoud.tawakol0?is_from_webapp=1&sender_device=pc"
               target="_blank"
               rel="noopener noreferrer"
@@ -46,7 +46,7 @@ const Footer = () => {
                 alt="TikTok"
                 className="social-icon"
               />
-            </a>
+            </a> */}
             <a
               href="https://www.facebook.com/profile.php?id=100063763039756&mibextid=ZbWKwL"
               target="_blank"
@@ -60,7 +60,7 @@ const Footer = () => {
               />
             </a>
             <a
-              href={`https://wa.me/${201120646425}`}
+              href={`https://wa.me/${201227245533}`}
               target="_blank"
               rel="noopener noreferrer"
               className="social-link"
@@ -71,7 +71,7 @@ const Footer = () => {
                 className="social-icon"
               />
             </a>
-            <a
+            {/* <a
               href="https://www.youtube.com/@%D8%A7%D9%84%D8%AA%D9%88%D9%83%D9%84-90"
               target="_blank"
               rel="noopener noreferrer"
@@ -82,7 +82,7 @@ const Footer = () => {
                 alt="YouTube"
                 className="social-icon"
               />
-            </a>
+            </a> */}
           </div>
         </div>
       </div>

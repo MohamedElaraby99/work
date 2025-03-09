@@ -96,7 +96,7 @@ const Math = () => {
                 <FaTiktok />
               </a>
               <a
-                href="https://wa.me/201221382008"
+                href="https://wa.me/201090736119"
                 target="_blank"
                 rel="noopener noreferrer"
               >

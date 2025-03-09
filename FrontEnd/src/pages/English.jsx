@@ -140,7 +140,7 @@ const English = () => {
                 <FaTiktok />
               </a>
               <a
-                href="https://wa.me/201279456731"
+                href="https://wa.me/201015118313"
                 target="_blank"
                 rel="noopener noreferrer"
               >
