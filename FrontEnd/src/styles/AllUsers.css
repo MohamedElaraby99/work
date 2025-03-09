@@ -1,0 +1,228 @@
+/* General container styling */
+.all-users-container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.all-users-container h2 {
+  text-align: center;
+  font-size: 26px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.search-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 15px;
+}
+
+.search-container input {
+  width: 60%;
+  padding: 12px 15px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.search-container input:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.search-container select {
+  padding: 12px 15px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+  transition: all 0.3s ease;
+}
+
+.search-container select:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+table th,
+table td {
+  padding: 12px 15px;
+  text-align: center;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+table th {
+  background-color: #f2f2f2;
+  color: #333;
+  font-weight: bold;
+}
+
+table td {
+  background-color: #fff;
+}
+
+table td input,
+table td select {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Buttons styling */
+
+button {
+  padding: 10px 15px;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Dropdown styling */
+select.edit-select {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  transition: all 0.3s ease;
+}
+
+select.edit-select:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.actions-cell {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .search-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .search-container input,
+  .search-container select {
+    width: 100%;
+  }
+
+  table th,
+  table td {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  button {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  table th,
+  table td {
+    font-size: 12px;
+    padding: 6px;
+  }
+
+  button {
+    padding: 6px 10px;
+    font-size: 10px;
+  }
+
+  .search-container input,
+  .search-container select {
+    font-size: 12px;
+  }
+}
+
+.cancel-button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+button.cancel-button:hover {
+  background-color: #c82333;
+}
+
+.save-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.make-available-button {
+  background-color: #089f49;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.make-available-button:hover {
+  background-color: #0d541c;
+}
+
+.actionss {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.deletee-button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.deletee-button:hover {
+  background-color: #c82333;
+}

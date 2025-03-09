@@ -1,0 +1,251 @@
+/* Home Page Styling */
+.home-page {
+  color: #000000;
+  font-family: "Roboto", Arial, sans-serif;
+}
+
+/* Section Styling */
+.section {
+  margin-bottom: 40px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.announcement-title {
+  font-family: "Cairo", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin-bottom: 0.5rem;
+  color: #a51600;
+}
+
+.announcement-description {
+  font-family: "Cairo", sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+  color: #000000;
+}
+
+.view-all-videos {
+  text-align: center;
+  color: #0b8eba;
+  cursor: pointer;
+  font-weight: bold;
+  transition: color 0.3s ease;
+  margin-top: 80px;
+}
+
+.view-all-videos:hover {
+  color: #e74c3c;
+}
+
+.section h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #2c3e50;
+  border-bottom: 2px solid #1abc9c;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+/* announcement section */
+
+.announcements-section {
+  margin-bottom: 2rem;
+}
+
+.announcements-list {
+  list-style: none;
+  padding: 0;
+}
+
+.announcement-item {
+  background-color: #f9f9f9;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.announcement-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.announcement-content {
+  font-size: 1rem;
+  color: #555;
+}
+
+.announcement-date {
+  font-size: 0.9rem;
+  color: #888;
+  margin-top: 0.5rem;
+}
+
+/* Videos Section */
+.videos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.video-card {
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.video-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.video-card h3 {
+  padding: 10px;
+  font-size: 18px;
+  background-color: #1abc9c;
+  color: white;
+  margin: 0;
+  text-align: center;
+}
+
+.video-container {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%;
+  /*Aspectratio16:;
+  9*/
+  background-color: #000;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.video-container .top-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 30%;
+  background: rgba(0, 0, 0, 0);
+  pointer-events: all;
+  z-index: 2;
+}
+
+.fullscreen-button:hover {
+  background-color: #16a085;
+}
+
+/* Upcoming Exams Section */
+.exam-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.exam-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  padding: 15px;
+  border-bottom: 1px solid #ddd;
+  background: #f9f9f9;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  transition: background 0.3s ease;
+  -webkit-transition: background 0.3s ease;
+  -moz-transition: background 0.3s ease;
+  -ms-transition: background 0.3s ease;
+  -o-transition: background 0.3s ease;
+}
+
+.exam-item:hover {
+  background: #eef6f6;
+}
+
+/* PDF Downloads Section */
+.pdf-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pdf-item {
+  margin-bottom: 15px;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+}
+
+.pdf-item a {
+  text-decoration: none;
+  color: #1abc9c;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  transition: color 0.3s ease;
+}
+
+.pdf-item a:hover {
+  color: #16a085;
+}
+
+.pdf-item a::before {
+  content: "📄";
+  margin-right: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .videos-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .video-card iframe {
+    height: 180px;
+  }
+
+  .exam-item {
+    font-size: 16px;
+  }
+}
+
+/* CSS for HomePage */
+.announcement-item {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1.5s forwards;
+  -webkit-animation: fadeInUp 1.5s forwards;
+}
+
+.home-page {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.9s forwards;
+  -webkit-animation: fadeInUp 0.9s forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

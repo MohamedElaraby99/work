@@ -1,0 +1,89 @@
+.add-video-container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 30px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.add-video-container h2 {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 25px;
+  font-weight: bold;
+}
+
+.message {
+  font-size: 16px;
+  color: green;
+  margin-bottom: 15px;
+}
+
+.add-video-form .form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.add-video-form label {
+  display: block;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #555;
+}
+
+.add-video-form input,
+.add-video-form select,
+.add-video-form textarea {
+  width: 100%;
+  padding: 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.add-video-form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.add-video-form input:focus,
+.add-video-form select:focus,
+.add-video-form textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+}
+
+.submit-button {
+  background-color: #007bff;
+  color: white;
+  font-size: 18px;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.submit-button:active {
+  background-color: #003f8a;
+  transform: translateY(0);
+}
+
+.add-video-container .form-group:last-child {
+  margin-bottom: 0;
+}

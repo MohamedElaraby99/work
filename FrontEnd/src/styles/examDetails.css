@@ -1,0 +1,117 @@
+.exam-details h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.exam-detailss {
+  display: flex;
+  flex-direction: column;
+  align-items: right;
+  text-align: center;
+  justify-content: center;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  max-width: 400px;
+  margin: 20px auto;
+  background-color: #0389ff;
+  color: #fff;
+  font-weight: 600;
+  font-size: 20px;
+  gap: 20px;
+}
+
+
+.exam-details p {
+  font-size: 16px;
+  margin: 5px 0;
+}
+
+.back-button {
+  padding: 10px 20px;
+  margin-top: 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.back-button:hover {
+  background-color: #0056b3;
+}
+
+.exam-details h2 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.exam-details p {
+  margin: 5px 0;
+}
+
+.status {
+  font-weight: bold;
+}
+
+.status.متاح {
+  color: green;
+}
+
+.status.منتهي {
+  color: red;
+}
+
+.status.قادم {
+  color: orange;
+}
+
+.start-exam-button {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #02356b;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.start-exam-button:hover {
+  background-color: #0056b3;
+}
+
+.back-button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #ccc;
+  color: #333;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #aaa;
+}
+
+.exam-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-weight: 700;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  max-width: 400px;
+  color: #fff;
+  margin: 20px auto;
+  background-color: #007bff;
+}

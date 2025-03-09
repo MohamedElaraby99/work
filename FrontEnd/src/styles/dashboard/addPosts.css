@@ -1,0 +1,131 @@
+/* Container for the post creation component */
+.create-post-component {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 30px;
+  max-width: 700px;
+  margin: 40px auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Header styles */
+.posts-header h2 {
+  font-size: 28px;
+  color: #333;
+  text-align: center;
+  margin-bottom: 25px;
+  font-weight: bold;
+}
+
+/* Post form styles */
+.post-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Form group styles */
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #555;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+  font-family: "Arial", sans-serif;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.4);
+  outline: none;
+}
+
+.form-group textarea {
+  resize: vertical;
+  height: 120px;
+}
+
+/* Checkbox container for years */
+.years-checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.checkbox-item label {
+  font-size: 14px;
+  color: #333;
+}
+
+/* Submit button styles */
+.submit-btn {
+  background: linear-gradient(to right, #007bff, #0056b3);
+  color: #ffffff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.submit-btn:hover {
+  background: linear-gradient(to right, #0056b3, #003f7f);
+  transform: translateY(-2px);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .create-post-component {
+    padding: 20px;
+    max-width: 95%;
+  }
+
+  .posts-header h2 {
+    font-size: 24px;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .submit-btn {
+    font-size: 16px;
+    padding: 10px 15px;
+  }
+
+  .years-checkboxes {
+    gap: 10px;
+  }
+}

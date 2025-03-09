@@ -1,0 +1,189 @@
+
+
+/* .video-card h3 {
+  padding: 10px;
+  font-size: 18px;
+  background-color: #1abc9c;
+  color: white;
+  margin: 0;
+  text-align: center;
+} */
+
+/* .video-title {
+  background-color: #345787;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  font-weight: 900;
+  border-radius: 10px 10px 0 0;
+  padding: 10px;
+  font-size: 16px;
+  margin: 0;
+  text-align: center;
+  z-index: 1;
+  margin-top: -38px;
+  -webkit-border-radius: 10px 10px 0 0;
+  -moz-border-radius: 10px 10px 0 0;
+  -ms-border-radius: 10px 10px 0 0;
+  -o-border-radius: 10px 10px 0 0;
+} */
+
+/* .video-container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+    background-color: #000;
+    cursor: pointer;
+    border-radius: 10px 10px 0 0;
+  } */
+
+/* .video-container .top-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 30%; 
+  background: rgba(0, 0, 0, 0);
+  pointer-events: all;
+  z-index: 2;
+} */
+
+/* .fullscreen-button {
+  position: absolute;
+  bottom: 5px;
+  right: 0px;
+  padding: 5px 7px;
+  background-color: #21416d ;
+  color: white;
+  font-weight: 700;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 15px;
+  z-index: 3;
+} */
+
+/* .fullscreen-button:hover {
+  background-color: #16a085;
+}  */
+
+/* تصميم القائمة */
+
+ /* .courses-page {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  align-items: center;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+} */
+/*
+.section {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  margin: 0;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.videos-grid {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.video-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%;
+  background-color: #000;
+  cursor: pointer;
+  border-radius: 10px 10px 0 0;
+} */
+
+.courses-page {
+  text-align: center;
+  margin-bottom: 100px;
+}
+
+.video-section {
+  margin-top: 20px;
+}
+
+.videos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 90px;
+  justify-items: center;
+}
+
+.video-container {
+  cursor: pointer;
+  width: 100%;
+  max-width: 300px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+  background-color: #f9f9f9;
+}
+
+.video-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.video-titlee:hover {
+  background-color: #194a7a;
+  border-radius: 0px 0px 0px 0px;
+  -webkit-border-radius: 0px 0px 0px 0px;
+  -moz-border-radius: 0px 0px 0px 0px;
+  -ms-border-radius: 0px 0px 0px 0px;
+  -o-border-radius: 0px 0px 0px 0px;
+}
+
+.video-thumbnail {
+  width: 100%;
+  height: auto;
+  border-radius: 10px 0px 0px 0px;
+  -webkit-border-radius: 10px 0px 0px 0px;
+  -moz-border-radius: 10px 0px 0px 0px;
+  -ms-border-radius: 10px 0px 0px 0px;
+  -o-border-radius: 10px 0px 0px 0px;
+}
+
+.video-titlee {
+  margin: -5px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #ffffff;
+  padding: 0 10px;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 40px;
+  color: #194a7a;
+}
+
+.video-info  {
+  background-color: #0d8acd;
+  border-radius: 0px 0px 10px 0px;
+  -webkit-border-radius: 0px 0px 10px 0px;
+  -moz-border-radius: 0px 0px 10px 0px;
+  -ms-border-radius: 0px 0px 10px 0px;
+  -o-border-radius: 0px 0px 10px 0px;
+}

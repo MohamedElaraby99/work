@@ -1,0 +1,185 @@
+.all-videos-container {
+  padding: 20px;
+  margin: 10px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.all-videos-container h2 {
+  text-align: center;
+  color: #194a7a;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.search-container {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.search-input {
+  padding: 10px 15px;
+  width: 100%;
+  max-width: 500px;
+  font-size: 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #4299e1;
+  box-shadow: 0 0 0 4px rgba(66, 153, 225, 0.2);
+}
+
+.videos-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.videos-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.videos-table th,
+.videos-table td {
+  padding: 15px;
+  text-align: right;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.videos-table th {
+  background-color: #194a7a;
+  color: white;
+  font-size: 1rem;
+}
+
+.videos-table tr:nth-child(even) {
+  background-color: #f3f4f6;
+}
+
+.videos-table tr:hover {
+  background-color: #e2e8f0;
+}
+
+.delete-button {
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  color: white;
+  background-color: #e53e3e;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.delete-button:hover {
+  background-color: #c53030;
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.edit-input {
+  width: 90%;
+  padding: 5px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.save-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.cancel-button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.save-button:hover,
+.cancel-button:hover {
+  opacity: 0.9;
+}
+
+.edit-input {
+  width: 100%;
+  padding: 5px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.cancel-button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.edit-button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.edit-button,
+.delete-button {
+  margin-right: 5px;
+}
+
+.save-button:hover,
+.cancel-button:hover,
+.edit-button:hover,
+.delete-button:hover {
+  opacity: 0.9;
+}
+
+.youtube-link {
+  color: #000000;
+  text-decoration: none;
+}
+
+.edit-button:active,
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.actionss:active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+
+@media screen and (max-width: 768px) {
+  .videos-table th,
+  .videos-table td {
+    padding: 10px;
+    font-size: 0.8rem;
+  }
+
+  .all-videos-container h2 {
+    font-size: 1.5rem;
+  }
+
+  .all-videos-container {
+    padding: 10px;
+  }
+}

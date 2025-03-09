@@ -1,0 +1,97 @@
+.all-pdfs-container {
+  padding: 20px;
+  margin: 0 auto;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.all-pdfs-container h2 {
+  text-align: center;
+  color: #4a5568;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.search-container {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.search-input {
+  padding: 10px 15px;
+  width: 100%;
+  max-width: 500px;
+  font-size: 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #3182ce;
+  box-shadow: 0 0 0 4px rgba(49, 130, 206, 0.2);
+}
+
+.pdfs-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.pdfs-table th,
+.pdfs-table td {
+  padding: 15px;
+  text-align: right;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.pdfs-table th {
+  background-color: #3182ce;
+  color: white;
+  font-size: 1rem;
+}
+
+.pdfs-table tr:nth-child(even) {
+  background-color: #f3f4f6;
+}
+
+.pdfs-table tr:hover {
+  background-color: #e2e8f0;
+}
+
+.link-button {
+  color: #3182ce;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.link-button:hover {
+  text-decoration: underline;
+}
+
+.delete-button {
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  color: white;
+  background-color: #e53e3e;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.delete-button:hover {
+  background-color: #c53030;
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.actions-cell {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}

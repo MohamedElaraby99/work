@@ -1,0 +1,218 @@
+/* General container styles */
+.all-posts-component {
+  font-family: "Arial", sans-serif;
+  padding: 20px;
+  max-width: 900px;
+  margin: 20px auto;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Header styles */
+.posts-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.posts-header h2 {
+  font-size: 24px;
+  color: #333;
+}
+
+.search-input {
+  padding: 10px;
+  width: 300px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.search-input:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Posts list styles */
+.posts-list {
+  list-style: none;
+  padding: 0;
+}
+
+.post-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  padding: 15px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.post-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.post-content h4 {
+  margin: 0 0 5px;
+  font-size: 18px;
+  color: #007bff;
+}
+
+.post-content p {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.post-content ul {
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+  color: #666;
+}
+
+.post-content ul li {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.post-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.post-actions button {
+  padding: 8px 12px;
+  font-size: 14px;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.view-post-btn {
+  background-color: #28a745;
+}
+
+.view-post-btn:hover {
+  background-color: #218838;
+}
+
+.edit-post-btn {
+  background-color: #ffc107;
+}
+
+.edit-post-btn:hover {
+  background-color: #e0a800;
+}
+
+.delete-post-btn {
+  background-color: #dc3545;
+}
+
+.delete-post-btn:hover {
+  background-color: #c82333;
+}
+
+/* Post details styles */
+.post-details,
+.post-edit {
+  background: #fff;
+  padding: 20px;
+  margin-top: 20px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.post-details h3,
+.post-edit h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #007bff;
+}
+
+.post-details h4,
+.post-edit h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.post-details p,
+.post-edit textarea {
+  font-size: 14px;
+  color: #555;
+  margin: 0;
+}
+
+.post-edit textarea {
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: none;
+  transition: border-color 0.3s ease;
+}
+
+.post-edit textarea:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.edit-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.save-edit-btn {
+  background-color: #28a745;
+}
+
+.save-edit-btn:hover {
+  background-color: #218838;
+}
+
+.cancel-edit-btn {
+  background-color: #6c757d;
+}
+
+.cancel-edit-btn:hover {
+  background-color: #5a6268;
+}
+
+/* Loading and no posts message */
+.loading-message,
+.no-posts-message {
+  font-size: 16px;
+  text-align: center;
+  color: #666;
+}
+
+.close-details-btn {
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.close-details-btn:hover {
+  background-color: #c82333;
+}

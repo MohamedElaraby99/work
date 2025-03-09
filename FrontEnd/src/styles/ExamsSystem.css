@@ -1,0 +1,269 @@
+/* Main container for the exam system */
+.exam-system-container {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+}
+
+/* Exam title styling */
+.exam-system-title {
+  text-align: center;
+  font-size: 30px;
+  color: #34495e;
+  margin-bottom: 30px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  border-bottom: 4px solid #007bff;
+  display: inline-block;
+  padding-bottom: 10px;
+}
+
+/* Form container for the questions */
+.exam-system-form {
+  width: 100%;
+}
+
+/* Container for each question */
+.exam-question-container {
+  margin-bottom: 30px;
+  padding: 20px;
+  border: 2px solid #e0e0e0;
+  border-radius: 15px;
+  background-color: #ffffff;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+.exam-question-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  border-color: #90caf9;
+}
+
+/* Styling for question text */
+.exam-question {
+  padding-right: 10px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 15px;
+  line-height: 1.6;
+  border-right: 5px solid #007bff;
+  padding-left: 10px;
+}
+
+/* Container for images */
+.exam-image-container {
+  text-align: center;
+  margin: 15px 0;
+}
+
+.exam-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  border: 2px solid #e0e0e0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.exam-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Options list container */
+.exam-options-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Styling for individual options */
+.exam-option {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 0px;
+  margin: 10px 0;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.exam-option:hover {
+  background-color: #f1f9ff;
+  border-color: #90caf9;
+  transform: translateX(10px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Hide default radio button */
+.exam-radio {
+  display: none;
+}
+
+.exam-option-label {
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* Selected option */
+.exam-option-selected {
+  background-color: #e1f5fe;
+  border-color: #42a5f5;
+  font-weight: bold;
+  color: #0d47a1;
+}
+
+/* Correct answer styling */
+.exam-option-correct {
+  background-color: #d4edda;
+  color: #155724;
+  border-color: #c3e6cb;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Wrong answer styling */
+.exam-option-wrong {
+  background-color: #fdecea;
+  color: #c62828;
+  border-color: #f5c6cb;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling for option label */
+.exam-option label {
+  flex-grow: 1;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 500;
+  color: #2c3e50;
+  user-select: none;
+  padding: 10px;
+}
+
+.exam-option label:hover {
+  color: #1565c0;
+}
+
+/* Correct answer text */
+.exam-correct-answer {
+  color: #388e3c;
+  font-weight: bold;
+  margin-top: 10px;
+  font-size: 16px;
+  text-align: right;
+}
+
+/* Submit button styling */
+.exam-submit-button {
+  padding: 15px 30px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: block;
+  margin: 30px auto;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  text-transform: uppercase;
+}
+
+.exam-submit-button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.exam-submit-button:active {
+  background-color: #003f7f;
+  transform: scale(0.98);
+}
+
+/* Toast container adjustments */
+.toast-container {
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  color: #333;
+}
+
+.exam-image-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.exam-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  border: 2px solid #ccc;
+}
+
+.back-to-exams-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.back-to-exams-button:hover {
+  background-color: #0056b3;
+}
+
+
+.show-result-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  text-transform: uppercase;
+}
+
+.show-result-button:hover {
+  background-color: #0056b3;
+}
+
+.submitted-text {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 18px;
+  color: #0d8c06;
+  font-weight: bold;
+  font-family: "cairo", sans-serif;
+}
+
+.submitted-message {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 18px;
+  color: #000000;
+  font-weight: bold;
+  font-family: "cairo", sans-serif;
+}

@@ -1,0 +1,131 @@
+.result-container {
+  padding: 30px;
+  background: linear-gradient(to bottom, #ffffff, #f4f4f4);
+  border-radius: 12px;
+  width: 90%;
+  max-width: 800px;
+  margin: 30px auto;
+  text-align: center;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.8s ease;
+}
+
+.result-header h2 {
+  margin-bottom: 20px;
+  font-size: 28px;
+  color: #333;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.result-score-circle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.circle {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  /* background: conic-gradient(
+    #4caf50 ${({ percentage }) => percentage}%,
+    #e0e0e0 ${({ percentage }) => percentage}% 100%
+  ); */
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.circle-inner {
+  width: 80%;
+  height: 80%;
+  background-color: #fff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #4caf50;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.result-list {
+  list-style: none;
+  padding: 0;
+  text-align: right;
+}
+
+.result-item {
+  padding: 15px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.result-item:hover {
+  background-color: #f9f9f9;
+}
+
+.result-question {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.result-answer {
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.result-answer.correct {
+  color: #4caf50;
+  font-weight: bold;
+}
+
+.result-answer.wrong {
+  color: #f44336;
+  font-weight: bold;
+}
+
+.result-correct-answer {
+  font-size: 16px;
+  color: #007bff;
+  margin-bottom: 8px;
+}
+
+.back-to-exams-button {
+  display: block;
+  margin: 20px auto;
+  padding: 12px 24px;
+  font-size: 18px;
+  background: linear-gradient(to right, #007bff, #0056b3);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.back-to-exams-button:hover {
+  background: linear-gradient(to right, #0056b3, #003c7a);
+  transform: scale(1.05);
+}
+
+/* Animation for the container */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
