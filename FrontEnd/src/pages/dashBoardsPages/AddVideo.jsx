@@ -147,6 +147,49 @@ const AddVideo = () => {
             placeholder="أدخل رابط يوتيوب"
           />
         </div>
+
+        <div className="form-group">
+          <label htmlFor="subjects">اختر المادة:</label>
+          <select
+            id="subjects"
+            name="subjects"
+            value={videoData.subjects}
+            onChange={(e) =>
+              setVideoData({ ...videoData, subjects: [e.target.value] })
+            }
+          >
+            <option value="">اختر المادة</option>
+            <option value="تاريخ">تاريخ</option>
+            <option value="لغة انجليزية">لغة انجليزية</option>
+            <option value="لغة فرنسية">لغة فرنسية</option>
+            <option value="رياضيات">رياضيات</option>
+          </select>
+        </div>
+
+        {videoData.subjects.includes("رياضيات") && (
+          <div className="form-group">
+            <label htmlFor="mathTopics">مواد الرياضيات:</label>
+            <select
+              id="mathTopics"
+              name="mathTopics"
+              value={videoData.mathTopics}
+              onChange={(e) =>
+                setVideoData({
+                  ...videoData,
+                  mathTopics: [e.target.value],
+                })
+              }
+            >
+              <option value="">اختر الموضوع</option>
+              <option value="الجبر">الجبر</option>
+              <option value="الهندسة">الهندسة</option>
+              <option value="حساب المثلثات">حساب المثلثات</option>
+              <option value="التفاضل">التفاضل</option>
+              <option value="الإحصاء">الإحصاء</option>
+            </select>
+          </div>
+        )}
+
         <div className="form-group">
           <label htmlFor="stage">المرحلة الدراسية:</label>
           <select
@@ -162,127 +205,6 @@ const AddVideo = () => {
             <option value="ثالثة ثانوي">ثالثة ثانوي</option>
           </select>
         </div>
-        <label>
-          المواد:
-          <div>
-            <label>
-              <input
-                type="checkbox"
-                name="subjects"
-                value="تاريخ"
-                checked={
-                  videoData.subjects && videoData.subjects.includes("تاريخ")
-                }
-                onChange={handleChange}
-              />
-              تاريخ
-            </label>
-          </div>
-          <div>
-            <label>
-              <input
-                type="checkbox"
-                name="subjects"
-                value="لغة انجليزية"
-                checked={videoData.subjects.includes("لغة انجليزية")}
-                onChange={handleChange}
-              />
-              لغة انجليزية
-            </label>
-          </div>
-          <div>
-            <label>
-              <input
-                type="checkbox"
-                name="subjects"
-                value="لغة فرنسية"
-                checked={videoData.subjects.includes("لغة فرنسية")}
-                onChange={handleChange}
-              />
-              لغة فرنسية
-            </label>
-          </div>
-          <div>
-            <label>
-              <input
-                type="checkbox"
-                name="subjects"
-                value="رياضيات"
-                checked={videoData.subjects.includes("رياضيات")}
-                onChange={handleChange}
-              />
-              رياضيات
-            </label>
-          </div>
-        </label>
-
-        {videoData.subjects.includes("رياضيات") && (
-          <div>
-            <label>
-              مواضيع الرياضيات:
-              <div>
-                <label>
-                  <input
-                    type="checkbox"
-                    name="mathTopics"
-                    value="الجبر"
-                    checked={videoData.mathTopics.includes("الجبر")}
-                    onChange={handleChange}
-                  />
-                  الجبر
-                </label>
-              </div>
-              <div>
-                <label>
-                  <input
-                    type="checkbox"
-                    name="mathTopics"
-                    value="الهندسة"
-                    checked={videoData.mathTopics.includes("الهندسة")}
-                    onChange={handleChange}
-                  />
-                  الهندسة
-                </label>
-              </div>
-              <div>
-                <label>
-                  <input
-                    type="checkbox"
-                    name="mathTopics"
-                    value="حساب المثلثات"
-                    checked={videoData.mathTopics.includes("حساب المثلثات")}
-                    onChange={handleChange}
-                  />
-                  حساب المثلثات
-                </label>
-              </div>
-              <div>
-                <label>
-                  <input
-                    type="checkbox"
-                    name="mathTopics"
-                    value="التفاضل"
-                    checked={videoData.mathTopics.includes("التفاضل")}
-                    onChange={handleChange}
-                  />
-                  التفاضل
-                </label>
-              </div>
-              <div>
-                <label>
-                  <input
-                    type="checkbox"
-                    name="mathTopics"
-                    value="الإحصاء"
-                    checked={videoData.mathTopics.includes("الإحصاء")}
-                    onChange={handleChange}
-                  />
-                  الإحصاء
-                </label>
-              </div>
-            </label>
-          </div>
-        )}
 
         <div className="form-group">
           <label htmlFor="subject"> اختر الوحدة :</label>
@@ -292,7 +214,7 @@ const AddVideo = () => {
             value={videoData.unit}
             onChange={handleChange}
           >
-            <option value="disabled">اختر الوحدة</option>
+            <option value="disabled" disabled>اختر الوحدة</option>
             <option value="1">الوحدة الأولى</option>
             <option value="2">الوحدة الثانية</option>
             <option value="3">الوحدة الثالثة</option>

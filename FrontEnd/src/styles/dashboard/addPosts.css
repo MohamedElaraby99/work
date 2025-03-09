@@ -18,6 +18,13 @@
   font-weight: bold;
 }
 
+.math-checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  flex-direction: row;
+}
+
 /* Post form styles */
 .post-form {
   display: flex;

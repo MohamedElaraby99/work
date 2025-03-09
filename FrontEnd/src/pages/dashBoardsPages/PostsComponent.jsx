@@ -136,7 +136,7 @@ const CreatePostComponent = () => {
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
           >
-            <option value="">اختر المادة </option>
+            <option value="" disabled>اختر المادة </option>
             <option value="تاريخ">تاريخ</option>
             <option value="رياضيات">رياضيات</option>
             <option value="لغة فرنسية">لغة فرنسية</option>

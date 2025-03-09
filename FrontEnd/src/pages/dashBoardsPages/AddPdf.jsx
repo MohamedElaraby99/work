@@ -181,120 +181,43 @@ const AddPdf = () => {
           </div>
 
           <div className="form-group">
-            <label>المواد الدراسية:</label>
-            <div>
-              <label>
-                <input
-                  type="checkbox"
-                  name="subjects"
-                  value="تاريخ"
-                  checked={pdfData.subjects.includes("تاريخ")}
-                  onChange={handleCheckboxChange}
-                />
-                تاريخ
-              </label>
-            </div>
-            <div>
-              <label>
-                <input
-                  type="checkbox"
-                  name="subjects"
-                  value="جغرافيا"
-                  checked={pdfData.subjects.includes("جغرافيا")}
-                  onChange={handleCheckboxChange}
-                />
-                جغرافيا
-              </label>
-            </div>
-            <div>
-              <label>
-                <input
-                  type="checkbox"
-                  name="subjects"
-                  value="قرنساوي"
-                  checked={pdfData.subjects.includes("قرنساوي")}
-                  onChange={handleCheckboxChange}
-                />
-                اللغة الفرنسية
-              </label>
-            </div>
-            <div>
-              <label>
-                <input
-                  type="checkbox"
-                  name="subjects"
-                  value="رياضيات"
-                  checked={pdfData.subjects.includes("رياضيات")}
-                  onChange={handleCheckboxChange}
-                />
-                رياضيات
-              </label>
-            </div>
+            <label htmlFor="subjects">اختر المادة الدراسية:</label>
+            <select
+              id="subjects"
+              name="subjects"
+              value={pdfData.subjects}
+              onChange={(e) =>
+                setPdfData({ ...pdfData, subjects: [e.target.value] })
+              }
+            >
+              <option value="">اختر المادة</option>
+              <option value="تاريخ">تاريخ</option>
+              <option value="جغرافيا">جغرافيا</option>
+              <option value="قرنساوي">اللغة الفرنسية</option>
+              <option value="رياضيات">رياضيات</option>
+            </select>
           </div>
-
           {pdfData.subjects.includes("رياضيات") && (
             <div className="form-group">
-              <label>مواضيع الرياضيات:</label>
-              <div>
-                <label>
-                  <input
-                    type="checkbox"
-                    name="mathTopics"
-                    value="الجبر"
-                    checked={pdfData.mathTopics.includes("الجبر")}
-                    onChange={handleCheckboxChange}
-                  />
-                  الجبر
-                </label>
-              </div>
-              <div>
-                <label>
-                  <input
-                    type="checkbox"
-                    name="mathTopics"
-                    value="الهندسة"
-                    checked={pdfData.mathTopics.includes("الهندسة")}
-                    onChange={handleCheckboxChange}
-                  />
-                  الهندسة
-                </label>
-              </div>
-              <div>
-                <label>
-                  <input
-                    type="checkbox"
-                    name="mathTopics"
-                    value="حساب المثلثات"
-                    checked={pdfData.mathTopics.includes("حساب المثلثات")}
-                    onChange={handleCheckboxChange}
-                  />
-                  حساب المثلثات
-                </label>
-              </div>
-              <div>
-                <label>
-                  <input
-                    type="checkbox"
-                    name="mathTopics"
-                    value="التفاضل"
-                    checked={pdfData.mathTopics.includes("التفاضل")}
-                    onChange={handleCheckboxChange}
-                  />
-                  التفاضل
-                </label>
-              </div>
-              <div>
-                <label>
-                  <input
-                    type="checkbox"
-                    name="mathTopics"
-                    value="الإحصاء"
-                    checked={pdfData.mathTopics.includes("الإحصاء")}
-                    onChange={handleCheckboxChange}
-                  />
-                  الإحصاء
-                </label>
-              </div>
+              <label htmlFor="mathTopics">اختر مادة الرياضيات:</label>
+              <select
+                id="mathTopics"
+                name="mathTopics"
+                value={pdfData.mathTopics}
+                onChange={(e) =>
+                  setPdfData({
+                    ...pdfData,
+                    mathTopics: [e.target.value], // تخزين الخيار في المصفوفة
+                  })
+                }
+              >
+                <option value="">اختر الموضوع</option>
+                <option value="الجبر">الجبر</option>
+                <option value="الهندسة">الهندسة</option>
+                <option value="حساب المثلثات">حساب المثلثات</option>
+                <option value="التفاضل">التفاضل</option>
+                <option value="الإحصاء">الإحصاء</option>
+              </select>
             </div>
           )}
 

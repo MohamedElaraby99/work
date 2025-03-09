@@ -10,34 +10,37 @@ const AddUser = () => {
     name: "",
     username: "",
     password: "",
-    stage: "",
-    subject: "",
+    stage: [],
+    subject: [],
     mathSubjects: [], // Added for math subcategories
   });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUser({
-      ...user,
-      [name]: value,
-    });
+    const { name, value, checked } = e.target;
+
+    if (name === "stage" || name === "subject") {
+      setUser((prevState) => ({
+        ...prevState,
+        [name]: checked
+          ? [...prevState[name], value] // Add to the array if checked
+          : prevState[name].filter((item) => item !== value), // Remove from the array if unchecked
+      }));
+    } else {
+      setUser({
+        ...user,
+        [name]: value,
+      });
+    }
   };
 
   const handleMathSubjectsChange = (e) => {
     const { value, checked } = e.target;
-    if (checked) {
-      setUser((prevState) => ({
-        ...prevState,
-        mathSubjects: [...prevState.mathSubjects, value],
-      }));
-    } else {
-      setUser((prevState) => ({
-        ...prevState,
-        mathSubjects: prevState.mathSubjects.filter(
-          (subject) => subject !== value
-        ),
-      }));
-    }
+    setUser((prevState) => ({
+      ...prevState,
+      mathSubjects: checked
+        ? [...prevState.mathSubjects, value] // Add to array
+        : prevState.mathSubjects.filter((subject) => subject !== value), // Remove from array
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -55,14 +58,16 @@ const AddUser = () => {
       toast.error("الرجاء إدخال كلمة المرور!");
       return;
     }
-    if (user.type === "student" && !user.stage) {
+    if (user.type === "student" && user.stage.length === 0) {
       toast.error("الرجاء اختيار المرحلة الدراسية!");
       return;
     }
 
     const requestData = {
       ...user,
-      mathSubjects: user.subject === "رياضيات" ? user.mathSubjects : undefined,
+      mathSubjects: user.subject.includes("رياضيات")
+        ? user.mathSubjects
+        : undefined,
     };
 
     try {
@@ -77,8 +82,8 @@ const AddUser = () => {
         name: "",
         username: "",
         password: "",
-        stage: "",
-        subject: "",
+        stage: [],
+        subject: [],
         mathSubjects: [],
       });
     } catch (error) {
@@ -142,89 +147,137 @@ const AddUser = () => {
           </div>
           {user.type === "student" && (
             <div className="form-group">
-              <label htmlFor="stage">المرحلة الدراسية:</label>
-              <select
-                id="stage"
-                name="stage"
-                value={user.stage}
-                onChange={handleChange}
-              >
-                <option value="">اختر المرحلة الدراسية</option>
-                <option value="ثالثة اعدادي">ثالثة اعدادي</option>
-                <option value="أولى ثانوي">أولى ثانوي</option>
-                <option value="ثانية ثانوي">ثانية ثانوي</option>
-                <option value="ثالثة ثانوي">ثالثة ثانوي</option>
-              </select>
-              <label htmlFor="subject">المادة:</label>
-              <select
-                id="subject"
-                name="subject"
-                value={user.subject}
-                onChange={handleChange}
-              >
-                <option value="">اختر المادة</option>
-                <option value="تاريخ">تاريخ</option>
-                <option value="رياضيات">رياضيات</option>
-                <option value="لغة فرنسية">لغة فرنسية</option>
-                <option value="لغة انجليزية">لغة انجليزية</option>
-              </select>
+              <div>
+                <label>المادة:</label>
+              </div>
+              <div className="subject-checkboxes">
+                <div>
+                  <label>
+                    <input
+                      type="checkbox"
+                      name="subject"
+                      value="تاريخ"
+                      checked={user.subject.includes("تاريخ")}
+                      onChange={handleChange}
+                    />
+                    تاريخ
+                  </label>
+                </div>
+                <div>
+                  <label>
+                    <input
+                      type="checkbox"
+                      name="subject"
+                      value="رياضيات"
+                      checked={user.subject.includes("رياضيات")}
+                      onChange={handleChange}
+                    />
+                    رياضيات
+                  </label>
+                </div>
+                <div>
+                  <label>
+                    <input
+                      type="checkbox"
+                      name="subject"
+                      value="لغة فرنسية"
+                      checked={user.subject.includes("لغة فرنسية")}
+                      onChange={handleChange}
+                    />
+                    لغة فرنسية
+                  </label>
+                </div>
+                <div>
+                  <label>
+                    <input
+                      type="checkbox"
+                      name="subject"
+                      value="لغة انجليزية"
+                      checked={user.subject.includes("لغة انجليزية")}
+                      onChange={handleChange}
+                    />
+                    لغة انجليزية
+                  </label>
+                </div>
+              </div>
             </div>
           )}
-          {user.subject === "رياضيات" && (
+          {user.subject.includes("رياضيات") && (
             <div className="form-group">
               <label>اختر مواد الرياضيات:</label>
-              <div>
-                <label>
-                  <input
-                    type="checkbox"
-                    value="جبر"
-                    onChange={handleMathSubjectsChange}
-                  />{" "}
-                  جبر
-                </label>
-              </div>
-              <div>
-                <label>
-                  <input
-                    type="checkbox"
-                    value="هندسة"
-                    onChange={handleMathSubjectsChange}
-                  />{" "}
-                  هندسة
-                </label>
-              </div>
-              <div>
-                <label>
-                  <input
-                    type="checkbox"
-                    value="حساب مثلثات"
-                    onChange={handleMathSubjectsChange}
-                  />{" "}
-                  حساب مثلثات
-                </label>
-              </div>
-              <div>
-                <label>
-                  <input
-                    type="checkbox"
-                    value="تفاضل"
-                    onChange={handleMathSubjectsChange}
-                  />{" "}
-                  تفاضل
-                </label>
-              </div>
-              <div>
-                <label>
-                  <input
-                    type="checkbox"
-                    value="إحصاء"
-                    onChange={handleMathSubjectsChange}
-                  />{" "}
-                  إحصاء
-                </label>
+              <div className="subject-checkboxes">
+                <div>
+                  <label>
+                    <input
+                      type="checkbox"
+                      value="جبر"
+                      onChange={handleMathSubjectsChange}
+                    />
+                    جبر
+                  </label>
+                </div>
+                <div>
+                  <label>
+                    <input
+                      type="checkbox"
+                      value="هندسة"
+                      onChange={handleMathSubjectsChange}
+                    />
+                    هندسة
+                  </label>
+                </div>
+                <div>
+                  <label>
+                    <input
+                      type="checkbox"
+                      value="حساب مثلثات"
+                      onChange={handleMathSubjectsChange}
+                    />
+                    حساب مثلثات
+                  </label>
+                </div>
+                <div>
+                  <label>
+                    <input
+                      type="checkbox"
+                      value="تفاضل"
+                      onChange={handleMathSubjectsChange}
+                    />
+                    تفاضل
+                  </label>
+                </div>
+                <div>
+                  <label>
+                    <input
+                      type="checkbox"
+                      value="إحصاء"
+                      onChange={handleMathSubjectsChange}
+                    />
+                    إحصاء
+                  </label>
+                </div>
               </div>
             </div>
           )}
+
+          <div className="form-group">
+            <label htmlFor="stage">المرحلة الدراسية:</label>
+            <select
+              id="stage"
+              name="stage"
+              value={user.stage}
+              onChange={
+                (e) => setUser({ ...user, stage: [e.target.value] }) // تخزين المرحلة كعنصر داخل مصفوفة
+              }
+            >
+              <option value="">اختر المرحلة الدراسية</option>
+              <option value="ثالثة اعدادي">ثالثة اعدادي</option>
+              <option value="أولى ثانوي">أولى ثانوي</option>
+              <option value="ثانية ثانوي">ثانية ثانوي</option>
+              <option value="ثالثة ثانوي">ثالثة ثانوي</option>
+            </select>
+          </div>
+
           <button type="submit" className="submit-button">
             {user.type === "student" ? "إضافة طالب" : "إضافة مشرف"}
           </button>
