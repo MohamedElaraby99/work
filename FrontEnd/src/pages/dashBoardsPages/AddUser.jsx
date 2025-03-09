@@ -12,7 +12,7 @@ const AddUser = () => {
     password: "",
     stage: [],
     subject: [],
-    mathSubjects: [], // Added for math subcategories
+    submath: [], // Added for math subcategories
   });
 
   const handleChange = (e) => {
@@ -37,9 +37,9 @@ const AddUser = () => {
     const { value, checked } = e.target;
     setUser((prevState) => ({
       ...prevState,
-      mathSubjects: checked
-        ? [...prevState.mathSubjects, value] // Add to array
-        : prevState.mathSubjects.filter((subject) => subject !== value), // Remove from array
+      submath: checked
+        ? [...prevState.submath, value] // Add to array
+        : prevState.submath.filter((subject) => subject !== value), // Remove from array
     }));
   };
 
@@ -84,7 +84,7 @@ const AddUser = () => {
         password: "",
         stage: [],
         subject: [],
-        mathSubjects: [],
+        submath: [],
       });
     } catch (error) {
       console.error("Error adding user:", error);
@@ -220,7 +220,7 @@ const AddUser = () => {
                   <label>
                     <input
                       type="checkbox"
-                      value="هندسة"
+                      value="هندسه"
                       onChange={handleMathSubjectsChange}
                     />
                     هندسة
@@ -230,7 +230,7 @@ const AddUser = () => {
                   <label>
                     <input
                       type="checkbox"
-                      value="حساب مثلثات"
+                      value="مثلثات"
                       onChange={handleMathSubjectsChange}
                     />
                     حساب مثلثات
@@ -250,7 +250,7 @@ const AddUser = () => {
                   <label>
                     <input
                       type="checkbox"
-                      value="إحصاء"
+                      value="احصاء"
                       onChange={handleMathSubjectsChange}
                     />
                     إحصاء

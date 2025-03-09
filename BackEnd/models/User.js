@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema(
     },
     stage: {
       type: String,
-      enum: ["ثالثة ثانوي", "ثانية ثانوي", "أولى ثانوي", ""], // Example values
+      enum: ["ثالثة ثانوي", "ثانية ثانوي", "أولى ثانوي", "ثالثة اعدادي"], // Example values
     },
     password: {
       type: String,
@@ -27,6 +27,10 @@ const userSchema = new mongoose.Schema(
     subject: {
       type: String,
       enum: ["تاريخ وجغرافيا","جغرافيا", "تاريخ"],
+    },
+    submath: {
+      type: String,
+      enum: ["هندسه", "جبر" , "مثلثات" , "احصاء" , "تفاضل"],
     },
   },
   { timestamps: true }
