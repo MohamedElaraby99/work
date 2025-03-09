@@ -25,13 +25,10 @@ const Footer = () => {
         {/* Center Logo and Tagline */}
         <div className="footer-section footer-center">
           <img
-            src={require("./../images/footer.png")}
+            src={require("./../images/4GLogo.png")}
             alt="Platform Logo"
             className="footer-logo"
           />
-          <p className="footer-tagline">
-            التاريخ والجغرافيا منهج طويل والتوكل فيه الدليل
-          </p>
         </div>
 
         {/* Social Media Links */}
@@ -93,8 +90,7 @@ const Footer = () => {
       {/* Bottom Section */}
       <div className="footer-bottom">
         <p className="footer-text">
-          &copy; {new Date().getFullYear()} - منصة مستر محمود توكل - جميع الحقوق
-          - محفوظة
+          &copy; {new Date().getFullYear()} - منصة فور جي - جميع الحقوق - محفوظة
         </p>
         <p>
           <a
@@ -103,7 +99,7 @@ const Footer = () => {
             rel="noopener noreferrer"
             className="footer-link developer-link"
           >
-            تصميم وتطوير فكرة - Fikra Software
+            تصميم وتطوير شركة فكرة - Fikra Software
           </a>
         </p>
       </div>

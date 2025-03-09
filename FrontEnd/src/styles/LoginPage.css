@@ -7,7 +7,7 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  font-family: "Arial", sans-serif;
+  font-family: "cairo", sans-serif;
   direction: rtl;
 }
 
@@ -23,6 +23,34 @@
   -moz-border-radius: 15px;
   -ms-border-radius: 15px;
   -o-border-radius: 15px;
+}
+
+.imageyyy {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background-color: inherit;
+  display: flex;
+  justify-content: center;
+}
+
+.login-header {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  color: white;
+  font-family: "cairo", sans-serif;
+  font-size: 1.5rem;
+  font-weight: bold;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px 10px 0 0;
+  padding: 0.5rem;
+}
+
+.foterrrr {
+  width: 100%;
 }
 
 /* Left side: Welcome section with gradient background */
@@ -259,6 +287,7 @@
 
 @media (max-width: 480px) {
   .login-page {
+    margin-top: -100px;
     display: flex;
     width: 480px;
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -288,6 +317,9 @@
     width: 100%;
     padding: 1rem;
     flex: 1 1 90%;
+  }
+  .login-header {
+    font-size: 1.2rem;
   }
 }
 

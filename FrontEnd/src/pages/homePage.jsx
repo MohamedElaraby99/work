@@ -41,7 +41,10 @@ const HomePage = () => {
           إعلانات مهمة
         </h2>
         {loadingAnnouncements ? (
-          <Loader />
+          <h2>
+          <span className="material-icons">campaign</span>
+         <Loader />
+        </h2>
         ) : errorAnnouncements ? (
           <p className="error-message">{errorAnnouncements}</p>
         ) : announcements.length > 0 ? (

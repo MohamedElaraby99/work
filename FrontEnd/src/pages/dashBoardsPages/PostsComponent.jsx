@@ -5,16 +5,38 @@ import "react-toastify/dist/ReactToastify.css";
 import "./../../styles/dashboard/addPosts.css";
 
 const CreatePostComponent = () => {
-  // States for new post fields
+  // States for form fields
   const [title, setTitle] = useState("");
   const [details, setDetails] = useState("");
   const [selectedYears, setSelectedYears] = useState([]);
   const [subject, setSubject] = useState("");
+  const [mathSubjects, setMathSubjects] = useState([]);
 
   // List of years
-  const years = ["الصف الأول", "الصف الثاني", "الصف الثالث"];
+  const years = ["الصف الأول", "الصف الثاني", "الصف الثالث", "ثالثة إعدادي"];
 
-  // Function to handle new post creation
+  // List of math subcategories
+  const mathSubjectsList = ["جبر", "هندسة", "حساب مثلثات", "تفاضل", "إحصاء"];
+
+  // Toggle selected years
+  const handleYearToggle = (year) => {
+    if (selectedYears.includes(year)) {
+      setSelectedYears(selectedYears.filter((y) => y !== year));
+    } else {
+      setSelectedYears([...selectedYears, year]);
+    }
+  };
+
+  // Handle math subjects toggle
+  const handleMathSubjectsToggle = (subject) => {
+    if (mathSubjects.includes(subject)) {
+      setMathSubjects(mathSubjects.filter((s) => s !== subject));
+    } else {
+      setMathSubjects([...mathSubjects, subject]);
+    }
+  };
+
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -23,22 +45,17 @@ const CreatePostComponent = () => {
       return;
     }
 
-    // Prepare data to send to the API
     const newPost = {
       title,
       description: details,
-      stage: {
-        stage_one: selectedYears.includes("الصف الأول"),
-        stage_two: selectedYears.includes("الصف الثاني"),
-        stage_three: selectedYears.includes("الصف الثالث"),
-      },
+      stage: selectedYears,
       subject,
+      mathSubjects: subject === "رياضيات" ? mathSubjects : [],
     };
 
-    const accessToken = localStorage.getItem("accessToken");
-
     try {
-      // Send POST request to API
+      const accessToken = localStorage.getItem("accessToken");
+
       await axios.post(
         `${process.env.REACT_APP_BASE_URL}/announcements`,
         newPost,
@@ -50,37 +67,17 @@ const CreatePostComponent = () => {
         }
       );
 
-      // Reset fields
       setTitle("");
       setDetails("");
       setSelectedYears([]);
       setSubject("");
+      setMathSubjects([]);
 
-      // Show success toast
       toast.success("تم إنشاء الإعلان بنجاح!");
     } catch (error) {
       console.error("Error creating post:", error);
-      if (error.response) {
-        toast.error(
-          `خطأ: ${error.response.data.message || "حدث خطأ أثناء الإنشاء."}`
-        );
-      } else {
-        toast.error("حدث خطأ أثناء إنشاء الإعلان.");
-      }
+      toast.error("حدث خطأ أثناء إنشاء الإعلان.");
     }
-  };
-
-  // Function to toggle selected years
-  const handleYearToggle = (year) => {
-    if (selectedYears.includes(year)) {
-      setSelectedYears(selectedYears.filter((y) => y !== year));
-    } else {
-      setSelectedYears([...selectedYears, year]);
-    }
-  };
-
-  const handleSubjectChange = (event) => {
-    setSubject(event.target.value);
   };
 
   return (
@@ -137,14 +134,34 @@ const CreatePostComponent = () => {
             id="subject"
             name="subject"
             value={subject}
-            onChange={handleSubjectChange}
+            onChange={(e) => setSubject(e.target.value)}
           >
             <option value="">اختر المادة </option>
-            <option value="تاريخ">تاريخ </option>
-            <option value="جغرافيا">جغرافيا </option>
-            <option value="تاريخ وجغرافيا">تاريخ وجغرافيا </option>
+            <option value="تاريخ">تاريخ</option>
+            <option value="رياضيات">رياضيات</option>
+            <option value="لغة فرنسية">لغة فرنسية</option>
+            <option value="لغة انجليزية">لغة انجليزية</option>
           </select>
         </div>
+
+        {subject === "رياضيات" && (
+          <div className="form-group">
+            <label>اختر مواد الرياضيات:</label>
+            <div className="math-checkboxes">
+              {mathSubjectsList.map((mathSubject) => (
+                <div key={mathSubject} className="checkbox-item">
+                  <input
+                    type="checkbox"
+                    id={mathSubject}
+                    checked={mathSubjects.includes(mathSubject)}
+                    onChange={() => handleMathSubjectsToggle(mathSubject)}
+                  />
+                  <label htmlFor={mathSubject}>{mathSubject}</label>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         <button type="submit" className="submit-btn">
           إنشاء الإعلان

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import OpenAI from "openai";
 import "./../styles/AiChat.css";
 import { toast, ToastContainer } from "react-toastify";
@@ -9,12 +9,25 @@ const Ai = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [apiToken, setApiToken] = useState("");
+  const [openai, setOpenai] = useState(null);
 
-  const openai = new OpenAI({
-    apiKey: "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",
-    baseURL: "https://models.inference.ai.azure.com",
-    dangerouslyAllowBrowser: true,
-  });
+  useEffect(() => {
+    // Access the environment variable correctly
+    setApiToken(process.env.REACT_APP_KEY);
+  }, []);
+
+  useEffect(() => {
+    // Initialize the OpenAI client once the API token is set
+    if (apiToken) {
+      const openaiInstance = new OpenAI({
+        apiKey: apiToken,
+        baseURL: "https://models.inference.ai.azure.com",
+        dangerouslyAllowBrowser: true,
+      });
+      setOpenai(openaiInstance);
+    }
+  }, [apiToken]);
 
   const handleSendMessage = async () => {
     if (input.trim() === "") return;

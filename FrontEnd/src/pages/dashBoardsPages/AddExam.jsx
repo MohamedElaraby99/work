@@ -9,7 +9,7 @@ import moment from "moment";
 
 const CreateExamComponent = () => {
   const [questions, setQuestions] = useState([]);
-  const [inputMode, setInputMode] = useState("file");
+  const [inputMode, setInputMode] = useState("manual");
   const [examDetails, setExamDetails] = useState({
     title: "",
     description: "",
@@ -18,7 +18,8 @@ const CreateExamComponent = () => {
     duration: "",
     stage: "",
     type: "",
-    subject: "",
+    subjects: [],
+    mathTopics: [],
     unit: "",
   });
 
@@ -26,7 +27,6 @@ const CreateExamComponent = () => {
     setQuestions([...questions, ...importedQuestions]);
   };
 
-  // دالة لحذف الأسئلة القادمة من `FileInputComponent`
   const handleDeleteQuestionFromFile = (index) => {
     setQuestions((prevQuestions) =>
       prevQuestions.filter((_, i) => i !== index)
@@ -41,6 +41,30 @@ const CreateExamComponent = () => {
     });
   };
 
+  const handleCheckboxChange = (e) => {
+    const { name, value, checked } = e.target;
+    setExamDetails((prevDetails) => {
+      if (name === "subjects") {
+        return {
+          ...prevDetails,
+          subjects: checked
+            ? [...prevDetails.subjects, value]
+            : prevDetails.subjects.filter((subject) => subject !== value),
+          mathTopics:
+            value === "رياضيات" && !checked ? [] : prevDetails.mathTopics,
+        };
+      } else if (name === "mathTopics") {
+        return {
+          ...prevDetails,
+          mathTopics: checked
+            ? [...prevDetails.mathTopics, value]
+            : prevDetails.mathTopics.filter((topic) => topic !== value),
+        };
+      }
+      return prevDetails;
+    });
+  };
+
   const handleSubmit = async () => {
     if (
       !examDetails.title ||
@@ -49,7 +73,7 @@ const CreateExamComponent = () => {
       !examDetails.duration ||
       !examDetails.stage ||
       !examDetails.type ||
-      !examDetails.subject ||
+      examDetails.subjects.length === 0 ||
       !examDetails.unit ||
       questions.length === 0
     ) {
@@ -65,8 +89,9 @@ const CreateExamComponent = () => {
       questions,
       stage: examDetails.stage,
       type: examDetails.type,
-      subject: examDetails.subject,
-      unit: examDetails.unit
+      subjects: examDetails.subjects,
+      mathTopics: examDetails.mathTopics,
+      unit: examDetails.unit,
     };
 
     try {
@@ -90,8 +115,9 @@ const CreateExamComponent = () => {
         duration: "",
         stage: "",
         type: "",
-        subject: "",
-        unit : "",
+        subjects: [],
+        mathTopics: [],
+        unit: "",
       });
       setQuestions([]);
     } catch (error) {
@@ -169,25 +195,132 @@ const CreateExamComponent = () => {
             <option value="" disabled>
               اختر المرحلة الدراسية
             </option>
+            <option value="ثالث اعدادي ">ثالث اعدادي</option>
             <option value="أولى ثانوي">أولى ثانوي</option>
             <option value="ثانية ثانوي">ثانية ثانوي</option>
             <option value="ثالثة ثانوي">ثالثة ثانوي</option>
           </select>
         </label>
         <label>
-          المادة:
-          <select
-            name="subject"
-            value={examDetails.subject}
-            onChange={handleInputChange}
-          >
-            <option value="" disabled>
-              اختر المادة
-            </option>
-            <option value="تاريخ">تاريخ</option>
-            <option value="جغرافيا">جغرافيا</option>
-          </select>
+          المواد:
+          <div>
+            <label>
+              <input
+                type="checkbox"
+                name="subjects"
+                value="تاريخ"
+                checked={examDetails.subjects.includes("تاريخ")}
+                onChange={handleCheckboxChange}
+              />
+              تاريخ
+            </label>
+          </div>
+          <div>
+            <label>
+              <input
+                type="checkbox"
+                name="subjects"
+                value="لغة انجليزية"
+                checked={examDetails.subjects.includes("لغة انجليزية")}
+                onChange={handleCheckboxChange}
+              />
+              لغة انجليزية
+            </label>
+          </div>
+          <div>
+            <label>
+              <input
+                type="checkbox"
+                name="subjects"
+                value="لغة فرنسية"
+                checked={examDetails.subjects.includes("لغة فرنسية")}
+                onChange={handleCheckboxChange}
+              />
+              لغة فرنسية
+            </label>
+          </div>
+          <div>
+            <label>
+              <input
+                type="checkbox"
+                name="subjects"
+                value="رياضيات"
+                checked={examDetails.subjects.includes("رياضيات")}
+                onChange={handleCheckboxChange}
+              />
+              رياضيات
+            </label>
+          </div>
         </label>
+
+        {examDetails.subjects.includes("رياضيات") && (
+          <div>
+            <label>
+              مواضيع الرياضيات:
+              <div>
+                <label>
+                  <input
+                    type="checkbox"
+                    name="mathTopics"
+                    value="الجبر"
+                    checked={examDetails.mathTopics.includes("الجبر")}
+                    onChange={handleCheckboxChange}
+                  />
+                  الجبر
+                </label>
+              </div>
+              <div>
+                <label>
+                  <input
+                    type="checkbox"
+                    name="mathTopics"
+                    value="الهندسة"
+                    checked={examDetails.mathTopics.includes("الهندسة")}
+                    onChange={handleCheckboxChange}
+                  />
+                  الهندسة
+                </label>
+              </div>
+              <div>
+                <label>
+                  <input
+                    type="checkbox"
+                    name="mathTopics"
+                    value="حساب المثلثات"
+                    checked={examDetails.mathTopics.includes("حساب المثلثات")}
+                    onChange={handleCheckboxChange}
+                  />
+                  حساب المثلثات
+                </label>
+              </div>
+              <div>
+                <label>
+                  <input
+                    type="checkbox"
+                    name="mathTopics"
+                    value="التفاضل"
+                    checked={examDetails.mathTopics.includes("التفاضل")}
+                    onChange={handleCheckboxChange}
+                  />
+                  التفاضل
+                </label>
+              </div>
+              <div>
+                <label>
+                  <input
+                    type="checkbox"
+                    name="mathTopics"
+                    value="الإحصاء"
+                    checked={examDetails.mathTopics.includes("الإحصاء")}
+                    onChange={handleCheckboxChange}
+                  />
+                  الإحصاء
+                </label>
+              </div>
+            </label>
+          </div>
+        )}
+
         <label>
           الوحدة:
           <select
@@ -198,7 +331,6 @@ const CreateExamComponent = () => {
             <option value="" disabled>
               اختر الوحدة
             </option>
-            <option value="0">الوحدة التمهيدية </option>
             <option value="1">الوحدة الأولى</option>
             <option value="2">الوحدة الثانية</option>
             <option value="3">الوحدة الثالثة</option>

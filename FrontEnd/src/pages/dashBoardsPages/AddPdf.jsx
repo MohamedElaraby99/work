@@ -9,11 +9,10 @@ const AddPdf = () => {
     name: "",
     file: null,
     stage: "",
-    subject: "",
+    subjects: [], // تأكد من أنها مصفوفة فارغة في البداية
+    mathTopics: [], // تأكد من أنها مصفوفة فارغة في البداية
     unit: "",
   });
-
-  const [message, setMessage] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,15 +22,39 @@ const AddPdf = () => {
     });
   };
 
+  const handleCheckboxChange = (e) => {
+    const { name, value, checked } = e.target;
+    setPdfData((prevData) => {
+      if (name === "subjects") {
+        return {
+          ...prevData,
+          subjects: checked
+            ? [...prevData.subjects, value]
+            : prevData.subjects.filter((subject) => subject !== value),
+          mathTopics:
+            value === "رياضيات" && !checked ? [] : prevData.mathTopics,
+        };
+      } else if (name === "mathTopics") {
+        return {
+          ...prevData,
+          mathTopics: checked
+            ? [...prevData.mathTopics, value]
+            : prevData.mathTopics.filter((topic) => topic !== value),
+        };
+      }
+      return prevData;
+    });
+  };
+
   const handleFileDrop = (acceptedFiles) => {
     if (acceptedFiles.length === 0) {
-      setMessage("يرجى اختيار ملف PDF صالح");
+      toast.error("يرجى اختيار ملف PDF صالح");
       return;
     }
 
     const file = acceptedFiles[0];
     if (file.type !== "application/pdf") {
-      setMessage("يرجى اختيار ملف بصيغة PDF فقط");
+      toast.error("يرجى اختيار ملف بصيغة PDF فقط");
       return;
     }
 
@@ -40,7 +63,7 @@ const AddPdf = () => {
       file: file,
     });
 
-    setMessage("تم اختيار الملف بنجاح");
+    toast.success("تم اختيار الملف بنجاح");
   };
 
   const handleSubmit = async (e) => {
@@ -50,10 +73,10 @@ const AddPdf = () => {
       !pdfData.name ||
       !pdfData.file ||
       !pdfData.stage ||
-      !pdfData.subject ||
+      pdfData.subjects.length === 0 ||
       !pdfData.unit
     ) {
-      setMessage("الرجاء ملء جميع الحقول");
+      toast.error("الرجاء ملء جميع الحقول");
       return;
     }
 
@@ -61,33 +84,31 @@ const AddPdf = () => {
     formData.append("title", pdfData.name);
     formData.append("file", pdfData.file);
     formData.append("stage", pdfData.stage);
-    formData.append("subject", pdfData.subject);
+    formData.append("subjects", JSON.stringify(pdfData.subjects));
+    formData.append("mathTopics", JSON.stringify(pdfData.mathTopics));
     formData.append("unit", pdfData.unit);
 
     const accessToken = localStorage.getItem("accessToken");
 
     try {
-      // إرسال الطلب إلى الـ API
       const response = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/files`,
         formData,
         {
           headers: {
-            Authorization: `Bearer ${accessToken}`, // تضمين التوكن في الرؤوس
+            Authorization: `Bearer ${accessToken}`,
           },
         }
       );
 
-      // عرض رسالة نجاح
-      setMessage("تم رفع الملف بنجاح!");
       toast.success("تم رفع الملف بنجاح!");
 
-      // إعادة تعيين البيانات
       setPdfData({
         name: "",
         file: null,
         stage: "",
-        subject: "",
+        subjects: [],
+        mathTopics: [],
         unit: "",
       });
     } catch (error) {
@@ -102,15 +123,6 @@ const AddPdf = () => {
     <div className="add-pdf">
       <div className="add-pdf-container">
         <h2>إضافة ملف PDF جديد</h2>
-        {message && (
-          <p
-            className={`message ${
-              message.includes("نجاح") ? "success" : "error"
-            }`}
-          >
-            {message}
-          </p>
-        )}
         <form onSubmit={handleSubmit} className="add-pdf-form">
           <div className="form-group">
             <label htmlFor="name">اسم الملف:</label>
@@ -159,37 +171,145 @@ const AddPdf = () => {
               value={pdfData.stage}
               onChange={handleChange}
             >
-              <option value="disabled">اختر المرحلة الدراسية</option>
-              <option value="أولى ثانوي"> أولى ثانوي </option>
-              <option value="ثانية ثانوي"> ثانية ثانوي </option>
-              <option value="ثالثة ثانوي"> ثالثة ثانوي </option>
+              <option value="" disabled>
+                اختر المرحلة الدراسية
+              </option>
+              <option value="أولى ثانوي">أولى ثانوي</option>
+              <option value="ثانية ثانوي">ثانية ثانوي</option>
+              <option value="ثالثة ثانوي">ثالثة ثانوي</option>
             </select>
           </div>
 
           <div className="form-group">
-            <label htmlFor="subject">المادة الدراسية :</label>
-            <select
-              id="subject"
-              name="subject"
-              value={pdfData.subject}
-              onChange={handleChange}
-            >
-              <option value="disabled">اختر المادة </option>
-              <option value="تاريخ">تاريخ </option>
-              <option value="جغرافيا">جغرافيا </option>
-            </select>
+            <label>المواد الدراسية:</label>
+            <div>
+              <label>
+                <input
+                  type="checkbox"
+                  name="subjects"
+                  value="تاريخ"
+                  checked={pdfData.subjects.includes("تاريخ")}
+                  onChange={handleCheckboxChange}
+                />
+                تاريخ
+              </label>
+            </div>
+            <div>
+              <label>
+                <input
+                  type="checkbox"
+                  name="subjects"
+                  value="جغرافيا"
+                  checked={pdfData.subjects.includes("جغرافيا")}
+                  onChange={handleCheckboxChange}
+                />
+                جغرافيا
+              </label>
+            </div>
+            <div>
+              <label>
+                <input
+                  type="checkbox"
+                  name="subjects"
+                  value="قرنساوي"
+                  checked={pdfData.subjects.includes("قرنساوي")}
+                  onChange={handleCheckboxChange}
+                />
+                اللغة الفرنسية
+              </label>
+            </div>
+            <div>
+              <label>
+                <input
+                  type="checkbox"
+                  name="subjects"
+                  value="رياضيات"
+                  checked={pdfData.subjects.includes("رياضيات")}
+                  onChange={handleCheckboxChange}
+                />
+                رياضيات
+              </label>
+            </div>
           </div>
 
+          {pdfData.subjects.includes("رياضيات") && (
+            <div className="form-group">
+              <label>مواضيع الرياضيات:</label>
+              <div>
+                <label>
+                  <input
+                    type="checkbox"
+                    name="mathTopics"
+                    value="الجبر"
+                    checked={pdfData.mathTopics.includes("الجبر")}
+                    onChange={handleCheckboxChange}
+                  />
+                  الجبر
+                </label>
+              </div>
+              <div>
+                <label>
+                  <input
+                    type="checkbox"
+                    name="mathTopics"
+                    value="الهندسة"
+                    checked={pdfData.mathTopics.includes("الهندسة")}
+                    onChange={handleCheckboxChange}
+                  />
+                  الهندسة
+                </label>
+              </div>
+              <div>
+                <label>
+                  <input
+                    type="checkbox"
+                    name="mathTopics"
+                    value="حساب المثلثات"
+                    checked={pdfData.mathTopics.includes("حساب المثلثات")}
+                    onChange={handleCheckboxChange}
+                  />
+                  حساب المثلثات
+                </label>
+              </div>
+              <div>
+                <label>
+                  <input
+                    type="checkbox"
+                    name="mathTopics"
+                    value="التفاضل"
+                    checked={pdfData.mathTopics.includes("التفاضل")}
+                    onChange={handleCheckboxChange}
+                  />
+                  التفاضل
+                </label>
+              </div>
+              <div>
+                <label>
+                  <input
+                    type="checkbox"
+                    name="mathTopics"
+                    value="الإحصاء"
+                    checked={pdfData.mathTopics.includes("الإحصاء")}
+                    onChange={handleCheckboxChange}
+                  />
+                  الإحصاء
+                </label>
+              </div>
+            </div>
+          )}
+
           <div className="form-group">
-            <label htmlFor="subject"> اختر الوحدة :</label>
+            <label htmlFor="unit">اختر الوحدة:</label>
             <select
               id="unit"
               name="unit"
               value={pdfData.unit}
               onChange={handleChange}
             >
-              <option value="disabled">اختر الوحدة</option>
-              <option value="0">الوحدة التمهيدية </option>
+              <option value="" disabled>
+                اختر الوحدة
+              </option>
+              <option value="0">الوحدة التمهيدية</option>
               <option value="1">الوحدة الأولى</option>
               <option value="2">الوحدة الثانية</option>
               <option value="3">الوحدة الثالثة</option>

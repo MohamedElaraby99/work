@@ -8,6 +8,12 @@ import {
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "./../styles/Math.css";
+import {
+  FaFacebook,
+  FaInstagram,
+  FaTiktok,
+  FaWhatsapp,
+} from "react-icons/fa";
 
 const English = () => {
   const navigate = useNavigate();
@@ -73,7 +79,10 @@ const English = () => {
     return (
       <div className="history-container centerrr">
         <header className="history-header">
-          <h1>مادة الجغرافيا</h1>
+          <h1>
+            <span class="material-icons iconnn">g_translate</span>
+            مـادة الـلغة الانـجليزية
+          </h1>
         </header>
         <p className="about-imag ">
           <img
@@ -90,11 +99,56 @@ const English = () => {
   return (
     <div className="history-container">
       <header className="history-header">
-        <h1>
-          <span class="material-icons iconnn">g_translate</span>
-          مادة اللغة الانجليزية
-        </h1>
-        <h2>Mr- Ahmed Ghozy</h2>
+        <div className="content-container">
+          {/* الصورة على اليسار */}
+          <div className="image-container">
+            <img
+              src={require("./../images/mrahmedgozy.png")}
+              alt="صورة المادة"
+              className="history-image"
+              style={{ border: "2px solid #ccc" }} // إضافة الإطار هنا
+            />
+          </div>
+          {/* النص على اليمين */}
+          <div className="text-container">
+            <h1>
+              <span class="material-icons iconnn">g_translate</span>
+              مادة اللغة الانجليزية
+            </h1>
+            <p>مـقدم الـمادة</p>
+            <p className="history-subtitle"> Mr- Ahmed Ghozy </p>
+            <div className="social-linkss">
+              <a
+                href="https://www.facebook.com/share/1B8FQwvbrx/?mibextid=wwXIfr"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaFacebook />
+              </a>
+              <a
+                href="https://www.instagram.com/ahmed_elsaiidd?igsh=MXdkenVsdDdiZThmcg%3D%3D&utm_source=qr"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaInstagram />
+              </a>
+              <a
+                href="https://www.tiktok.com/@ahmedelsaid5?_t=ZS-8uXqjqzaElA&_r=1"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaTiktok />
+              </a>
+              <a
+                href="https://wa.me/201279456731"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaWhatsapp />
+              </a>
+            </div>
+          </div>
+        </div>
       </header>
 
       {/* قسم الفيديوهات */}

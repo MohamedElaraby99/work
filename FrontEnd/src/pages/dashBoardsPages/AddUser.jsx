@@ -6,15 +6,15 @@ import "./../../styles/dashboard/AddUser.css";
 
 const AddUser = () => {
   const [user, setUser] = useState({
-    type: "student", // Default to student
+    type: "student",
     name: "",
     username: "",
     password: "",
     stage: "",
     subject: "",
+    mathSubjects: [], // Added for math subcategories
   });
 
-  // Handle form input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUser({
@@ -23,11 +23,26 @@ const AddUser = () => {
     });
   };
 
-  // Handle form submission
+  const handleMathSubjectsChange = (e) => {
+    const { value, checked } = e.target;
+    if (checked) {
+      setUser((prevState) => ({
+        ...prevState,
+        mathSubjects: [...prevState.mathSubjects, value],
+      }));
+    } else {
+      setUser((prevState) => ({
+        ...prevState,
+        mathSubjects: prevState.mathSubjects.filter(
+          (subject) => subject !== value
+        ),
+      }));
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Perform validation
     if (!user.name) {
       toast.error("الرجاء إدخال الاسم!");
       return;
@@ -44,32 +59,19 @@ const AddUser = () => {
       toast.error("الرجاء اختيار المرحلة الدراسية!");
       return;
     }
-    if (user.type === "admin" && (!user.stage || !user.subject)) {
-      toast.error("الرجاء اختيار المرحلة الدراسية والمادة!");
-      return;
-    }
 
-    // إعداد بيانات الطلب
     const requestData = {
-      name: user.name,
-      username: user.username,
-      password: user.password,
-      role: user.type,
-      stage: user.type === "student" ? user.stage : undefined, // إذا كان مشرفًا، لا يتم إرسال المرحلة الدراسية
-      subject: user.type === "student" ? user.subject : undefined,
+      ...user,
+      mathSubjects: user.subject === "رياضيات" ? user.mathSubjects : undefined,
     };
 
     try {
-      // إرسال الطلب إلى الـ API
       const response = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/auth/register`,
         requestData
       );
-
-      // عرض رسالة نجاح
       toast.success("تم إضافة المستخدم بنجاح!");
 
-      // إعادة تعيين النموذج
       setUser({
         type: "student",
         name: "",
@@ -77,9 +79,9 @@ const AddUser = () => {
         password: "",
         stage: "",
         subject: "",
+        mathSubjects: [],
       });
     } catch (error) {
-      // معالجة الأخطاء
       console.error("Error adding user:", error);
       toast.error(
         error.response?.data?.message || "حدث خطأ أثناء إضافة المستخدم!"
@@ -89,7 +91,6 @@ const AddUser = () => {
 
   return (
     <div className="add-user">
-      {/* Toast Notifications */}
       <ToastContainer position="top-center" autoClose={3000} />
 
       <div className="add-user-container">
@@ -108,7 +109,7 @@ const AddUser = () => {
             </select>
           </div>
           <div className="form-group">
-            <label htmlFor="name">الاسم :</label>
+            <label htmlFor="name">الاسم:</label>
             <input
               type="text"
               name="name"
@@ -125,7 +126,7 @@ const AddUser = () => {
               name="username"
               value={user.username}
               onChange={handleChange}
-              placeholder="أدخل اسم المستخدم (على سبيل المثال: ali123)"
+              placeholder="أدخل اسم المستخدم"
             />
           </div>
           <div className="form-group">
@@ -149,22 +150,79 @@ const AddUser = () => {
                 onChange={handleChange}
               >
                 <option value="">اختر المرحلة الدراسية</option>
+                <option value="ثالثة اعدادي">ثالثة اعدادي</option>
                 <option value="أولى ثانوي">أولى ثانوي</option>
                 <option value="ثانية ثانوي">ثانية ثانوي</option>
                 <option value="ثالثة ثانوي">ثالثة ثانوي</option>
               </select>
-              <label htmlFor="stage">المادة :</label>
+              <label htmlFor="subject">المادة:</label>
               <select
                 id="subject"
                 name="subject"
                 value={user.subject}
                 onChange={handleChange}
               >
-                <option value="">اختر المادة </option>
-                <option value="تاريخ">تاريخ </option>
-                <option value="جغرافيا">جغرافيا </option>
-                <option value="تاريخ وجغرافيا">تاريخ وجغرافيا </option>
+                <option value="">اختر المادة</option>
+                <option value="تاريخ">تاريخ</option>
+                <option value="رياضيات">رياضيات</option>
+                <option value="لغة فرنسية">لغة فرنسية</option>
+                <option value="لغة انجليزية">لغة انجليزية</option>
               </select>
+            </div>
+          )}
+          {user.subject === "رياضيات" && (
+            <div className="form-group">
+              <label>اختر مواد الرياضيات:</label>
+              <div>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="جبر"
+                    onChange={handleMathSubjectsChange}
+                  />{" "}
+                  جبر
+                </label>
+              </div>
+              <div>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="هندسة"
+                    onChange={handleMathSubjectsChange}
+                  />{" "}
+                  هندسة
+                </label>
+              </div>
+              <div>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="حساب مثلثات"
+                    onChange={handleMathSubjectsChange}
+                  />{" "}
+                  حساب مثلثات
+                </label>
+              </div>
+              <div>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="تفاضل"
+                    onChange={handleMathSubjectsChange}
+                  />{" "}
+                  تفاضل
+                </label>
+              </div>
+              <div>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="إحصاء"
+                    onChange={handleMathSubjectsChange}
+                  />{" "}
+                  إحصاء
+                </label>
+              </div>
             </div>
           )}
           <button type="submit" className="submit-button">

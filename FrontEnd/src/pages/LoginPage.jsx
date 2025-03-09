@@ -75,6 +75,16 @@ const LoginForm = ({ setRole }) => {
 
   return (
     <div className="login-page-wrapper">
+      <div className="login-header">
+        <div className="logo-container imageyyy">
+          <img
+            className="logo"
+            src={require("./../images/4GLogo.png")}
+            alt="محمود توكل"
+          />
+          <h1>مـنـصـة 4G</h1>
+        </div>
+      </div>
       <div className="login-page-container">
         <div className="login-page">
           {/* Left Section */}
@@ -82,7 +92,7 @@ const LoginForm = ({ setRole }) => {
             <div className="left-side">
               <img
                 className="left-side-image"
-                src={require("./../images/logo.png")}
+                src={require("./../images/4GLogo.png")}
                 alt=""
               />
             </div>
@@ -93,7 +103,7 @@ const LoginForm = ({ setRole }) => {
             <div className="login-form-container">
               <img
                 className="leftt-side-image"
-                src={require("./../images/logo.png")}
+                src={require("./../images/4GLogo.png")}
                 alt=""
               />
               <p className="login-title">تسجيل الدخول</p>
@@ -152,7 +162,7 @@ const LoginForm = ({ setRole }) => {
           </div>
         </div>
       </div>
-      <footer className="footer">
+      <footer className="footer foterrrr">
         <div className="footer-container">
           {/* About the Platform */}
           <div className="footer-section">
@@ -169,13 +179,10 @@ const LoginForm = ({ setRole }) => {
           {/* Center Logo and Tagline */}
           <div className="footer-section footer-center">
             <img
-              src={require("./../images/footer.png")}
+              src={require("./../images/4GLogo.png")}
               alt="Platform Logo"
               className="footer-logo"
             />
-            <p className="footer-tagline">
-              التاريخ والجغرافيا منهج طويل والتوكل فيه الدليل
-            </p>
           </div>
 
           {/* Social Media Links */}
@@ -235,8 +242,8 @@ const LoginForm = ({ setRole }) => {
         </div>
         <div className="footer-bottom">
           <p className="footer-text">
-            &copy; {new Date().getFullYear()} - منصة مستر محمود توكل - جميع
-            الحقوق - محفوظة
+            &copy; {new Date().getFullYear()} - منصة فور جي - جميع الحقوق -
+            محفوظة
           </p>
           <p>
             <a
@@ -245,7 +252,7 @@ const LoginForm = ({ setRole }) => {
               rel="noopener noreferrer"
               className="footer-link developer-link"
             >
-              تصميم وتطوير فكرة - Fikra Software
+              تصميم وتطوير شركة فكرة - Fikra Software
             </a>
           </p>
         </div>

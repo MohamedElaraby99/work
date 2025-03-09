@@ -57,13 +57,10 @@ const Layout = ({ children, role }) => {
         <div className="logo-container" onClick={() => navigate("/home")}>
           <img
             className="logo"
-            src={require("./../images/0d231dfe-f53b-42fb-aa49-90b4d32966af.png")}
+            src={require("./../images/4GLogo.png")}
             alt="محمود توكل"
           />
-          <h1>
-            مــنص<span className="highlight-dot">ـة</span> الــتوك
-            <span className="highlight-dot">ـل</span>
-          </h1>
+          <h1>مـنـصـة 4G</h1>
         </div>
 
         <div className="user-menu">

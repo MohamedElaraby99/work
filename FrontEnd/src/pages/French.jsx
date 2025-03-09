@@ -8,6 +8,7 @@ import {
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "./../styles/Math.css";
+import { FaFacebook, FaInstagram, FaTiktok, FaWhatsapp } from "react-icons/fa";
 
 const French = () => {
   const navigate = useNavigate();
@@ -73,7 +74,12 @@ const French = () => {
     return (
       <div className="history-container centerrr">
         <header className="history-header">
-          <h1>مادة الجغرافيا</h1>
+          <h1>
+            <span class="material-symbols-outlined iconnn">
+              language_french
+            </span>
+            مادة اللغة الفرنسية
+          </h1>
         </header>
         <p className="about-imag ">
           <img
@@ -90,11 +96,58 @@ const French = () => {
   return (
     <div className="history-container">
       <header className="history-header">
-        <h1>
-          <span class="material-symbols-outlined iconnn">language_french</span>
-          مادة اللغة الفرنسية
-        </h1>
-        <h2> Professeur - Ahmed Emad </h2>
+        <div className="content-container">
+          {/* الصورة على اليسار */}
+          <div className="image-container">
+            <img
+              src={require("./../images/mrahmedemad.png")}
+              alt="صورة المادة"
+              className="history-image"
+              style={{ border: "2px solid #ffffff" }}
+            />
+          </div>
+          {/* النص على اليمين */}
+          <div className="text-container">
+            <h1>
+              <span class="material-symbols-outlined iconnn">
+                language_french
+              </span>
+              مادة اللغة الفرنسية
+            </h1>
+            <p>مـقدم الـمادة</p>
+            <p className="history-subtitle"> Professeur - Ahmed Emad </p>
+            <div className="social-linkss">
+              <a
+                href="https://www.facebook.com/share/1HpuLsGQV1/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaFacebook />
+              </a>
+              <a
+                href="https://www.instagram.com/ahmed_emad53?igsh=MWFqeW5taDIzYWg1eQ=="
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaInstagram />
+              </a>
+              <a
+                href="https://www.tiktok.com/@el_msu?_t=ZS-8uXqULmMc5J&_r=1"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaTiktok />
+              </a>
+              <a
+                href="https://wa.me/201221382008"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaWhatsapp />
+              </a>
+            </div>
+          </div>
+        </div>
       </header>
 
       {/* قسم الفيديوهات */}

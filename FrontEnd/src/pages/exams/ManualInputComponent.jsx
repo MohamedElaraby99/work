@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { toast } from "react-toastify";
 import "./ManualInputComponent.css";
 
 const ManualInputComponent = ({ onAddQuestions }) => {
   const [question, setQuestion] = useState("");
-  const [why, setWhy] = useState(""); // حقل التعليل
+  const [why, setWhy] = useState("");
   const [options, setOptions] = useState(["", "", "", ""]);
   const [correctAnswer, setCorrectAnswer] = useState(null);
-  const [image, setImage] = useState(null); // لتخزين الصورة المرفوعة
+  const [image, setImage] = useState(null);
+  const imageInputRef = useRef(null); // إنشاء مرجع لحقل الإدخال
 
   const handleAddQuestion = () => {
     if (!question.trim()) {
@@ -25,14 +26,10 @@ const ManualInputComponent = ({ onAddQuestions }) => {
       return;
     }
 
-    if (!why.trim()) {
-      toast.error("الرجاء إدخال التعليل!");
-      return;
-    }
-
+    // إعداد السؤال
     const newQuestion = {
       question,
-      why, // إضافة التعليل إلى السؤال
+      why: why.trim() ? why : undefined, // التعليل اختياري
       options,
       correctAnswer,
       image, // إضافة الصورة إلى البيانات
@@ -40,10 +37,13 @@ const ManualInputComponent = ({ onAddQuestions }) => {
 
     onAddQuestions([newQuestion]);
     setQuestion("");
-    setWhy(""); // إعادة تعيين التعليل بعد إضافة السؤال
+    setWhy("");
     setOptions(["", "", "", ""]);
     setCorrectAnswer(null);
-    setImage(null); // إعادة تعيين الصورة
+    setImage(null);
+    if (imageInputRef.current) {
+      imageInputRef.current.value = ""; // إعادة تعيين قيمة حقل الإدخال
+    }
     toast.success("تمت إضافة السؤال بنجاح!");
   };
 
@@ -52,12 +52,21 @@ const ManualInputComponent = ({ onAddQuestions }) => {
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
-        setImage(reader.result); // حفظ الصورة بتنسيق base64
+        setImage(reader.result);
       };
       reader.onerror = () => {
         toast.error("فشل في قراءة ملف الصورة.");
       };
       reader.readAsDataURL(file);
+    }
+  };
+
+  const handleDeleteOption = (index) => {
+    setOptions(options.filter((_, i) => i !== index));
+    if (correctAnswer === index) {
+      setCorrectAnswer(null);
+    } else if (correctAnswer > index) {
+      setCorrectAnswer(correctAnswer - 1);
     }
   };
 
@@ -73,16 +82,21 @@ const ManualInputComponent = ({ onAddQuestions }) => {
         />
       </label>
       <label>
-        التعليل:
+        التعليل (اختياري):
         <input
           value={why}
           onChange={(e) => setWhy(e.target.value)}
-          placeholder="أدخل التعليل لهذا السؤال"
+          placeholder="أدخل التعليل لهذا السؤال (اختياري)"
         />
       </label>
       <label>
         إضافة صورة:
-        <input type="file" onChange={handleImageChange} accept="image/*" />
+        <input
+          type="file"
+          onChange={handleImageChange}
+          accept="image/*"
+          ref={imageInputRef} // ربط المرجع بحقل الإدخال
+        />
         {image && (
           <div style={{ marginTop: "10px" }}>
             <img
@@ -116,6 +130,18 @@ const ManualInputComponent = ({ onAddQuestions }) => {
               placeholder={`الخيار ${index + 1}`}
               style={{ flex: 1 }}
             />
+            <button
+              onClick={() => handleDeleteOption(index)}
+              style={{
+                backgroundColor: "red",
+                color: "white",
+                border: "none",
+                cursor: "pointer",
+                padding: "5px 10px",
+              }}
+            >
+              حذف
+            </button>
             <button
               onClick={() => setCorrectAnswer(index)}
               style={{

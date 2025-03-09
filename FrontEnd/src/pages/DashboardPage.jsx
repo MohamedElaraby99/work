@@ -143,7 +143,7 @@ const Dashboard = () => {
         <div>
           <h1> لوحة تحكم المنصة </h1>
           <p className="dashboard-welcome">
-            مرحباً بك من جديد، {savedData.name}{" "}
+            مـرحباً بـك مـستر : {savedData.name}
           </p>
         </div>
       </header>

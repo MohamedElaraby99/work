@@ -7,9 +7,10 @@ const AddVideo = () => {
     title: "",
     lesson_link: "",
     stage: "",
-    subject: "",
-    description: "", // وصف الفيديو
-    notes: "", // ملاحظات الفيديو
+    subjects: [], // تأكد من أنها مصفوفة فارغة في البداية
+    mathTopics: [], // تأكد من أنها مصفوفة فارغة في البداية
+    description: "",
+    notes: "",
     unit: "",
   });
 
@@ -19,10 +20,35 @@ const AddVideo = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setVideoData({
-      ...videoData,
-      [name]: value,
-    });
+    setVideoData({ ...videoData, [name]: value });
+    // تحديث القيمة المختارة في المواضيع
+    if (name === "subjects") {
+      if (e.target.checked) {
+        setVideoData({
+          ...videoData,
+          subjects: [...videoData.subjects, value],
+        });
+      } else {
+        setVideoData({
+          ...videoData,
+          subjects: videoData.subjects.filter((subject) => subject !== value),
+        });
+      }
+    }
+    // تحديث القيمة المختارة في مواضيع الرياضيات
+    if (name === "mathTopics") {
+      if (e.target.checked) {
+        setVideoData({
+          ...videoData,
+          mathTopics: [...videoData.mathTopics, value],
+        });
+      } else {
+        setVideoData({
+          ...videoData,
+          mathTopics: videoData.mathTopics.filter((topic) => topic !== value),
+        });
+      }
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -130,24 +156,133 @@ const AddVideo = () => {
             onChange={handleChange}
           >
             <option value="">اختر المرحلة الدراسية</option>
+            <option value="ثالث اعدادي ">ثالث اعدادي</option>
             <option value="أولى ثانوي">أولى ثانوي</option>
             <option value="ثانية ثانوي">ثانية ثانوي</option>
             <option value="ثالثة ثانوي">ثالثة ثانوي</option>
           </select>
         </div>
-        <div className="form-group">
-          <label htmlFor="subject">المادة الدراسية :</label>
-          <select
-            id="subject"
-            name="subject"
-            value={videoData.subject}
-            onChange={handleChange}
-          >
-            <option value="">اختر المادة </option>
-            <option value="تاريخ">تاريخ </option>
-            <option value="جغرافيا">جغرافيا </option>
-          </select>
-        </div>
+        <label>
+          المواد:
+          <div>
+            <label>
+              <input
+                type="checkbox"
+                name="subjects"
+                value="تاريخ"
+                checked={
+                  videoData.subjects && videoData.subjects.includes("تاريخ")
+                }
+                onChange={handleChange}
+              />
+              تاريخ
+            </label>
+          </div>
+          <div>
+            <label>
+              <input
+                type="checkbox"
+                name="subjects"
+                value="لغة انجليزية"
+                checked={videoData.subjects.includes("لغة انجليزية")}
+                onChange={handleChange}
+              />
+              لغة انجليزية
+            </label>
+          </div>
+          <div>
+            <label>
+              <input
+                type="checkbox"
+                name="subjects"
+                value="لغة فرنسية"
+                checked={videoData.subjects.includes("لغة فرنسية")}
+                onChange={handleChange}
+              />
+              لغة فرنسية
+            </label>
+          </div>
+          <div>
+            <label>
+              <input
+                type="checkbox"
+                name="subjects"
+                value="رياضيات"
+                checked={videoData.subjects.includes("رياضيات")}
+                onChange={handleChange}
+              />
+              رياضيات
+            </label>
+          </div>
+        </label>
+
+        {videoData.subjects.includes("رياضيات") && (
+          <div>
+            <label>
+              مواضيع الرياضيات:
+              <div>
+                <label>
+                  <input
+                    type="checkbox"
+                    name="mathTopics"
+                    value="الجبر"
+                    checked={videoData.mathTopics.includes("الجبر")}
+                    onChange={handleChange}
+                  />
+                  الجبر
+                </label>
+              </div>
+              <div>
+                <label>
+                  <input
+                    type="checkbox"
+                    name="mathTopics"
+                    value="الهندسة"
+                    checked={videoData.mathTopics.includes("الهندسة")}
+                    onChange={handleChange}
+                  />
+                  الهندسة
+                </label>
+              </div>
+              <div>
+                <label>
+                  <input
+                    type="checkbox"
+                    name="mathTopics"
+                    value="حساب المثلثات"
+                    checked={videoData.mathTopics.includes("حساب المثلثات")}
+                    onChange={handleChange}
+                  />
+                  حساب المثلثات
+                </label>
+              </div>
+              <div>
+                <label>
+                  <input
+                    type="checkbox"
+                    name="mathTopics"
+                    value="التفاضل"
+                    checked={videoData.mathTopics.includes("التفاضل")}
+                    onChange={handleChange}
+                  />
+                  التفاضل
+                </label>
+              </div>
+              <div>
+                <label>
+                  <input
+                    type="checkbox"
+                    name="mathTopics"
+                    value="الإحصاء"
+                    checked={videoData.mathTopics.includes("الإحصاء")}
+                    onChange={handleChange}
+                  />
+                  الإحصاء
+                </label>
+              </div>
+            </label>
+          </div>
+        )}
 
         <div className="form-group">
           <label htmlFor="subject"> اختر الوحدة :</label>
@@ -158,7 +293,6 @@ const AddVideo = () => {
             onChange={handleChange}
           >
             <option value="disabled">اختر الوحدة</option>
-            <option value="0">الوحدة التمهيدية </option>
             <option value="1">الوحدة الأولى</option>
             <option value="2">الوحدة الثانية</option>
             <option value="3">الوحدة الثالثة</option>
