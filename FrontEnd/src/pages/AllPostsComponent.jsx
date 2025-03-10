@@ -18,6 +18,7 @@ const AllPostsComponent = () => {
     stage_three: false,
   });
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedSubject, setSelectedSubject] = useState("");
   const [loading, setLoading] = useState(true);
 
   // Fetch posts from API
@@ -65,9 +66,9 @@ const AllPostsComponent = () => {
     setEditTitle(post.title);
     setEditContent(post.description);
     setEditStages({
-      stage_one: post.stage.stage_one,
-      stage_two: post.stage.stage_two,
-      stage_three: post.stage.stage_three,
+      stage_one: post.stage?.stage_one || false,
+      stage_two: post.stage?.stage_two || false,
+      stage_three: post.stage?.stage_three || false,
     });
     setSelectedPost(null); // Exit details view
     setEditSubject(post.subject);
@@ -187,16 +188,16 @@ const AllPostsComponent = () => {
     }
   };
 
-  // Function to filter posts based on search term
+  // Function to filter posts based on search term and subject
   const filteredPosts = posts.filter(
     (post) =>
-      post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      post.description.toLowerCase().includes(searchTerm.toLowerCase())
+      (post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        post.description.toLowerCase().includes(searchTerm.toLowerCase())) &&
+      (selectedSubject === "" || post.subject === selectedSubject)
   );
 
   return (
     <div className="all-posts-component">
-      {/* Toast Notifications */}
       <ToastContainer />
 
       <header className="posts-header">
@@ -208,6 +209,23 @@ const AllPostsComponent = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
           className="search-input"
         />
+        <select
+          value={selectedSubject}
+          onChange={(e) => setSelectedSubject(e.target.value)}
+          className="subject-dropdown"
+        >
+          <option value="">كل المواد</option>
+          <option value="فرنسي">لغة فرنسية</option>
+          <option value="انجليزي">لغة انجليزية</option>
+          <option value="تاريخ">تاريخ</option>
+          <optgroup label="رياضيات">
+            <option value="جبر">جبر</option>
+            <option value="هندسة">هندسة</option>
+            <option value="تفاضل">تفاضل</option>
+            <option value="مثلثات">مثلثات</option>
+            <option value="إحصاء">إحصاء</option>
+          </optgroup>
+        </select>
       </header>
 
       <div className="posts-container">
@@ -222,13 +240,13 @@ const AllPostsComponent = () => {
                     <h4>{post.title}</h4>
                     <h5>{post.subject}</h5>
                     <ul>
-                      {post.stage.stage_one && (
+                      {post.stage?.stage_one && (
                         <li>المرحلة الدراسية: أولى ثانوي</li>
                       )}
-                      {post.stage.stage_two && (
+                      {post.stage?.stage_two && (
                         <li>المرحلة الدراسية: ثانية ثانوي</li>
                       )}
-                      {post.stage.stage_three && (
+                      {post.stage?.stage_three && (
                         <li>المرحلة الدراسية: ثالثة ثانوي</li>
                       )}
                     </ul>
@@ -268,13 +286,13 @@ const AllPostsComponent = () => {
             <h4>{selectedPost.title}</h4>
             <p>{selectedPost.description}</p>
             <ul>
-              {selectedPost.stage.stage_one && (
+              {selectedPost.stage?.stage_one && (
                 <li>المرحلة الدراسية: أولى ثانوي</li>
               )}
-              {selectedPost.stage.stage_two && (
+              {selectedPost.stage?.stage_two && (
                 <li>المرحلة الدراسية: ثانية ثانوي</li>
               )}
-              {selectedPost.stage.stage_three && (
+              {selectedPost.stage?.stage_three && (
                 <li>المرحلة الدراسية: ثالثة ثانوي</li>
               )}
             </ul>
