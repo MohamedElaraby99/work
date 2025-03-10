@@ -202,55 +202,21 @@ const CreateExamComponent = () => {
           </select>
         </label>
         <label>
-          المواد:
-          <div>
-            <label>
-              <input
-                type="checkbox"
-                name="subjects"
-                value="تاريخ"
-                checked={examDetails.subjects.includes("تاريخ")}
-                onChange={handleCheckboxChange}
-              />
-              تاريخ
-            </label>
-          </div>
-          <div>
-            <label>
-              <input
-                type="checkbox"
-                name="subjects"
-                value="لغة انجليزية"
-                checked={examDetails.subjects.includes("لغة انجليزية")}
-                onChange={handleCheckboxChange}
-              />
-              لغة انجليزية
-            </label>
-          </div>
-          <div>
-            <label>
-              <input
-                type="checkbox"
-                name="subjects"
-                value="لغة فرنسية"
-                checked={examDetails.subjects.includes("لغة فرنسية")}
-                onChange={handleCheckboxChange}
-              />
-              لغة فرنسية
-            </label>
-          </div>
-          <div>
-            <label>
-              <input
-                type="checkbox"
-                name="subjects"
-                value="رياضيات"
-                checked={examDetails.subjects.includes("رياضيات")}
-                onChange={handleCheckboxChange}
-              />
-              رياضيات
-            </label>
-          </div>
+          <label htmlFor="subjects">اختر المادة:</label>
+          <select
+            id="subjects"
+            name="subjects"
+            value={examDetails.subjects}
+            onChange={(e) =>
+              setExamDetails({ ...examDetails, subjects: [e.target.value] })
+            }
+          >
+            <option value="" disabled>اختر المادة</option>
+            <option value="تاريخ">تاريخ</option>
+            <option value="جغرافيا">جغرافيا</option>
+            <option value="اللغة الفرنسية">اللغة الفرنسية</option>
+            <option value="رياضيات">رياضيات</option>
+          </select>
         </label>
 
         {examDetails.subjects.includes("رياضيات") && (
