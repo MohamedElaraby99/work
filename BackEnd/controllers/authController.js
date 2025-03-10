@@ -23,7 +23,11 @@ const register = async (req, res) => {
         .status(400)
         .json({ message: "المادة الدراسية مطلوبة اذا لم تكن مشرف" });
     }
-    if (!subjects.includes(subject)) {
+    const isSubjectValid = subject.every((sub) => {
+      return subjects.includes(sub);
+    });
+
+    if (!isSubjectValid) {
       return res.status(400).json({ message: "المادة الدراسية غير صالحة" });
     }
   }
