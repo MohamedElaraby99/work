@@ -25,8 +25,18 @@
   -o-border-radius: 15px;
 }
 
-.foterrrr {
-  width: 100%;
+
+
+.attribution {
+  font-family: "cairo", sans-serif;
+  font-size: 18px;
+  text-align: center;
+  color: white;
+  text-decoration: none;
+}
+
+.attribution:hover {
+  color: yellow;
 }
 
 .login-page-title {

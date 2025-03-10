@@ -6,7 +6,7 @@ import {
   FaChevronDown,
   FaChevronUp,
 } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./../styles/Math.css";
 
 const SelectMath = () => {
@@ -18,47 +18,46 @@ const SelectMath = () => {
     pdfs: false,
   });
   const [isSubscribed, setIsSubscribed] = useState(true);
+  const location = useLocation();
 
   // استرداد المرحلة الدراسية والدور و subject من localStorage
   const stage = localStorage.getItem("stage");
   const role = localStorage.getItem("role");
-  const subject = localStorage.getItem("subject");
+
+  // const subject = localStorage.getItem("subject");
+  const { subject } = location.state;
 
   // فحص الاشتراك
-  useEffect(() => {
-    if (
-      role === "student" &&
-      subject !== "جغرافيا" &&
-      subject !== "تاريخ وجغرافيا"
-    ) {
-      setIsSubscribed(false);
-    }
-  }, [role, subject]);
+  // useEffect(() => {
+  //   if (role === "student" && subject !== "جبر" && subject !== "هندسة") {
+  //     setIsSubscribed(false);
+  //   }
+  // }, [role, subject]);
 
   // بيانات الوحدات مع روابط الصفحات
   const courseUnits = {
     videos: Array.from({ length: 8 }, (_, i) => ({
       id: i + 1,
       title: `الوحدة ${i + 1}`,
-      path: `/history/unit/${i + 1}/videos`,
+      path: `/select-math/unit/${i + 1}/videos`,
     })),
 
     exams: Array.from({ length: 8 }, (_, i) => ({
       id: i + 1,
       title: `الوحدة ${i + 1}`,
-      path: `/history/unit/${i + 1}/exams`,
+      path: `/select-math/unit/${i + 1}/exams`,
     })),
 
     assignments: Array.from({ length: 8 }, (_, i) => ({
       id: i + 1,
       title: `الوحدة ${i + 1}`,
-      path: `/history/unit/${i + 1}/assignments`,
+      path: `/select-math/unit/${i + 1}/assignments`,
     })),
 
     pdfs: Array.from({ length: 8 }, (_, i) => ({
       id: i + 1,
       title: `الوحدة ${i + 1}`,
-      path: `/history/unit/${i + 1}/pdfs`,
+      path: `/select-math/unit/${i + 1}/pdfs`,
     })),
   };
 
@@ -110,7 +109,7 @@ const SelectMath = () => {
                 className="unit-item"
                 onClick={() =>
                   navigate("/courses", {
-                    state: { subject: "جغرافيا", unit: unit.id },
+                    state: { subject: subject, unit: unit.id },
                   })
                 }
               >

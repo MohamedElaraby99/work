@@ -27,11 +27,7 @@ const French = () => {
 
   // فحص الاشتراك
   useEffect(() => {
-    if (
-      role === "student" &&
-      subject !== "جغرافيا" &&
-      subject !== "تاريخ وجغرافيا"
-    ) {
+    if (role === "student" && !subject.includes("فرنسي")) {
       setIsSubscribed(false);
     }
   }, [role, subject]);
@@ -41,25 +37,25 @@ const French = () => {
     videos: Array.from({ length: 4 }, (_, i) => ({
       id: i + 1,
       title: `الوحدة ${i + 1}`,
-      path: `/history/unit/${i + 1}/videos`,
+      path: `/frensh/unit/${i + 1}/videos`,
     })),
 
     exams: Array.from({ length: 4 }, (_, i) => ({
       id: i + 1,
       title: `الوحدة ${i + 1}`,
-      path: `/history/unit/${i + 1}/exams`,
+      path: `/frensh/unit/${i + 1}/exams`,
     })),
 
     assignments: Array.from({ length: 4 }, (_, i) => ({
       id: i + 1,
       title: `الوحدة ${i + 1}`,
-      path: `/history/unit/${i + 1}/assignments`,
+      path: `/frensh/unit/${i + 1}/assignments`,
     })),
 
     pdfs: Array.from({ length: 4 }, (_, i) => ({
       id: i + 1,
       title: `الوحدة ${i + 1}`,
-      path: `/history/unit/${i + 1}/pdfs`,
+      path: `/frensh/unit/${i + 1}/pdfs`,
     })),
   };
 
@@ -74,12 +70,55 @@ const French = () => {
     return (
       <div className="history-container centerrr">
         <header className="history-header">
-          <h1>
-            <span class="material-symbols-outlined iconnn">
-              language_french
-            </span>
-            مادة اللغة الفرنسية
-          </h1>
+          <div className="contenttt">
+            <div className="content-container">
+              {/* الصورة على اليسار */}
+              <div className="image-container">
+                <img
+                  src={require("./../images/mrahmedemad.png")}
+                  alt="صورة المادة"
+                  className="history-image"
+                  style={{ border: "2px solid #ffffff" }}
+                />
+              </div>
+              {/* النص على اليمين */}
+              <div className="text-container">
+                <h1>مادة اللغة الفرنسية</h1>
+                <p>مـقدم الـمادة</p>
+                <p className="history-subtitle"> Mr - Ahmed Emad </p>
+                <div className="social-linkss">
+                  <a
+                    href="https://www.facebook.com/share/1HpuLsGQV1/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaFacebook />
+                  </a>
+                  <a
+                    href="https://www.instagram.com/ahmed_emad53?igsh=MWFqeW5taDIzYWg1eQ=="
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaInstagram />
+                  </a>
+                  <a
+                    href="https://www.tiktok.com/@el_msu?_t=ZS-8uXqULmMc5J&_r=1"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaTiktok />
+                  </a>
+                  <a
+                    href="https://wa.me/201277037363"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaWhatsapp />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
         </header>
         <p className="about-imag ">
           <img
@@ -109,10 +148,7 @@ const French = () => {
             </div>
             {/* النص على اليمين */}
             <div className="text-container">
-              <h1>
-                
-                مادة اللغة الفرنسية
-              </h1>
+              <h1>مادة اللغة الفرنسية</h1>
               <p>مـقدم الـمادة</p>
               <p className="history-subtitle"> Mr - Ahmed Emad </p>
               <div className="social-linkss">
@@ -164,7 +200,7 @@ const French = () => {
                 className="unit-item"
                 onClick={() =>
                   navigate("/courses", {
-                    state: { subject: "جغرافيا", unit: unit.id },
+                    state: { subject: "فرنسي", unit: unit.id },
                   })
                 }
               >
@@ -190,7 +226,7 @@ const French = () => {
                 onClick={() =>
                   navigate("/exams", {
                     state: {
-                      subject: "جغرافيا",
+                      subject: "فرنسي",
                       unit: unit.id,
                       type: "امتحان",
                     },
@@ -207,7 +243,7 @@ const French = () => {
       {/* قسم الواجبات */}
       <section className="expandable-section">
         <h2 onClick={() => toggleSection("assignments")}>
-          <FaClipboardList /> الواجبات
+          <FaClipboardList /> التدريبات
           {expandedSections.assignments ? <FaChevronUp /> : <FaChevronDown />}
         </h2>
         {expandedSections.assignments && (
@@ -219,7 +255,7 @@ const French = () => {
                 onClick={() =>
                   navigate("/exams", {
                     state: {
-                      subject: "جغرافيا",
+                      subject: "فرنسي",
                       unit: unit.id,
                       type: "تدريب",
                     },
@@ -248,7 +284,7 @@ const French = () => {
                 onClick={() =>
                   navigate("/pdf", {
                     state: {
-                      subject: "جغرافيا",
+                      subject: "فرنسي",
                       unit: unit.id,
                     },
                   })

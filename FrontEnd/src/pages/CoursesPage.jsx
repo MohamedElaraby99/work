@@ -6,10 +6,8 @@ import Loader from "./Loader";
 
 const CoursesPage = () => {
   const navigate = useNavigate();
-
   const location = useLocation();
   const {subject, unit} = location.state;
-
 
   // حالة لتخزين الفيديوهات
   const [videos, setVideos] = useState([]);

@@ -27,11 +27,7 @@ const English = () => {
 
   // فحص الاشتراك
   useEffect(() => {
-    if (
-      role === "student" &&
-      subject !== "جغرافيا" &&
-      subject !== "تاريخ وجغرافيا"
-    ) {
+    if (role === "student" && !subject.includes("انجليزي") ) {
       setIsSubscribed(false);
     }
   }, [role, subject]);
@@ -41,25 +37,25 @@ const English = () => {
     videos: Array.from({ length: 6 }, (_, i) => ({
       id: i + 1,
       title: `الوحدة ${i + 1}`,
-      path: `/history/unit/${i + 1}/videos`,
+      path: `/english/unit/${i + 1}/videos`,
     })),
 
     exams: Array.from({ length: 6 }, (_, i) => ({
       id: i + 1,
       title: `الوحدة ${i + 1}`,
-      path: `/history/unit/${i + 1}/exams`,
+      path: `/english/unit/${i + 1}/exams`,
     })),
 
     assignments: Array.from({ length: 6 }, (_, i) => ({
       id: i + 1,
       title: `الوحدة ${i + 1}`,
-      path: `/history/unit/${i + 1}/assignments`,
+      path: `/english/unit/${i + 1}/assignments`,
     })),
 
     pdfs: Array.from({ length: 6 }, (_, i) => ({
       id: i + 1,
       title: `الوحدة ${i + 1}`,
-      path: `/history/unit/${i + 1}/pdfs`,
+      path: `/english/unit/${i + 1}/pdfs`,
     })),
   };
 
@@ -74,10 +70,55 @@ const English = () => {
     return (
       <div className="history-container centerrr">
         <header className="history-header">
-          <h1>
-            <span class="material-icons iconnn">g_translate</span>
-            مـادة الـلغة الانـجليزية
-          </h1>
+          <div className="contenttt">
+            <div className="content-container">
+              {/* الصورة على اليسار */}
+              <div className="image-container">
+                <img
+                  src={require("./../images/mrahmedgozy.png")}
+                  alt="صورة المادة"
+                  className="history-image"
+                  style={{ border: "2px solid #ccc" }} // إضافة الإطار هنا
+                />
+              </div>
+              {/* النص على اليمين */}
+              <div className="text-container">
+                <h1>مادة اللغة الانجليزية</h1>
+                <p>مـقدم الـمادة</p>
+                <p className="history-subtitle"> Mr- Ahmed Ghozy </p>
+                <div className="social-linkss">
+                  <a
+                    href="https://www.facebook.com/share/18tQGTuUgK/?mibextid=wwXIfr"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaFacebook />
+                  </a>
+                  <a
+                    href="https://www.instagram.com/aoghozy?igsh=MW5memZqMjd6NXV3OA=="
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaInstagram />
+                  </a>
+                  <a
+                    href="https://www.tiktok.com/@aoghozy?_r=1&_d=ea9clh1ahih945&sec_uid=MS4wLjABAAAAyPj4PpzeHkZ8_9lADwsubWWKanLxVRoK3HJR_1q6wBrOHB-t4-WuoCRIjdpe7029&share_author_id=6957505322089759749&sharer_language=en&source=h5_m&u_code=dib232gf07eeie&timestamp=1741566718&user_id=6957505322089759749&sec_user_id=MS4wLjABAAAAyPj4PpzeHkZ8_9lADwsubWWKanLxVRoK3HJR_1q6wBrOHB-t4-WuoCRIjdpe7029&utm_source=copy&utm_campaign=client_share&utm_medium=android&share_iid=7441054284672026376&share_link_id=36a45378-244d-4545-a12c-1426c0093f32&share_app_id=1233&ugbiz_name=ACCOUNT&ug_btm=b8727%2Cb0229&social_share_type=5&enable_checksum=1"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaTiktok />
+                  </a>
+                  <a
+                    href="https://wa.me/201015118313"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaWhatsapp />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
         </header>
         <p className="about-imag ">
           <img
@@ -159,7 +200,7 @@ const English = () => {
                 className="unit-item"
                 onClick={() =>
                   navigate("/courses", {
-                    state: { subject: "جغرافيا", unit: unit.id },
+                    state: { subject: "انجليزي", unit: unit.id },
                   })
                 }
               >
@@ -185,7 +226,7 @@ const English = () => {
                 onClick={() =>
                   navigate("/exams", {
                     state: {
-                      subject: "جغرافيا",
+                      subject: "انجليزي",
                       unit: unit.id,
                       type: "امتحان",
                     },
@@ -202,7 +243,7 @@ const English = () => {
       {/* قسم الواجبات */}
       <section className="expandable-section">
         <h2 onClick={() => toggleSection("assignments")}>
-          <FaClipboardList /> الواجبات
+          <FaClipboardList /> التدريبات
           {expandedSections.assignments ? <FaChevronUp /> : <FaChevronDown />}
         </h2>
         {expandedSections.assignments && (
@@ -214,7 +255,7 @@ const English = () => {
                 onClick={() =>
                   navigate("/exams", {
                     state: {
-                      subject: "جغرافيا",
+                      subject: "انجليزي",
                       unit: unit.id,
                       type: "تدريب",
                     },
@@ -243,7 +284,7 @@ const English = () => {
                 onClick={() =>
                   navigate("/pdf", {
                     state: {
-                      subject: "جغرافيا",
+                      subject: "انجليزي",
                       unit: unit.id,
                     },
                   })
