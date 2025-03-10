@@ -12,7 +12,7 @@ const register = async (req, res) => {
         .status(400)
         .json({ message: "المرحلة الدراسية مطلوبة اذا لم تكن مشرف" });
     }
-    if (subject.length > 0) {
+    if (subject.length === 0) {
       return res
         .status(400)
         .json({ message: "المادة الدراسية مطلوبة اذا لم تكن مشرف" });

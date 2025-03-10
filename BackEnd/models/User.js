@@ -1,5 +1,7 @@
 const e = require("express");
 const mongoose = require("mongoose");
+const { default: stages } = require("../utils/stages");
+const { default: subjects } = require("../utils/subjects");
 
 const userSchema = new mongoose.Schema(
   {
@@ -13,7 +15,7 @@ const userSchema = new mongoose.Schema(
     },
     stage: {
       type: String,
-      enum: ["ثالثة ثانوي", "ثانية ثانوي", "أولى ثانوي", "ثالثة اعدادي"], // Example values
+      enum: stages, // Example values
     },
     password: {
       type: String,
@@ -26,16 +28,7 @@ const userSchema = new mongoose.Schema(
     },
     subject: {
       type: String,
-      enum: [
-        "فرنسي",
-        "انجليزي",
-        "تاريخ",
-        "إحصاء",
-        "تفاضل",
-        "مثلثات",
-        "هندسة",
-        "جبر",
-      ],
+      enum: subjects,
     },
   },
   { timestamps: true }

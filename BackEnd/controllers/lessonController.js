@@ -1,4 +1,5 @@
 const Lesson = require("../models/Lesson");
+const subjects = require("../utils/subjects");
 
 const getAllLessons = async (req, res) => {
   try {
@@ -33,7 +34,8 @@ const getAllLessons = async (req, res) => {
 };
 
 const createLesson = async (req, res) => {
-  const { title, lesson_link, stage, description, notes, subject, unit } = req.body;
+  const { title, lesson_link, stage, description, notes, subject, unit } =
+    req.body;
   if (!title) {
     return res.status(400).json({ message: " العنوان مطلوب" });
   }
@@ -45,6 +47,9 @@ const createLesson = async (req, res) => {
   }
   if (!subject) {
     return res.status(400).json({ message: "المادة الدراسية مطلوبة" });
+  }
+  if (!subjects.includes(subject)) {
+    return res.status(400).json({ message: "المادة الدراسية غير صالحة" });
   }
   if (!unit) {
     return res.status(400).json({ message: "الوحدة مطلوبة" });
@@ -72,7 +77,8 @@ const createLesson = async (req, res) => {
 
 const updateLesson = async (req, res) => {
   const { id } = req.params;
-  const { title, lesson_link, stage, description, notes, subject, unit } = req.body;
+  const { title, lesson_link, stage, description, notes, subject, unit } =
+    req.body;
   if (!title) {
     return res.status(400).json({ message: "العنوان مطلوب" });
   }
@@ -85,6 +91,10 @@ const updateLesson = async (req, res) => {
 
   if (!subject) {
     return res.status(400).json({ message: "المادة الدراسية مطلوبة" });
+  }
+
+  if (!subjects.includes(subject)) {
+    return res.status(400).json({ message: "المادة الدراسية غير صالحة" });
   }
 
   if (!unit) {

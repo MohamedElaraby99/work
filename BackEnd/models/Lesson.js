@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { validate } = require("./User");
+const subjects = require("../utils/subjects");
 
 const lessonSchema = new mongoose.Schema(
   {
@@ -23,16 +23,7 @@ const lessonSchema = new mongoose.Schema(
     },
     subject: {
       type: String,
-      enum: [
-        "فرنسي",
-        "انجليزي",
-        "تاريخ",
-        "إحصاء",
-        "تفاضل",
-        "مثلثات",
-        "هندسة",
-        "جبر",
-      ],
+      enum: subjects,
       required: true,
     },
     unit: {

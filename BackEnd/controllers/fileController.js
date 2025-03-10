@@ -1,6 +1,8 @@
 const File = require("../models/File");
 const fs = require("fs");
 const path = require("path");
+const stages = require("../utils/stages");
+const subjects = require("../utils/subjects");
 
 const getFiles = async (req, res) => {
   try {
@@ -57,10 +59,10 @@ const uploadFile = async (req, res) => {
     if (!stage) {
       return res.status(400).json({ message: "المرحلة الدراسية مطلوبة" });
     }
-    if (!["ثالثة ثانوي", "ثانية ثانوي", "أولى ثانوي"].includes(stage)) {
+    if (!stages.includes(stage)) {
       return res.status(400).json({ message: "المرحلة الدراسية غير صالحة" });
     }
-    if (!["جغرافيا", "تاريخ"].includes(subject)) {
+    if (!subjects.includes(subject)) {
       return res.status(400).json({ message: "المادة الدراسية غير صالحة" });
     }
     if (!unit) {
@@ -107,11 +109,11 @@ const updateFile = async (req, res) => {
     if (!stage) {
       return res.status(400).json({ message: "المرحلة الدراسية مطلوبة" });
     }
-    if (!["ثالثة ثانوي", "ثانية ثانوي", "أولى ثانوي"].includes(stage)) {
+    if (!stages.includes(stage)) {
       return res.status(400).json({ message: "المرحلة الدراسية غير صالحة" });
     }
 
-    if (!["جغرافيا", "تاريخ"].includes(subject)) {
+    if (!subjects.includes(subject)) {
       return res.status(400).json({ message: "المادة الدراسية غير صالحة" });
     }
     if (!unit) {

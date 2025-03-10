@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-
+const subjects = require("../utils/subjects");
+const stages = require("../utils/stages");
 
 const fileMetadataSchema = new mongoose.Schema(
   {
@@ -10,7 +11,7 @@ const fileMetadataSchema = new mongoose.Schema(
     stage: {
       type: String,
       required: true,
-      enum: ["ثالثة ثانوي", "ثانية ثانوي", "أولى ثانوي"], // Example values
+      enum: stages, // Example values
     },
     file: {
       type: String,
@@ -18,9 +19,9 @@ const fileMetadataSchema = new mongoose.Schema(
     },
     subject: {
       type: String,
-      enum: ["جغرافيا", "تاريخ"],
+      enum: subjects,
       required: true,
-    }, 
+    },
     unit: {
       type: Number,
       required: true,
