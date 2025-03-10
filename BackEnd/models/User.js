@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
     subject: {
-      type: String,
+      type: Array,
       enum: subjects,
     },
   },
