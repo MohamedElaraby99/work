@@ -7,10 +7,21 @@ const AllPDFs = () => {
   const [pdfs, setPdfs] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [editingPdf, setEditingPdf] = useState(null);
-  const [editData, setEditData] = useState({ title: "", file: "", stage: "" , subject: "", unit: ""});
+  const [editData, setEditData] = useState({
+    title: "",
+    file: "",
+    stage: "",
+    subject: "",
+    unit: "",
+  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState("");
+  const [selectedSubject, setSelectedSubject] = useState("");
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+  };
 
   // Fetch files on component mount
   useEffect(() => {
@@ -74,7 +85,7 @@ const AllPDFs = () => {
 
   // Handle input changes during editing
   const handleEditChange = (e) => {
-    const { name, value  } = e.target;
+    const { name, value } = e.target;
     setEditData({
       ...editData,
       [name]: value,
@@ -113,7 +124,7 @@ const AllPDFs = () => {
       );
       setPdfs(updatedPdfs);
       setEditingPdf(null);
-      setEditData({ title: "", file: "", stage: "" , subject: "", unit: ""});
+      setEditData({ title: "", file: "", stage: "", subject: "", unit: "" });
       setMessage("تم تعديل البيانات بنجاح!");
 
       // Reload the page after successful save
@@ -171,12 +182,20 @@ const AllPDFs = () => {
     }
   };
 
-  // Filter files based on search term
-  const filteredPdfs = pdfs.filter(
-    (pdf) =>
+  // Filter files based on search term and selected subject
+  const filteredPdfs = pdfs.filter((pdf) => {
+    const matchesSearch =
       pdf.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      pdf.stage.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+      pdf.stage.toLowerCase().includes(searchTerm.toLowerCase());
+
+    const matchesSubject =
+      selectedSubject === "" ||
+      pdf.subject === selectedSubject ||
+      (selectedSubject === "رياضيات" &&
+        ["جبر", "هندسة", "تفاضل", "إحصاء"].includes(pdf.subject));
+
+    return matchesSearch && matchesSubject;
+  });
 
   if (loading) return <Loader />;
   if (error) return <p className="error">{error}</p>;
@@ -190,9 +209,20 @@ const AllPDFs = () => {
           type="text"
           placeholder="ابحث باسم الملف أو المرحلة الدراسية"
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={handleSearch}
           className="search-input"
         />
+        <select
+          value={selectedSubject}
+          onChange={(e) => setSelectedSubject(e.target.value)}
+          className="subject-filter"
+        >
+          <option value="">كل المواد</option>
+          <option value="تاريخ">تاريخ</option>
+          <option value="انجليزي">لغة انجليزية</option>
+          <option value="فرنسي">لغة فرنسية</option>
+          <option value="رياضيات">رياضيات</option>
+        </select>
       </div>
       <div className="pdfs-table">
         <table>
@@ -227,6 +257,10 @@ const AllPDFs = () => {
                         onChange={handleEditChange}
                         className="edit-select"
                       >
+                        <option value="disabled" disabled>
+                          اختر المرحلة الدراسية
+                        </option>
+                        <option value="ثالثة اعدادي">ثالثة اعدادي</option>
                         <option value="أولى ثانوي">أولى ثانوي</option>
                         <option value="ثانية ثانوي">ثاني ثانوي</option>
                         <option value="ثالثة ثانوي">ثالثة ثانوي</option>
@@ -239,9 +273,17 @@ const AllPDFs = () => {
                         value={editData.subject}
                         onChange={handleEditChange}
                       >
-                        <option value="disabled">اختر المادة </option>
-                        <option value="تاريخ">تاريخ </option>
-                        <option value="جغرافيا">جغرافيا </option>
+                        <option value="disabled" disabled>
+                          اختر المادة{" "}
+                        </option>
+                        <option value="تاريخ">تاريخ</option>
+                        <option value="انجليزي">لغة انجليزية</option>
+                        <option value="فرنسي">لغة فرنسية</option>
+                        <option value="جبر">جبر</option>
+                        <option value="هندسة">هندسة</option>
+                        <option value="مثلثات">مثلثات</option>
+                        <option value="تفاضل">تفاضل</option>
+                        <option value="إحصاء">إحصاء</option>
                       </select>
                     </td>
                     <td>
@@ -251,7 +293,9 @@ const AllPDFs = () => {
                         value={editData.unit}
                         onChange={handleEditChange}
                       >
-                        <option value="disabled">اختر الوحدة </option>
+                        <option value="disabled" disabled>
+                          اختر الوحدة
+                        </option>
                         <option value="الوحدة الاولى">الوحدة الاولى </option>
                         <option value="الوحدة الثانية">الوحدة الثانية </option>
                         <option value="الوحدة الثالثة">الوحدة الثالثة </option>
@@ -260,7 +304,6 @@ const AllPDFs = () => {
                         <option value="الوحدة السادسة">الوحدة السادسة </option>
                         <option value="الوحدة السابعة">الوحدة السابعة </option>
                         <option value="الوحدة الثامنة">الوحدة الثامنة </option>
-
                       </select>
                     </td>
                     <td>
@@ -289,8 +332,8 @@ const AllPDFs = () => {
                   <>
                     <td>{pdf.title}</td>
                     <td>{pdf.stage}</td>
-                      <td>{pdf.subject}</td>
-                      <td>{pdf.unit}</td>
+                    <td>{pdf.subject}</td>
+                    <td>{pdf.unit}</td>
                     <td>
                       <button
                         onClick={() =>

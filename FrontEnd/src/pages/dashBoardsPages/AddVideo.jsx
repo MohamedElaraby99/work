@@ -7,13 +7,13 @@ const AddVideo = () => {
     title: "",
     lesson_link: "",
     stage: "",
-    subjects: [], // تأكد من أنها مصفوفة فارغة في البداية
-    mathTopics: [], // تأكد من أنها مصفوفة فارغة في البداية
+    subject: "",
     description: "",
     notes: "",
     unit: "",
   });
 
+  const [mathTopic, setMathTopic] = useState(""); // New state for math topic
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -21,64 +21,42 @@ const AddVideo = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setVideoData({ ...videoData, [name]: value });
-    // تحديث القيمة المختارة في المواضيع
-    if (name === "subjects") {
-      if (e.target.checked) {
-        setVideoData({
-          ...videoData,
-          subjects: [...videoData.subjects, value],
-        });
-      } else {
-        setVideoData({
-          ...videoData,
-          subjects: videoData.subjects.filter((subject) => subject !== value),
-        });
-      }
-    }
-    // تحديث القيمة المختارة في مواضيع الرياضيات
-    if (name === "mathTopics") {
-      if (e.target.checked) {
-        setVideoData({
-          ...videoData,
-          mathTopics: [...videoData.mathTopics, value],
-        });
-      } else {
-        setVideoData({
-          ...videoData,
-          mathTopics: videoData.mathTopics.filter((topic) => topic !== value),
-        });
-      }
-    }
+  };
+
+  const handleMathTopicChange = (e) => {
+    setMathTopic(e.target.value);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { title, youtubeLink, stage, description, notes, subject, unit } =
+
+    const { title, lesson_link, stage, description, notes, subject, unit } =
       videoData;
 
-    // تحقق من أن الحقول ليست فارغة
+    // Validate that fields are not empty
     if (
       !title ||
-      !youtubeLink ||
+      !lesson_link ||
       !stage ||
       !description ||
       !notes ||
       !subject ||
-      !unit
+      !unit ||
+      (subject === "رياضيات" && !mathTopic) // Ensure math topic is selected if subject is math
     ) {
       setMessage("");
       setError("الرجاء ملء جميع الحقول.");
       return;
     }
 
-    // إعداد البيانات لإرسالها إلى API
+    // Prepare the data to send to the API
     const requestData = {
       title,
-      lesson_link: youtubeLink, // تحويل youtubeLink إلى lesson_link (الاسم المتوقع في API)
+      lesson_link,
       stage,
       description,
       notes,
-      subject,
+      subject: subject === "رياضيات" ? mathTopic : subject, // Use math topic if subject is math
       unit,
     };
 
@@ -87,13 +65,13 @@ const AddVideo = () => {
       setError("");
       setMessage("");
 
-      const accessToken = localStorage.getItem("accessToken"); // جلب التوكن من LocalStorage
+      const accessToken = localStorage.getItem("accessToken"); // Retrieve the token from localStorage
       await axios.post(
         `${process.env.REACT_APP_BASE_URL}/lessons`,
         requestData,
         {
           headers: {
-            Authorization: `Bearer ${accessToken}`, // تضمين التوكن في الرؤوس
+            Authorization: `Bearer ${accessToken}`,
           },
         }
       );
@@ -101,16 +79,17 @@ const AddVideo = () => {
       setMessage("تم إضافة الفيديو بنجاح!");
       setError("");
 
-      // إعادة تعيين النموذج
+      // Reset the form
       setVideoData({
         title: "",
-        youtubeLink: "",
+        lesson_link: "",
         stage: "",
+        subject: "",
         description: "",
         notes: "",
-        subject: "",
         unit: "",
       });
+      setMathTopic(""); // Reset math topic
     } catch (err) {
       setError("حدث خطأ أثناء إضافة الفيديو. الرجاء المحاولة مرة أخرى.");
       console.error("Error adding video:", err);
@@ -137,55 +116,50 @@ const AddVideo = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="youtubeLink">رابط الفيديو على يوتيوب:</label>
+          <label htmlFor="lesson_link">رابط الفيديو على يوتيوب:</label>
           <input
             type="text"
-            id="youtubeLink"
-            name="youtubeLink"
-            value={videoData.youtubeLink}
+            id="lesson_link"
+            name="lesson_link"
+            value={videoData.lesson_link}
             onChange={handleChange}
             placeholder="أدخل رابط يوتيوب"
           />
         </div>
 
         <div className="form-group">
-          <label htmlFor="subjects">اختر المادة:</label>
+          <label htmlFor="subject">اختر المادة:</label>
           <select
-            id="subjects"
-            name="subjects"
-            value={videoData.subjects}
-            onChange={(e) =>
-              setVideoData({ ...videoData, subjects: [e.target.value] })
-            }
+            id="subject"
+            name="subject"
+            value={videoData.subject}
+            onChange={handleChange}
           >
-            <option value="">اختر المادة</option>
+            <option value="" disabled>اختر المادة</option>
             <option value="تاريخ">تاريخ</option>
-            <option value="لغة انجليزية">لغة انجليزية</option>
-            <option value="لغة فرنسية">لغة فرنسية</option>
+            <option value="انجليزي">لغة انجليزية</option>
+            <option value="فرنسي">لغة فرنسية</option>
             <option value="رياضيات">رياضيات</option>
           </select>
         </div>
 
-        {videoData.subjects.includes("رياضيات") && (
+        {videoData.subject === "رياضيات" && (
           <div className="form-group">
-            <label htmlFor="mathTopics">مواد الرياضيات:</label>
+            <label htmlFor="mathTopic">اختر مادة الرياضيات:</label>
             <select
-              id="mathTopics"
-              name="mathTopics"
-              value={videoData.mathTopics}
-              onChange={(e) =>
-                setVideoData({
-                  ...videoData,
-                  mathTopics: [e.target.value],
-                })
-              }
+              id="mathTopic"
+              name="mathTopic"
+              value={mathTopic}
+              onChange={handleMathTopicChange}
             >
-              <option value="">اختر الموضوع</option>
-              <option value="الجبر">الجبر</option>
-              <option value="الهندسة">الهندسة</option>
-              <option value="حساب المثلثات">حساب المثلثات</option>
-              <option value="التفاضل">التفاضل</option>
-              <option value="الإحصاء">الإحصاء</option>
+              <option value="" disabled>
+                اختر الموضوع
+              </option>
+              <option value="جبر">جبر</option>
+              <option value="هندسة">هندسة</option>
+              <option value="مثلثات">مثلثات</option>
+              <option value="تفاضل">تفاضل</option>
+              <option value="إحصاء">إحصاء</option>
             </select>
           </div>
         )}
@@ -199,7 +173,7 @@ const AddVideo = () => {
             onChange={handleChange}
           >
             <option value="">اختر المرحلة الدراسية</option>
-            <option value="ثالث اعدادي ">ثالث اعدادي</option>
+            <option value="ثالثة اعدادي">ثالثة اعدادي</option>
             <option value="أولى ثانوي">أولى ثانوي</option>
             <option value="ثانية ثانوي">ثانية ثانوي</option>
             <option value="ثالثة ثانوي">ثالثة ثانوي</option>
@@ -207,14 +181,9 @@ const AddVideo = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="subject"> اختر الوحدة :</label>
-          <select
-            name="unit"
-            type="number"
-            value={videoData.unit}
-            onChange={handleChange}
-          >
-            <option value="disabled" disabled>اختر الوحدة</option>
+          <label htmlFor="unit">اختر الوحدة:</label>
+          <select name="unit" value={videoData.unit} onChange={handleChange}>
+            <option value="">اختر الوحدة</option>
             <option value="1">الوحدة الأولى</option>
             <option value="2">الوحدة الثانية</option>
             <option value="3">الوحدة الثالثة</option>
@@ -225,6 +194,7 @@ const AddVideo = () => {
             <option value="8">الوحدة الثامنة</option>
           </select>
         </div>
+
         <div className="form-group">
           <label htmlFor="description">وصف الفيديو:</label>
           <textarea
@@ -245,6 +215,7 @@ const AddVideo = () => {
             placeholder="أدخل ملاحظات الفيديو"
           />
         </div>
+
         <button type="submit" className="submit-button" disabled={loading}>
           {loading ? "جارٍ الإضافة..." : "إضافة فيديو"}
         </button>
