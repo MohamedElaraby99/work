@@ -91,6 +91,7 @@ const AllExams = () => {
           <option value="" disabled>
             اختر المرحلة الدراسية
           </option>
+          <option value="ثالثة اعدادي">ثالثة اعدادي</option>
           <option value="أولى ثانوي">أولى ثانوي</option>
           <option value="ثانية ثانوي">ثانية ثانوي</option>
           <option value="ثالثة ثانوي">ثالثة ثانوي</option>
@@ -116,7 +117,8 @@ const AllExams = () => {
                   <th>تاريخ الامتحان</th>
                   <th>وقت الامتحان</th>
                   <th>نوع الامتحان </th>
-                  <th>مادة الامتحان</th>
+                    <th>مادة الامتحان</th>
+                    <th>الوحدة</th>
                   <th>مدة الامتحان (دقائق)</th>
                   <th>حالة الامتحان</th>
                   <th>الإجراءات</th>
@@ -130,6 +132,7 @@ const AllExams = () => {
                     <td>{new Date(exam.date).toLocaleTimeString()}</td>
                     <td>{exam.exam}</td>
                     <td>{exam.subject}</td>
+                    <td>{exam.unit}</td>
                     <td>{exam.duration}</td>
                     <td>{exam.exam_status}</td>
                     <td className="actionss">
