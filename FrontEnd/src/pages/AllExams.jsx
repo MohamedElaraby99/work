@@ -10,6 +10,7 @@ const AllExams = () => {
   const [filteredExams, setFilteredExams] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedStage, setSelectedStage] = useState("أولى ثانوي");
+  const [selectedSubject, setSelectedSubject] = useState("");
   const [loading, setLoading] = useState(false);
   const [selectedExam, setSelectedExam] = useState(null);
 
@@ -38,11 +39,13 @@ const AllExams = () => {
   }, [selectedStage]);
 
   useEffect(() => {
-    const filtered = exams.filter((exam) =>
-      exam.title.toLowerCase().includes(searchTerm.toLowerCase())
+    const filtered = exams.filter(
+      (exam) =>
+        exam.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
+        (selectedSubject === "" || exam.subject === selectedSubject)
     );
     setFilteredExams(filtered);
-  }, [searchTerm, exams]);
+  }, [searchTerm, exams, selectedSubject]);
 
   useEffect(() => {
     setSelectedExam(null); // إغلاق جدول النتائج عند تغيير المرحلة
@@ -51,6 +54,8 @@ const AllExams = () => {
   const handleSearch = (e) => setSearchTerm(e.target.value);
 
   const handleStageChange = (e) => setSelectedStage(e.target.value);
+
+  const handleSubjectChange = (e) => setSelectedSubject(e.target.value);
 
   const handleViewSubmissions = (exam) => {
     setSelectedExam(exam); // تعيين الامتحان الحالي لعرض الـ submissions
@@ -96,6 +101,26 @@ const AllExams = () => {
           <option value="ثانية ثانوي">ثانية ثانوي</option>
           <option value="ثالثة ثانوي">ثالثة ثانوي</option>
         </select>
+        <select
+          name="subject"
+          value={selectedSubject}
+          onChange={handleSubjectChange}
+          className="subject-dropdown"
+        >
+          <option value="" disabled>
+            اختر المادة
+          </option>
+          <option value="فرنسي">لغة فرنسية</option>
+          <option value="انجليزي">لغة انجليزية</option>
+          <option value="تاريخ">تاريخ</option>
+          <optgroup label="رياضيات">
+            <option value="جبر">جبر</option>
+            <option value="هندسة">هندسة</option>
+            <option value="تفاضل">تفاضل</option>
+            <option value="مثلثات">مثلثات</option>
+            <option value="إحصاء">إحصاء</option>
+          </optgroup>
+        </select>
         <input
           type="text"
           placeholder="ابحث باسم الامتحان"
@@ -117,8 +142,7 @@ const AllExams = () => {
                   <th>تاريخ الامتحان</th>
                   <th>وقت الامتحان</th>
                   <th>نوع الامتحان </th>
-                    <th>مادة الامتحان</th>
-                    <th>الوحدة</th>
+                  <th>مادة الامتحان</th>
                   <th>مدة الامتحان (دقائق)</th>
                   <th>حالة الامتحان</th>
                   <th>الإجراءات</th>
@@ -132,7 +156,6 @@ const AllExams = () => {
                     <td>{new Date(exam.date).toLocaleTimeString()}</td>
                     <td>{exam.exam}</td>
                     <td>{exam.subject}</td>
-                    <td>{exam.unit}</td>
                     <td>{exam.duration}</td>
                     <td>{exam.exam_status}</td>
                     <td className="actionss">

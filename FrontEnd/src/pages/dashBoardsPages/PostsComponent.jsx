@@ -9,30 +9,50 @@ const CreatePostComponent = () => {
   const [title, setTitle] = useState("");
   const [details, setDetails] = useState("");
   const [selectedYears, setSelectedYears] = useState([]);
-  const [subject, setSubject] = useState("");
-  const [mathSubjects, setMathSubjects] = useState([]);
+  const [selectedSubjects, setSelectedSubjects] = useState([]);
+  const [isMathExpanded, setIsMathExpanded] = useState(false);
 
   // List of years
-  const years = ["الصف الأول", "الصف الثاني", "الصف الثالث", "ثالثة إعدادي"];
+  const years = ["ثالثة اعدادي", "اولى ثانوي", "ثانية ثانوي", "ثالثة ثانوي"];
 
-  // List of math subcategories
-  const mathSubjectsList = ["جبر", "هندسة", "حساب مثلثات", "تفاضل", "إحصاء"];
+  // List of subjects
+  const subjects = [
+    { label: "تاريخ", value: "تاريخ" },
+    { label: "لغة فرنسية", value: "فرنسي" },
+    { label: "لغة انجليزية", value: "انجليزي" },
+    {
+      label: "رياضيات",
+      options: [
+        { label: "جبر", value: "جبر" },
+        { label: "هندسة", value: "هندسة" },
+        { label: "تفاضل", value: "تفاضل" },
+        { label: "مثلثات", value: "مثلثات" },
+        { label: "إحصاء", value: "إحصاء" },
+      ],
+    },
+  ];
 
   // Toggle selected years
   const handleYearToggle = (year) => {
-    if (selectedYears.includes(year)) {
-      setSelectedYears(selectedYears.filter((y) => y !== year));
-    } else {
-      setSelectedYears([...selectedYears, year]);
-    }
+    setSelectedYears((prev) =>
+      prev.includes(year) ? prev.filter((y) => y !== year) : [...prev, year]
+    );
   };
 
-  // Handle math subjects toggle
-  const handleMathSubjectsToggle = (subject) => {
-    if (mathSubjects.includes(subject)) {
-      setMathSubjects(mathSubjects.filter((s) => s !== subject));
-    } else {
-      setMathSubjects([...mathSubjects, subject]);
+  // Toggle selected subjects
+  const handleSubjectToggle = (subject) => {
+    setSelectedSubjects((prev) =>
+      prev.includes(subject)
+        ? prev.filter((s) => s !== subject)
+        : [...prev, subject]
+    );
+  };
+
+  // Toggle math options visibility
+  const toggleMathOptions = () => {
+    setIsMathExpanded(!isMathExpanded);
+    if (!isMathExpanded) {
+      handleSubjectToggle("رياضيات");
     }
   };
 
@@ -40,7 +60,12 @@ const CreatePostComponent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!title || !details || !subject || selectedYears.length === 0) {
+    if (
+      !title ||
+      !details ||
+      selectedSubjects.length === 0 ||
+      selectedYears.length === 0
+    ) {
       toast.error("يرجى تعبئة جميع الحقول!");
       return;
     }
@@ -49,8 +74,7 @@ const CreatePostComponent = () => {
       title,
       description: details,
       stage: selectedYears,
-      subject,
-      mathSubjects: subject === "رياضيات" ? mathSubjects : [],
+      subject: selectedSubjects,
     };
 
     try {
@@ -70,8 +94,8 @@ const CreatePostComponent = () => {
       setTitle("");
       setDetails("");
       setSelectedYears([]);
-      setSubject("");
-      setMathSubjects([]);
+      setSelectedSubjects([]);
+      setIsMathExpanded(false);
 
       toast.success("تم إنشاء الإعلان بنجاح!");
     } catch (error) {
@@ -130,38 +154,51 @@ const CreatePostComponent = () => {
 
         <div className="form-group">
           <label htmlFor="subject">المادة الدراسية :</label>
-          <select
-            id="subject"
-            name="subject"
-            value={subject}
-            onChange={(e) => setSubject(e.target.value)}
-          >
-            <option value="" disabled>اختر المادة </option>
-            <option value="تاريخ">تاريخ</option>
-            <option value="رياضيات">رياضيات</option>
-            <option value="لغة فرنسية">لغة فرنسية</option>
-            <option value="لغة انجليزية">لغة انجليزية</option>
-          </select>
-        </div>
-
-        {subject === "رياضيات" && (
-          <div className="form-group">
-            <label>اختر مواد الرياضيات:</label>
-            <div className="math-checkboxes">
-              {mathSubjectsList.map((mathSubject) => (
-                <div key={mathSubject} className="checkbox-item">
+          <div className="years-checkboxes">
+            {subjects.map((subjectGroup) =>
+              subjectGroup.options ? (
+                <div key={subjectGroup.value} className="checkbox-item">
                   <input
                     type="checkbox"
-                    id={mathSubject}
-                    checked={mathSubjects.includes(mathSubject)}
-                    onChange={() => handleMathSubjectsToggle(mathSubject)}
+                    id={subjectGroup.value}
+                    checked={selectedSubjects.includes(subjectGroup.value)}
+                    onChange={toggleMathOptions}
                   />
-                  <label htmlFor={mathSubject}>{mathSubject}</label>
+                  <label htmlFor={subjectGroup.value}>
+                    {subjectGroup.label}
+                  </label>
+                  {isMathExpanded && (
+                    <div className="sub-options">
+                      {subjectGroup.options.map((option) => (
+                        <div key={option.value} className="checkbox-item">
+                          <input
+                            type="checkbox"
+                            id={option.value}
+                            checked={selectedSubjects.includes(option.value)}
+                            onChange={() => handleSubjectToggle(option.value)}
+                          />
+                          <label htmlFor={option.value}>{option.label}</label>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
-              ))}
-            </div>
+              ) : (
+                <div key={subjectGroup.value} className="checkbox-item">
+                  <input
+                    type="checkbox"
+                    id={subjectGroup.value}
+                    checked={selectedSubjects.includes(subjectGroup.value)}
+                    onChange={() => handleSubjectToggle(subjectGroup.value)}
+                  />
+                  <label htmlFor={subjectGroup.value}>
+                    {subjectGroup.label}
+                  </label>
+                </div>
+              )
+            )}
           </div>
-        )}
+        </div>
 
         <button type="submit" className="submit-btn">
           إنشاء الإعلان
