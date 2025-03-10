@@ -4,6 +4,8 @@ const Submission = require("../models/SubmitExam");
 const User = require("../models/User");
 const moment = require("moment-timezone");
 const e = require("express");
+const stages = require("../utils/stages");
+const subjects = require("../utils/subjects");
 
 const getExamsWithScores = async (req, res) => {
   try {
@@ -119,6 +121,9 @@ const addExam = async (req, res) => {
     if (!subject) {
       return res.status(400).json({ message: "Exam subject is required" });
     }
+    if (!subjects.includes(subject)) {
+      return res.status(400).json({ message: "المادة الدراسية غير صالحة" });
+    }
     if (!date) {
       return res.status(400).json({ message: "Exam date is required" });
     }
@@ -138,6 +143,9 @@ const addExam = async (req, res) => {
 
     if (!stage) {
       return res.status(400).json({ message: "Exam stage is required" });
+    }
+    if (!stages.includes(stage)) {
+      return res.status(400).json({ message: "المرحلة الدراسية غير صالحة" });
     }
     if (!duration || duration <= 0) {
       return res
@@ -224,6 +232,16 @@ const updateExam = async (req, res) => {
     }
     if (!subject) {
       return res.status(400).json({ message: "Exam subject is required" });
+    }
+    if (!subjects.includes(subject)) {
+      return res.status(400).json({ message: "المادة الدراسية غير صالحة" });
+    }
+
+    if (!stage) {
+      return res.status(400).json({ message: "Exam stage is required" });
+    }
+    if (!stages.includes(stage)) {
+      return res.status(400).json({ message: "المرحلة الدراسية غير صالحة" });
     }
     if (!date) {
       return res.status(400).json({ message: "Exam date is required" });
@@ -406,8 +424,7 @@ const getExamDataForAdmin = async (req, res) => {
 
     // Fetch all exams for the given stage
     const exams = await Exam.find({ stage }).lean();
-    console.log(exams);
-    console.log(exams.length);
+    
     if (exams.length === 0) {
       return res.status(200).json([]);
     }

@@ -1,5 +1,7 @@
 const Announcement = require("../models/Announcement");
 const mongoose = require("mongoose");
+const subjects = require("../utils/subjects");
+const stages = require("../utils/stages");
 
 const getAnnouncements = async (req, res) => {
   try {
@@ -9,34 +11,40 @@ const getAnnouncements = async (req, res) => {
 
     if (role === "admin") {
       announcements = await Announcement.find();
-    } else if (stage) {
-      // Map the incoming `stage` string to the corresponding object key
-      const stageKeyMap = {
-        "أولى ثانوي": "stage_one",
-        "ثانية ثانوي": "stage_two",
-        "ثالثة ثانوي": "stage_three",
-      };
-
-      const stageKey = stageKeyMap[stage]; // Get the corresponding key
-
-      if (!stageKey) {
-        return res.status(400).json({ message: "المرحلة غير معروفة" });
-      }
-
-      // Filter announcements where the specific stage key is true and subject matches
+    } else if (role !== "admin") {
       announcements = await Announcement.find({
-        [`stage.${stageKey}`]: true, // Dynamic query for nested field
-        $or: [
-          { subject: subject },
-          { subject: "تاريخ وجغرافيا" },
-          { subject: subject === "تاريخ" ? "تاريخ" : "جغرافيا" },
-        ],
+        stage: { $in: [stage] },
+        subject: { $in: subject },
       });
-    } else {
+    }
+    // } else if (stage) {
+    //   // Map the incoming `stage` string to the corresponding object key
+    //   const stageKeyMap = {
+    //     "أولى ثانوي": "stage_one",
+    //     "ثانية ثانوي": "stage_two",
+    //     "ثالثة ثانوي": "stage_three",
+    //   };
+
+    //   const stageKey = stageKeyMap[stage]; // Get the corresponding key
+
+    //   if (!stageKey) {
+    //     return res.status(400).json({ message: "المرحلة غير معروفة" });
+    //   }
+
+    //   // Filter announcements where the specific stage key is true and subject matches
+    //   announcements = await Announcement.find({
+    //     [`stage.${stageKey}`]: true, // Dynamic query for nested field
+    //     $or: [
+    //       { subject: subject },
+    //       { subject: "تاريخ وجغرافيا" },
+    //       { subject: subject === "تاريخ" ? "تاريخ" : "جغرافيا" },
+    //     ],
+    //   });
+    // }
+    else {
       // If the user has no stage (and is not admin), return an error
       return res.status(403).json({ message: "Access denied" });
     }
-
     return res.status(200).json(announcements);
   } catch (error) {
     console.error("Error retrieving announcements:", error);
@@ -63,28 +71,45 @@ const createAnnouncement = async (req, res) => {
       return res.status(400).json({ message: "المادة الدراسية مطلوبة" });
     }
 
-    if (!["تاريخ وجغرافيا", "جغرافيا", "تاريخ"].includes(subject)) {
+    const isSubjectValid = subject.every((sub) => {
+      return subjects.includes(sub);
+    });
+
+    if (!isSubjectValid) {
       return res.status(400).json({ message: "المادة الدراسية غير صالحة" });
     }
 
+    // // Validate `stage`
+    // const allowedKeys = ["stage_one", "stage_two", "stage_three"];
+    // if (!stage || typeof stage !== "object") {
+    //   return res
+    //     .status(400)
+    //     .json({ message: "المرحلة الدراسية مطلوبة ويجب أن تكون كائنًا" });
+    // }
+
+    // // Ensure all allowed keys exist and are Booleans
+    // for (const key of allowedKeys) {
+    //   if (!stage.hasOwnProperty(key)) {
+    //     return res.status(400).json({ message: ` مطلوبة ${key} قيمة ` });
+    //   }
+    //   if (typeof stage[key] !== "boolean") {
+    //     return res
+    //       .status(400)
+    //       .json({ message: `يجب أن تكون قيمة ${key} بنعم او لا` });
+    //   }
+    // }
+
     // Validate `stage`
-    const allowedKeys = ["stage_one", "stage_two", "stage_three"];
-    if (!stage || typeof stage !== "object") {
-      return res
-        .status(400)
-        .json({ message: "المرحلة الدراسية مطلوبة ويجب أن تكون كائنًا" });
+    if (!stage) {
+      return res.status(400).json({ message: "المرحلة الدراسية مطلوبة" });
     }
 
-    // Ensure all allowed keys exist and are Booleans
-    for (const key of allowedKeys) {
-      if (!stage.hasOwnProperty(key)) {
-        return res.status(400).json({ message: ` مطلوبة ${key} قيمة ` });
-      }
-      if (typeof stage[key] !== "boolean") {
-        return res
-          .status(400)
-          .json({ message: `يجب أن تكون قيمة ${key} بنعم او لا` });
-      }
+    const isStageValid = stage.every((sub) => {
+      return stages.includes(sub);
+    });
+
+    if (!isStageValid) {
+      return res.status(400).json({ message: "المرحلة الدراسية غير صالحة" });
     }
 
     // Create the announcement
@@ -122,34 +147,60 @@ const updateAnnouncement = async (req, res) => {
       return res.status(400).json({ message: "الوصف مطلوب" });
     }
 
+    // // Validate `subject`
+    // if (!subject) {
+    //   return res.status(400).json({ message: "المادة الدراسية مطلوبة" });
+    // }
+
+    // if (!["تاريخ وجغرافيا", "جغرافيا", "تاريخ"].includes(subject)) {
+    //   return res.status(400).json({ message: "المادة الدراسية غير صالحة" });
+    // }
+
+    // // Validate `stage`
+    // const allowedKeys = ["stage_one", "stage_two", "stage_three"];
+    // if (!stage || typeof stage !== "object") {
+    //   return res
+    //     .status(400)
+    //     .json({ message: "المرحلة الدراسية مطلوبة ويجب أن تكون كائنًا" });
+    // }
+
+    // for (const key of allowedKeys) {
+    //   if (!stage.hasOwnProperty(key)) {
+    //     return res
+    //       .status(400)
+    //       .json({ message: `المرحلة ${key} مطلوبة في الكائن` });
+    //   }
+    //   if (typeof stage[key] !== "boolean") {
+    //     return res
+    //       .status(400)
+    //       .json({ message: `المرحلة ${key} يجب أن تكون قيمة منطقية` });
+    //   }
+    // }
+
     // Validate `subject`
     if (!subject) {
       return res.status(400).json({ message: "المادة الدراسية مطلوبة" });
     }
 
-    if (!["تاريخ وجغرافيا", "جغرافيا", "تاريخ"].includes(subject)) {
+    const isSubjectValid = subject.every((sub) => {
+      return subjects.includes(sub);
+    });
+
+    if (!isSubjectValid) {
       return res.status(400).json({ message: "المادة الدراسية غير صالحة" });
     }
 
     // Validate `stage`
-    const allowedKeys = ["stage_one", "stage_two", "stage_three"];
-    if (!stage || typeof stage !== "object") {
-      return res
-        .status(400)
-        .json({ message: "المرحلة الدراسية مطلوبة ويجب أن تكون كائنًا" });
+    if (!stage) {
+      return res.status(400).json({ message: "المرحلة الدراسية مطلوبة" });
     }
 
-    for (const key of allowedKeys) {
-      if (!stage.hasOwnProperty(key)) {
-        return res
-          .status(400)
-          .json({ message: `المرحلة ${key} مطلوبة في الكائن` });
-      }
-      if (typeof stage[key] !== "boolean") {
-        return res
-          .status(400)
-          .json({ message: `المرحلة ${key} يجب أن تكون قيمة منطقية` });
-      }
+    const isStageValid = stage.every((sub) => {
+      return stages.includes(sub);
+    });
+
+    if (!isStageValid) {
+      return res.status(400).json({ message: "المرحلة الدراسية غير صالحة" });
     }
 
     // Find and update the announcement

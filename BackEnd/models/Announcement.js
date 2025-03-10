@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const subjects = require("../utils/subjects");
+const stages = require("../utils/stages");
 
 const announcementSchema = new mongoose.Schema(
   {
@@ -10,26 +12,31 @@ const announcementSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    // stage: {
+    //   type: new mongoose.Schema({
+    //     stage_one: {
+    //       type: Boolean,
+    //       required: true,
+    //     },
+    //     stage_two: {
+    //       type: Boolean,
+    //       required: true,
+    //     },
+    //     stage_three: {
+    //       type: Boolean,
+    //       required: true,
+    //     },
+    //   }),
+    //   required: true,
+    // },
     stage: {
-      type: new mongoose.Schema({
-        stage_one: {
-          type: Boolean,
-          required: true,
-        },
-        stage_two: {
-          type: Boolean,
-          required: true,
-        },
-        stage_three: {
-          type: Boolean,
-          required: true,
-        },
-      }),
+      type: [String],
+      enum: stages,
       required: true,
     },
     subject: {
-      type: String,
-      enum: ["تاريخ وجغرافيا", "جغرافيا", "تاريخ"],
+      type: [String],
+      enum: subjects,
       required: true,
     },
   },

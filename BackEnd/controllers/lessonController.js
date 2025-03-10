@@ -1,4 +1,5 @@
 const Lesson = require("../models/Lesson");
+const stages = require("../utils/stages");
 const subjects = require("../utils/subjects");
 
 const getAllLessons = async (req, res) => {
@@ -45,6 +46,9 @@ const createLesson = async (req, res) => {
   if (!stage) {
     return res.status(400).json({ message: "المرحلة الدراسية مطلوبة" });
   }
+  if (!stages.includes(stage)) {
+    return res.status(400).json({ message: "المادة الدراسية غير صالحة" });
+  }
   if (!subject) {
     return res.status(400).json({ message: "المادة الدراسية مطلوبة" });
   }
@@ -87,6 +91,9 @@ const updateLesson = async (req, res) => {
   }
   if (!stage) {
     return res.status(400).json({ message: "المرحلة الدراسية مطلوبة" });
+  }
+  if (!stages.includes(stage)) {
+    return res.status(400).json({ message: "المادة الدراسية غير صالحة" });
   }
 
   if (!subject) {

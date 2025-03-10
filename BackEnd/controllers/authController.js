@@ -1,21 +1,30 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jsonWebToken = require("jsonwebtoken");
+const subjects = require("../utils/subjects");
+const stages = require("../utils/stages");
 const register = async (req, res) => {
   const { name, username, password, role, stage, subject } = req.body;
   if (!name || !username || !password || !role) {
     return res.status(400).json({ message: "كل الحقول مطلوبة" });
   }
+
   if (role !== "admin") {
     if (!stage) {
       return res
         .status(400)
         .json({ message: "المرحلة الدراسية مطلوبة اذا لم تكن مشرف" });
     }
+    if (!stages.includes(stage)) {
+      return res.status(400).json({ message: "المرحلة الدراسية غير صالحة" });
+    }
     if (subject.length === 0) {
       return res
         .status(400)
         .json({ message: "المادة الدراسية مطلوبة اذا لم تكن مشرف" });
+    }
+    if (!subjects.includes(subject)) {
+      return res.status(400).json({ message: "المادة الدراسية غير صالحة" });
     }
   }
 

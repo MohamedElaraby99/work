@@ -1,5 +1,7 @@
 const e = require("express");
 const mongoose = require("mongoose");
+const subjects = require("../utils/subjects");
+const stages = require("../utils/stages");
 
 const questionSchema = new mongoose.Schema({
   question: { type: String, required: true },
@@ -16,7 +18,7 @@ const examSchema = new mongoose.Schema(
     date: { type: Date, required: true },
     duration: { type: Number, required: true },
     questions: [questionSchema],
-    stage: { type: String, required: true },
+    stage: { type: String, enum: stages, required: true },
     type: {
       type: String,
       default: "امتحان",
@@ -24,7 +26,7 @@ const examSchema = new mongoose.Schema(
     },
     subject: {
       type: String,
-      enum: ["جغرافيا", "تاريخ"],
+      enum: subjects,
       required: true,
     },
     unit: {
