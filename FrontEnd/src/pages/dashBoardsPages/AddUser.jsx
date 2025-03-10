@@ -175,7 +175,7 @@ const AddUser = () => {
                       <input
                         type="checkbox"
                         name="subject"
-                        value="فرنساوي"
+                        value="فرنسي"
                         checked={user.subject.includes("فرنساوي")}
                         onChange={handleChange}
                       />

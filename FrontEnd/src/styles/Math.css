@@ -7,7 +7,6 @@
 
 .history-header {
   text-align: center;
-  margin-bottom: 40px;
   color: #ffffff;
 }
 
@@ -45,10 +44,12 @@
   align-items: center;
   text-align: center;
   gap: 20px; /* المسافة بين النص والصورة */
+  width: 100%;
+  
 }
 
 .image-container {
-  flex: 0 0 180px; /* عرض ثابت للصورة */
+  flex: 0 0 230px; /* عرض ثابت للصورة */
   border-radius: 8px;
   overflow: hidden;
 }
@@ -58,9 +59,27 @@
 }
 
 .text-container {
-  text-align: right; /* النص على اليمين */
-  flex: 1; /* النص يمتد على كامل العرض */
+  text-align: right;
+  /* flex: 1; */
   color: #ffffff;
+  padding-right: 20px;
+}
+
+.contenttt {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  align-items: center;
+  width: 500px;
+}
+
+.contentt {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-items: center;
 }
 
 .social-linkss a {

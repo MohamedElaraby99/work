@@ -8,12 +8,7 @@ import {
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "./../styles/Math.css";
-import {
-  FaFacebook,
-  FaInstagram,
-  FaTiktok,
-  FaWhatsapp,
-} from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaTiktok, FaWhatsapp } from "react-icons/fa";
 
 const English = () => {
   const navigate = useNavigate();
@@ -99,53 +94,52 @@ const English = () => {
   return (
     <div className="history-container">
       <header className="history-header">
-        <div className="content-container">
-          {/* الصورة على اليسار */}
-          <div className="image-container">
-            <img
-              src={require("./../images/mrahmedgozy.png")}
-              alt="صورة المادة"
-              className="history-image"
-              style={{ border: "2px solid #ccc" }} // إضافة الإطار هنا
-            />
-          </div>
-          {/* النص على اليمين */}
-          <div className="text-container">
-            <h1>
-              <span class="material-icons iconnn">g_translate</span>
-              مادة اللغة الانجليزية
-            </h1>
-            <p>مـقدم الـمادة</p>
-            <p className="history-subtitle"> Mr- Ahmed Ghozy </p>
-            <div className="social-linkss">
-              <a
-                href="https://www.facebook.com/share/1B8FQwvbrx/?mibextid=wwXIfr"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FaFacebook />
-              </a>
-              <a
-                href="https://www.instagram.com/ahmed_elsaiidd?igsh=MXdkenVsdDdiZThmcg%3D%3D&utm_source=qr"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FaInstagram />
-              </a>
-              <a
-                href="https://www.tiktok.com/@ahmedelsaid5?_t=ZS-8uXqjqzaElA&_r=1"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FaTiktok />
-              </a>
-              <a
-                href="https://wa.me/201015118313"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FaWhatsapp />
-              </a>
+        <div className="contenttt">
+          <div className="content-container">
+            {/* الصورة على اليسار */}
+            <div className="image-container">
+              <img
+                src={require("./../images/mrahmedgozy.png")}
+                alt="صورة المادة"
+                className="history-image"
+                style={{ border: "2px solid #ccc" }} // إضافة الإطار هنا
+              />
+            </div>
+            {/* النص على اليمين */}
+            <div className="text-container">
+              <h1>مادة اللغة الانجليزية</h1>
+              <p>مـقدم الـمادة</p>
+              <p className="history-subtitle"> Mr- Ahmed Ghozy </p>
+              <div className="social-linkss">
+                <a
+                  href="https://www.facebook.com/share/18tQGTuUgK/?mibextid=wwXIfr"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FaFacebook />
+                </a>
+                <a
+                  href="https://www.instagram.com/aoghozy?igsh=MW5memZqMjd6NXV3OA=="
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FaInstagram />
+                </a>
+                <a
+                  href="https://www.tiktok.com/@aoghozy?_r=1&_d=ea9clh1ahih945&sec_uid=MS4wLjABAAAAyPj4PpzeHkZ8_9lADwsubWWKanLxVRoK3HJR_1q6wBrOHB-t4-WuoCRIjdpe7029&share_author_id=6957505322089759749&sharer_language=en&source=h5_m&u_code=dib232gf07eeie&timestamp=1741566718&user_id=6957505322089759749&sec_user_id=MS4wLjABAAAAyPj4PpzeHkZ8_9lADwsubWWKanLxVRoK3HJR_1q6wBrOHB-t4-WuoCRIjdpe7029&utm_source=copy&utm_campaign=client_share&utm_medium=android&share_iid=7441054284672026376&share_link_id=36a45378-244d-4545-a12c-1426c0093f32&share_app_id=1233&ugbiz_name=ACCOUNT&ug_btm=b8727%2Cb0229&social_share_type=5&enable_checksum=1"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FaTiktok />
+                </a>
+                <a
+                  href="https://wa.me/201015118313"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FaWhatsapp />
+                </a>
+              </div>
             </div>
           </div>
         </div>

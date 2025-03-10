@@ -9,15 +9,15 @@ const AllUsers = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [editingUser, setEditingUser] = useState(null);
+  const [selectedSubject, setSelectedSubject] = useState("");
   const [editData, setEditData] = useState({
     name: "",
     username: "",
     stage: "",
     password: "",
     role: "",
-    subject: "تاريخ وجغرافيا",
+    subject: "",
   });
-
   const [selectedTable, setSelectedTable] = useState("students");
   const [selectedStage, setSelectedStage] = useState("");
 
@@ -38,7 +38,6 @@ const AllUsers = () => {
         setLoading(false);
       }
     };
-
     fetchUsers();
   }, []);
 
@@ -62,7 +61,6 @@ const AllUsers = () => {
       alert("يرجى ملء جميع الحقول قبل الحفظ!");
       return;
     }
-
     try {
       const accessToken = localStorage.getItem("accessToken");
       const response = await axios.put(
@@ -76,7 +74,6 @@ const AllUsers = () => {
         )
       );
       setEditingUser(null);
-      // alert("تم تحديث المستخدم بنجاح!");
     } catch (err) {
       alert("حدث خطأ أثناء تحديث المستخدم.");
     }
@@ -100,11 +97,26 @@ const AllUsers = () => {
     user.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const matchesSubject = (user) => {
+    if (selectedSubject === "") return true;
+
+    // إذا تم اختيار "رياضيات" بشكل عام
+    if (selectedSubject === "رياضيات") {
+      return ["جبر", "هندسة", "مثلثات", "تفاضل", "إحصاء"].includes(
+        user.subject
+      );
+    }
+
+    // التصفية العادية للمواد الأخرى
+    return user.subject === selectedSubject;
+  };
   const students = filteredUsers.filter(
     (user) =>
       user.role === "student" &&
-      (selectedStage ? user.stage === selectedStage : true)
+      (selectedStage ? user.stage === selectedStage : true) &&
+      matchesSubject(user)
   );
+
   const admins = filteredUsers.filter((user) => user.role === "admin");
 
   if (loading) return <Loader />;
@@ -130,19 +142,30 @@ const AllUsers = () => {
           <option value="admins">جدول المشرفين</option>
         </select>
         {selectedTable === "students" && (
-          <select
-            value={selectedStage}
-            onChange={(e) => setSelectedStage(e.target.value)}
-            className="stage-selector"
-          >
-            <option value="">كل المراحل</option>
-            <option value="أولى ثانوي">أولى ثانوي</option>
-            <option value="ثانية ثانوي">ثانية ثانوي</option>
-            <option value="ثالثة ثانوي">ثالثة ثانوي</option>
-          </select>
+          <>
+            <select
+              value={selectedSubject}
+              onChange={(e) => setSelectedSubject(e.target.value)}
+              className="subject-selector"
+            >
+              <option value="">كل المواد</option>
+              <option value="تاريخ">تاريخ</option>
+              <option value="انجليزي">لغة إنجليزية</option>
+              <option value="فرنسي">لغة فرنسية</option>
+
+              {/* مجموعة الرياضيات مع المواد الفرعية */}
+              <optgroup label="رياضيات">
+                <option value="رياضيات">الكل</option>
+                <option value="جبر">جبر</option>
+                <option value="هندسة">هندسة</option>
+                <option value="مثلثات">مثلثات</option>
+                <option value="تفاضل">تفاضل</option>
+                <option value="إحصاء">إحصاء</option>
+              </optgroup>
+            </select>
+          </>
         )}
       </div>
-
       {selectedTable === "students" && (
         <div>
           <h3>جدول الطلاب</h3>
@@ -184,6 +207,7 @@ const AllUsers = () => {
                           value={editData.stage}
                           onChange={handleEditChange}
                         >
+                          <option value="ثالثة اعدادي">ثالثة اعدادي</option>
                           <option value="أولى ثانوي">أولى ثانوي</option>
                           <option value="ثانية ثانوي">ثانية ثانوي</option>
                           <option value="ثالثة ثانوي">ثالثة ثانوي</option>
@@ -196,8 +220,13 @@ const AllUsers = () => {
                           onChange={handleEditChange}
                         >
                           <option value="تاريخ">تاريخ</option>
-                          <option value="جغرافيا">جغرافيا</option>
-                          <option value="تاريخ وجغرافيا">تاريخ وجغرافيا</option>
+                          <option value="انجليزي">لغة انجليزية</option>
+                          <option value="فرنسي">لغة فرنسية</option>
+                          <option value="جبر">جبر</option>
+                          <option value="هندسة">هندسة</option>
+                          <option value="مثلثات">مثلثات</option>
+                          <option value="تفاضل">تفاضل</option>
+                          <option value="إحصاء">إحصاء</option>
                         </select>
                       </td>
                       <td>
@@ -252,7 +281,6 @@ const AllUsers = () => {
           </table>
         </div>
       )}
-
       {selectedTable === "admins" && (
         <div>
           <h3>جدول المشرفين</h3>

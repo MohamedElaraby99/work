@@ -6,6 +6,8 @@ import Loader from "./Loader";
 const AllVideos = () => {
   const [videos, setVideos] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedSubject, setSelectedSubject] = useState(""); // State for subject filter
+  const [selectedMathTopic, setSelectedMathTopic] = useState(""); // State for math subtopic filter
   const [editingVideo, setEditingVideo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -42,6 +44,15 @@ const AllVideos = () => {
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
+  };
+
+  const handleSubjectChange = (e) => {
+    setSelectedSubject(e.target.value);
+    setSelectedMathTopic(""); // Reset math subtopic when subject changes
+  };
+
+  const handleMathTopicChange = (e) => {
+    setSelectedMathTopic(e.target.value);
   };
 
   const handleDelete = async (id) => {
@@ -100,7 +111,13 @@ const AllVideos = () => {
 
   const filteredVideos = videos.filter(
     (video) =>
-      video.title.includes(searchTerm) || video.stage.includes(searchTerm)
+      (video.title.includes(searchTerm) || video.stage.includes(searchTerm)) &&
+      (selectedSubject === "" ||
+        selectedSubject === "رياضيات" ||
+        video.subject === selectedSubject) &&
+      (selectedSubject !== "رياضيات" ||
+        selectedMathTopic === "" ||
+        video.subject === selectedMathTopic)
   );
 
   if (loading) {
@@ -122,6 +139,31 @@ const AllVideos = () => {
           onChange={handleSearch}
           className="search-input"
         />
+        <select
+          value={selectedSubject}
+          onChange={handleSubjectChange}
+          className="subject-filter"
+        >
+          <option value="">كل المواد</option>
+          <option value="تاريخ">تاريخ</option>
+          <option value="انجليزي">لغة انجليزية</option>
+          <option value="فرنسي">لغة فرنسية</option>
+          <option value="رياضيات">رياضيات</option>
+        </select>
+        {selectedSubject === "رياضيات" && (
+          <select
+            value={selectedMathTopic}
+            onChange={handleMathTopicChange}
+            className="subject-filter"
+          >
+            <option value="">كل مواد الرياضيات</option>
+            <option value="جبر">جبر</option>
+            <option value="هندسة">هندسة</option>
+            <option value="مثلثات">مثلثات</option>
+            <option value="تفاضل">تفاضل</option>
+            <option value="إحصاء">إحصاء</option>
+          </select>
+        )}
       </div>
       <div className="videos-table">
         <table>
@@ -131,6 +173,7 @@ const AllVideos = () => {
               <th>الرابط</th>
               <th>المرحلة الدراسية</th>
               <th>المادة الدراسية</th>
+              <th>الوحدة</th>
               <th>الوصف</th>
               <th>الملاحظات</th>
               <th>الإجراءات</th>
@@ -180,6 +223,7 @@ const AllVideos = () => {
                       onChange={handleEditChange}
                       className="edit-input"
                     >
+                      <option value="ثالثة اعدادي ">ثالثة اعدادي </option>
                       <option value="اولي ثانوي">اولي ثانوي</option>
                       <option value="ثاني ثانوي">ثاني ثانوي</option>
                       <option value="ثالث ثانوي">ثالث ثانوي</option>
@@ -196,12 +240,38 @@ const AllVideos = () => {
                       onChange={handleEditChange}
                     >
                       <option value="تاريخ">تاريخ</option>
-                      <option value="جغرافيا">جغرافيا</option>
-                      <option value="تاريخ وجغرافيا">تاريخ وجغرافيا</option>
+                      <option value="انجليزي">لغة انجليزية</option>
+                      <option value="فرنسي">لغة فرنسية</option>
+                      <option value="جبر">جبر</option>
+                      <option value="هندسة">هندسة</option>
+                      <option value="مثلثات">مثلثات</option>
+                      <option value="تفاضل">تفاضل</option>
+                      <option value="إحصاء">إحصاء</option>
                     </select>
                   </td>
                 ) : (
                   <td>{video.subject}</td>
+                )}
+
+                {editingVideo && editingVideo._id === video._id ? (
+                  <td>
+                    <select
+                      name="unit"
+                      value={editingVideo.unit}
+                      onChange={handleEditChange}
+                    >
+                      <option value="1">الوحدة الأولى</option>
+                      <option value="2">الوحدة الثانية</option>
+                      <option value="3 "> الوحدة الثالثة</option>
+                      <option value="4">الوحدة الرابعة</option>
+                      <option value="5">الوحدة الخامسة</option>
+                      <option value="6">الوحدة السادسة</option>
+                      <option value="7">الوحدة السابعة</option>
+                      <option value="8">الوحدة الثامنة</option>
+                    </select>
+                  </td>
+                ) : (
+                  <td>{video.unit}</td>
                 )}
 
                 <td>
@@ -242,7 +312,7 @@ const AllVideos = () => {
                       </button>
                     </>
                   ) : (
-                    <div className="actionss">
+                    <div className="actions">
                       <button
                         onClick={() => handleEdit(video)}
                         className="edit-button"
@@ -251,7 +321,7 @@ const AllVideos = () => {
                       </button>
                       <button
                         onClick={() => handleDelete(video._id)}
-                        className="deletee-button"
+                        className="delete-button"
                       >
                         حذف
                       </button>

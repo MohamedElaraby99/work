@@ -9,8 +9,8 @@ const AddPdf = () => {
     name: "",
     file: null,
     stage: "",
-    subjects: [], // تأكد من أنها مصفوفة فارغة في البداية
-    mathTopics: [], // تأكد من أنها مصفوفة فارغة في البداية
+    subject: "", // Keep subject as a string
+    mathTopic: "", // Use a separate state for math topic
     unit: "",
   });
 
@@ -19,30 +19,6 @@ const AddPdf = () => {
     setPdfData({
       ...pdfData,
       [name]: value,
-    });
-  };
-
-  const handleCheckboxChange = (e) => {
-    const { name, value, checked } = e.target;
-    setPdfData((prevData) => {
-      if (name === "subjects") {
-        return {
-          ...prevData,
-          subjects: checked
-            ? [...prevData.subjects, value]
-            : prevData.subjects.filter((subject) => subject !== value),
-          mathTopics:
-            value === "رياضيات" && !checked ? [] : prevData.mathTopics,
-        };
-      } else if (name === "mathTopics") {
-        return {
-          ...prevData,
-          mathTopics: checked
-            ? [...prevData.mathTopics, value]
-            : prevData.mathTopics.filter((topic) => topic !== value),
-        };
-      }
-      return prevData;
     });
   };
 
@@ -73,19 +49,22 @@ const AddPdf = () => {
       !pdfData.name ||
       !pdfData.file ||
       !pdfData.stage ||
-      pdfData.subjects.length === 0 ||
+      !pdfData.subject ||
       !pdfData.unit
     ) {
       toast.error("الرجاء ملء جميع الحقول");
       return;
     }
 
+    // Determine the final subject value
+    const finalSubject =
+      pdfData.subject === "رياضيات" ? pdfData.mathTopic : pdfData.subject;
+
     const formData = new FormData();
     formData.append("title", pdfData.name);
     formData.append("file", pdfData.file);
     formData.append("stage", pdfData.stage);
-    formData.append("subjects", JSON.stringify(pdfData.subjects));
-    formData.append("mathTopics", JSON.stringify(pdfData.mathTopics));
+    formData.append("subject", finalSubject);
     formData.append("unit", pdfData.unit);
 
     const accessToken = localStorage.getItem("accessToken");
@@ -107,8 +86,8 @@ const AddPdf = () => {
         name: "",
         file: null,
         stage: "",
-        subjects: [],
-        mathTopics: [],
+        subject: "",
+        mathTopic: "",
         unit: "",
       });
     } catch (error) {
@@ -174,6 +153,7 @@ const AddPdf = () => {
               <option value="" disabled>
                 اختر المرحلة الدراسية
               </option>
+              <option value="ثالثة اعدادي">ثالثة اعدادي</option>
               <option value="أولى ثانوي">أولى ثانوي</option>
               <option value="ثانية ثانوي">ثانية ثانوي</option>
               <option value="ثالثة ثانوي">ثالثة ثانوي</option>
@@ -181,42 +161,40 @@ const AddPdf = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="subjects">اختر المادة الدراسية:</label>
+            <label htmlFor="subject">اختر المادة الدراسية:</label>
             <select
-              id="subjects"
-              name="subjects"
-              value={pdfData.subjects}
-              onChange={(e) =>
-                setPdfData({ ...pdfData, subjects: [e.target.value] })
-              }
+              id="subject"
+              name="subject"
+              value={pdfData.subject}
+              onChange={handleChange}
             >
-              <option value="">اختر المادة</option>
+              <option value="" disabled>
+                اختر المادة
+              </option>
               <option value="تاريخ">تاريخ</option>
-              <option value="جغرافيا">جغرافيا</option>
-              <option value="قرنساوي">اللغة الفرنسية</option>
+              <option value="فرنسي">اللغة الفرنسية</option>
+              <option value="انجليزي">لغة انجليزية</option>
               <option value="رياضيات">رياضيات</option>
             </select>
           </div>
-          {pdfData.subjects.includes("رياضيات") && (
+
+          {pdfData.subject === "رياضيات" && (
             <div className="form-group">
-              <label htmlFor="mathTopics">اختر مادة الرياضيات:</label>
+              <label htmlFor="mathTopic">اختر مادة الرياضيات:</label>
               <select
-                id="mathTopics"
-                name="mathTopics"
-                value={pdfData.mathTopics}
-                onChange={(e) =>
-                  setPdfData({
-                    ...pdfData,
-                    mathTopics: [e.target.value], // تخزين الخيار في المصفوفة
-                  })
-                }
+                id="mathTopic"
+                name="mathTopic"
+                value={pdfData.mathTopic}
+                onChange={handleChange}
               >
-                <option value="">اختر الموضوع</option>
-                <option value="الجبر">الجبر</option>
-                <option value="الهندسة">الهندسة</option>
-                <option value="حساب المثلثات">حساب المثلثات</option>
-                <option value="التفاضل">التفاضل</option>
-                <option value="الإحصاء">الإحصاء</option>
+                <option value="" disabled>
+                  اختر الموضوع
+                </option>
+                <option value="جبر">الجبر</option>
+                <option value="هندسة">الهندسة</option>
+                <option value="مثلثات">حساب المثلثات</option>
+                <option value="تفاضل">التفاضل</option>
+                <option value="إحصاء">الإحصاء</option>
               </select>
             </div>
           )}
@@ -232,7 +210,6 @@ const AddPdf = () => {
               <option value="" disabled>
                 اختر الوحدة
               </option>
-              <option value="0">الوحدة التمهيدية</option>
               <option value="1">الوحدة الأولى</option>
               <option value="2">الوحدة الثانية</option>
               <option value="3">الوحدة الثالثة</option>

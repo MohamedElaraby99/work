@@ -7,12 +7,13 @@ const AddVideo = () => {
     title: "",
     lesson_link: "",
     stage: "",
-    subject: "", // Make subject a string
+    subject: "",
     description: "",
     notes: "",
     unit: "",
   });
 
+  const [mathTopic, setMathTopic] = useState(""); // New state for math topic
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -20,6 +21,10 @@ const AddVideo = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setVideoData({ ...videoData, [name]: value });
+  };
+
+  const handleMathTopicChange = (e) => {
+    setMathTopic(e.target.value);
   };
 
   const handleSubmit = async (e) => {
@@ -36,7 +41,8 @@ const AddVideo = () => {
       !description ||
       !notes ||
       !subject ||
-      !unit
+      !unit ||
+      (subject === "رياضيات" && !mathTopic) // Ensure math topic is selected if subject is math
     ) {
       setMessage("");
       setError("الرجاء ملء جميع الحقول.");
@@ -50,7 +56,7 @@ const AddVideo = () => {
       stage,
       description,
       notes,
-      subject,
+      subject: subject === "رياضيات" ? mathTopic : subject, // Use math topic if subject is math
       unit,
     };
 
@@ -83,6 +89,7 @@ const AddVideo = () => {
         notes: "",
         unit: "",
       });
+      setMathTopic(""); // Reset math topic
     } catch (err) {
       setError("حدث خطأ أثناء إضافة الفيديو. الرجاء المحاولة مرة أخرى.");
       console.error("Error adding video:", err);
@@ -128,24 +135,26 @@ const AddVideo = () => {
             value={videoData.subject}
             onChange={handleChange}
           >
-            <option value="">اختر المادة</option>
+            <option value="" disabled>اختر المادة</option>
             <option value="تاريخ">تاريخ</option>
             <option value="انجليزي">لغة انجليزية</option>
-            <option value="فرنساوي">لغة فرنسية</option>
+            <option value="فرنسي">لغة فرنسية</option>
             <option value="رياضيات">رياضيات</option>
           </select>
         </div>
 
         {videoData.subject === "رياضيات" && (
           <div className="form-group">
-            <label htmlFor="subject">اختر موضوع الرياضيات:</label>
+            <label htmlFor="mathTopic">اختر مادة الرياضيات:</label>
             <select
-              id="subject"
-              name="subject"
-              value={videoData.subject}
-              onChange={handleChange}
+              id="mathTopic"
+              name="mathTopic"
+              value={mathTopic}
+              onChange={handleMathTopicChange}
             >
-              <option value="" disabled>اختر المادة</option>
+              <option value="" disabled>
+                اختر الموضوع
+              </option>
               <option value="جبر">جبر</option>
               <option value="هندسة">هندسة</option>
               <option value="مثلثات">مثلثات</option>
