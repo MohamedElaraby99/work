@@ -13,7 +13,7 @@ const CreatePostComponent = () => {
   const [isMathExpanded, setIsMathExpanded] = useState(false);
 
   // List of years
-  const years = ["ثالثة اعدادي", "اولى ثانوي", "ثانية ثانوي", "ثالثة ثانوي"];
+  const years = ["ثالثة اعدادي", "أولى ثانوي", "ثانية ثانوي", "ثالثة ثانوي"];
 
   // List of subjects
   const subjects = [
@@ -52,7 +52,8 @@ const CreatePostComponent = () => {
   const toggleMathOptions = () => {
     setIsMathExpanded(!isMathExpanded);
     if (!isMathExpanded) {
-      handleSubjectToggle("رياضيات");
+      // Remove "رياضيات" from selected subjects when expanding
+      setSelectedSubjects((prev) => prev.filter((s) => s !== "رياضيات"));
     }
   };
 
@@ -74,7 +75,7 @@ const CreatePostComponent = () => {
       title,
       description: details,
       stage: selectedYears,
-      subject: selectedSubjects,
+      subject: selectedSubjects.filter((s) => s !== "رياضيات"), // Exclude "رياضيات"
     };
 
     try {
@@ -161,7 +162,7 @@ const CreatePostComponent = () => {
                   <input
                     type="checkbox"
                     id={subjectGroup.value}
-                    checked={selectedSubjects.includes(subjectGroup.value)}
+                    checked={isMathExpanded}
                     onChange={toggleMathOptions}
                   />
                   <label htmlFor={subjectGroup.value}>
