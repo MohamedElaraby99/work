@@ -105,9 +105,7 @@ const Layout = ({ children, role }) => {
             </li>
             <li className={location.pathname === "/french" ? "active" : ""}>
               <Link to="/french">
-                <span className="material-symbols-outlined">
-                  language_french
-                </span>
+                <span class="material-icons">token</span>
                 اللغة الفرنسية
               </Link>
             </li>
