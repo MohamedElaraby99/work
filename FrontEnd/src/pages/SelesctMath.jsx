@@ -24,8 +24,8 @@ const SelectMath = () => {
   const stage = localStorage.getItem("stage");
   const role = localStorage.getItem("role");
 
-  // const subject = localStorage.getItem("subject");
-  const { subject } = location.state;
+  // Retrieve the subject from location state
+  const { subject } = location.state || {};
 
   // فحص الاشتراك
   // useEffect(() => {
@@ -90,8 +90,8 @@ const SelectMath = () => {
     <div className="history-container">
       <header className="history-header">
         <h1>
-          <span class="material-icons iconnn">calculate</span>
-          مادة الرياضيات
+          <span className="material-icons iconnn">calculate</span>
+          مادة {subject}
         </h1>
       </header>
 
@@ -135,7 +135,7 @@ const SelectMath = () => {
                 onClick={() =>
                   navigate("/exams", {
                     state: {
-                      subject: "جغرافيا",
+                      subject: subject,
                       unit: unit.id,
                       type: "امتحان",
                     },
@@ -164,7 +164,7 @@ const SelectMath = () => {
                 onClick={() =>
                   navigate("/exams", {
                     state: {
-                      subject: "جغرافيا",
+                      subject: subject,
                       unit: unit.id,
                       type: "تدريب",
                     },
@@ -193,7 +193,7 @@ const SelectMath = () => {
                 onClick={() =>
                   navigate("/pdf", {
                     state: {
-                      subject: "جغرافيا",
+                      subject: subject,
                       unit: unit.id,
                     },
                   })

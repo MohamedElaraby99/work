@@ -178,7 +178,11 @@ const Math = () => {
         {(role === "admin" || subject.includes("هندسة")) && (
           <div
             className="subject-item"
-            onClick={() => navigate("/select-math")}
+            onClick={() =>
+              navigate("/select-math", {
+                state: { subject: "هندسة" },
+              })
+            }
           >
             <FaRulerCombined /> الهندسة
           </div>
@@ -186,7 +190,11 @@ const Math = () => {
         {(role === "admin" || subject.includes("مثلثات")) && (
           <div
             className="subject-item"
-            onClick={() => navigate("/select-math")}
+            onClick={() =>
+              navigate("/select-math", {
+                state: { subject: "مثلثات" },
+              })
+            }
           >
             <FaWaveSquare /> حساب المثلثات
           </div>
@@ -194,7 +202,11 @@ const Math = () => {
         {(role === "admin" || subject.includes("تفاضل")) && (
           <div
             className="subject-item"
-            onClick={() => navigate("/select-math")}
+            onClick={() =>
+              navigate("/select-math", {
+                state: { subject: "تفاضل" },
+              })
+            }
           >
             <FaChartLine /> التفاضل
           </div>
@@ -202,7 +214,11 @@ const Math = () => {
         {(role === "admin" || subject.includes("إحصاء")) && (
           <div
             className="subject-item"
-            onClick={() => navigate("/select-math")}
+            onClick={() =>
+              navigate("/select-math", {
+                state: { subject: "إحصاء" },
+              })
+            }
           >
             <FaChartBar /> الإحصاء
           </div>
