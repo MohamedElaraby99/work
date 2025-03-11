@@ -110,6 +110,7 @@ const AllUsers = () => {
     // التصفية العادية للمواد الأخرى
     return user.subject === selectedSubject;
   };
+
   const students = filteredUsers.filter(
     (user) =>
       user.role === "student" &&
@@ -257,7 +258,7 @@ const AllUsers = () => {
                       <td>{student.name}</td>
                       <td>{student.username}</td>
                       <td>{student.stage}</td>
-                      <td>{student.subject}</td>
+                      <td>{student.subject.join(", ")}</td>
                       <td>{"*".repeat(student.password.length)}</td>
                       <td className="actions-cell">
                         <button

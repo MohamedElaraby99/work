@@ -11,7 +11,7 @@ const AllPostsComponent = () => {
   const [editingPost, setEditingPost] = useState(null);
   const [editContent, setEditContent] = useState("");
   const [editTitle, setEditTitle] = useState("");
-  const [editSubject, setEditSubject] = useState("");
+  const [editSubject, setEditSubject] = useState([]);
   const [editStages, setEditStages] = useState({
     stage_one: false,
     stage_two: false,
@@ -20,6 +20,23 @@ const AllPostsComponent = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedSubject, setSelectedSubject] = useState("");
   const [loading, setLoading] = useState(true);
+
+  // List of subjects
+  const subjects = [
+    { label: "تاريخ", value: "تاريخ" },
+    { label: "لغة فرنسية", value: "فرنسي" },
+    { label: "لغة انجليزية", value: "انجليزي" },
+    {
+      label: "رياضيات",
+      options: [
+        { label: "جبر", value: "جبر" },
+        { label: "هندسة", value: "هندسة" },
+        { label: "تفاضل", value: "تفاضل" },
+        { label: "مثلثات", value: "مثلثات" },
+        { label: "إحصاء", value: "إحصاء" },
+      ],
+    },
+  ];
 
   // Fetch posts from API
   useEffect(() => {
@@ -66,17 +83,26 @@ const AllPostsComponent = () => {
     setEditTitle(post.title);
     setEditContent(post.description);
     setEditStages({
-      stage_one: post.stage?.stage_one || false,
-      stage_two: post.stage?.stage_two || false,
-      stage_three: post.stage?.stage_three || false,
+      stage_one: post.stage.includes("أولى ثانوي"),
+      stage_two: post.stage.includes("ثانية ثانوي"),
+      stage_three: post.stage.includes("ثالثة ثانوي"),
     });
     setSelectedPost(null); // Exit details view
     setEditSubject(post.subject);
   };
 
+  // Function to handle subject toggle in edit mode
+  const handleSubjectToggle = (subject) => {
+    setEditSubject((prev) =>
+      prev.includes(subject)
+        ? prev.filter((s) => s !== subject)
+        : [...prev, subject]
+    );
+  };
+
   // Function to save edited post
   const saveEditPost = async () => {
-    if (!editTitle.trim() || !editContent.trim() || !editSubject.trim()) {
+    if (!editTitle.trim() || !editContent.trim() || editSubject.length === 0) {
       toast.error("العنوان ومحتوى الإعلان لا يمكن أن يكونا فارغين!");
       return;
     }
@@ -100,8 +126,12 @@ const AllPostsComponent = () => {
         {
           title: editTitle,
           description: editContent,
-          stage: editStages,
-          subject: editSubject, // Ensure subject is sent
+          stage: [
+            editStages.stage_one ? "أولى ثانوي" : null,
+            editStages.stage_two ? "ثانية ثانوي" : null,
+            editStages.stage_three ? "ثالثة ثانوي" : null,
+          ].filter(Boolean),
+          subject: editSubject,
         },
         {
           headers: {
@@ -152,6 +182,7 @@ const AllPostsComponent = () => {
       stage_two: false,
       stage_three: false,
     });
+    setEditSubject([]);
     toast.info("تم إلغاء التعديلات.");
   };
 
@@ -193,7 +224,8 @@ const AllPostsComponent = () => {
     (post) =>
       (post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         post.description.toLowerCase().includes(searchTerm.toLowerCase())) &&
-      (selectedSubject === "" || post.subject === selectedSubject)
+      (selectedSubject === "" ||
+        post.subject.some((sub) => sub.includes(selectedSubject)))
   );
 
   return (
@@ -238,17 +270,11 @@ const AllPostsComponent = () => {
                 <li key={post._id} className="post-item">
                   <div className="post-content">
                     <h4>{post.title}</h4>
-                    <h5>{post.subject}</h5>
+                    <h5>{post.subject.join(", ")}</h5>
                     <ul>
-                      {post.stage?.stage_one && (
-                        <li>المرحلة الدراسية: أولى ثانوي</li>
-                      )}
-                      {post.stage?.stage_two && (
-                        <li>المرحلة الدراسية: ثانية ثانوي</li>
-                      )}
-                      {post.stage?.stage_three && (
-                        <li>المرحلة الدراسية: ثالثة ثانوي</li>
-                      )}
+                      {post.stage.map((stage, index) => (
+                        <li key={index}>المرحلة الدراسية: {stage}</li>
+                      ))}
                     </ul>
                   </div>
                   <div className="post-actions">
@@ -285,17 +311,22 @@ const AllPostsComponent = () => {
             <h3>تفاصيل الإعلان</h3>
             <h4>{selectedPost.title}</h4>
             <p>{selectedPost.description}</p>
-            <ul>
-              {selectedPost.stage?.stage_one && (
-                <li>المرحلة الدراسية: أولى ثانوي</li>
-              )}
-              {selectedPost.stage?.stage_two && (
-                <li>المرحلة الدراسية: ثانية ثانوي</li>
-              )}
-              {selectedPost.stage?.stage_three && (
-                <li>المرحلة الدراسية: ثالثة ثانوي</li>
-              )}
-            </ul>
+            <div className="details-section">
+              <h5>المراحل الدراسية:</h5>
+              <ul>
+                {selectedPost.stage.map((stage, index) => (
+                  <li key={index}>{stage}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="details-section">
+              <h5>المواد:</h5>
+              <ul>
+                {selectedPost.subject.map((sub, index) => (
+                  <li key={index}>{sub}</li>
+                ))}
+              </ul>
+            </div>
             <button
               className="close-details-btn"
               onClick={() => setSelectedPost(null)}
@@ -309,19 +340,26 @@ const AllPostsComponent = () => {
         {editingPost && (
           <div className="post-edit">
             <h3>تعديل محتوى الإعلان</h3>
-            <input
-              type="text"
-              value={editTitle}
-              onChange={(e) => setEditTitle(e.target.value)}
-              placeholder="عنوان الإعلان"
-              className="edit-title-input"
-            />
-            <textarea
-              value={editContent}
-              onChange={(e) => setEditContent(e.target.value)}
-              className="edit-textarea"
-            />
-            <div className="edit-stages">
+            <div className="edit-section">
+              <label>عنوان الإعلان:</label>
+              <input
+                type="text"
+                value={editTitle}
+                onChange={(e) => setEditTitle(e.target.value)}
+                placeholder="عنوان الإعلان"
+                className="edit-title-input"
+              />
+            </div>
+            <div className="edit-section">
+              <label>تفاصيل الإعلان:</label>
+              <textarea
+                value={editContent}
+                onChange={(e) => setEditContent(e.target.value)}
+                className="edit-textarea"
+              />
+            </div>
+            <div className="edit-section">
+              <h4>المراحل الدراسية</h4>
               <label>
                 <input
                   type="checkbox"
@@ -361,6 +399,35 @@ const AllPostsComponent = () => {
                 />
                 ثالثة ثانوي
               </label>
+            </div>
+            <div className="edit-section">
+              <h4>المواد الدراسية</h4>
+              {subjects.map((subjectGroup) =>
+                subjectGroup.options ? (
+                  <div key={subjectGroup.value} className="checkbox-item">
+                    <h5>{subjectGroup.label}</h5>
+                    {subjectGroup.options.map((option) => (
+                      <label key={option.value}>
+                        <input
+                          type="checkbox"
+                          checked={editSubject.includes(option.value)}
+                          onChange={() => handleSubjectToggle(option.value)}
+                        />
+                        {option.label}
+                      </label>
+                    ))}
+                  </div>
+                ) : (
+                  <label key={subjectGroup.value} className="checkbox-item">
+                    <input
+                      type="checkbox"
+                      checked={editSubject.includes(subjectGroup.value)}
+                      onChange={() => handleSubjectToggle(subjectGroup.value)}
+                    />
+                    {subjectGroup.label}
+                  </label>
+                )
+              )}
             </div>
             <div className="edit-actions">
               <button className="save-edit-btn" onClick={saveEditPost}>
