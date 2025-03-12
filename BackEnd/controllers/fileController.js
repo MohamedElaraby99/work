@@ -250,6 +250,7 @@ const downloadFile = async (req, res) => {
     // Set headers to control caching and display
     res.set({
       "Content-Disposition": "inline",
+      'Content-Type': 'application/pdf',
       "X-Content-Type-Options": "nosniff",
       "X-Frame-Options": "SAMEORIGIN",
       "X-Download-Options": "noopen",

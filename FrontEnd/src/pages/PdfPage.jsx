@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import * as pdfjsLib from "pdfjs-dist/webpack";
 import axios from "axios";
 import "./../styles/pdfs.css";
 import Loader from "./Loader";
 import { useLocation } from "react-router-dom";
+
+pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
 
 const PdfPage = ({ state }) => {
   const location = useLocation();
@@ -11,6 +14,7 @@ const PdfPage = ({ state }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedPdfUrl, setSelectedPdfUrl] = useState(null);
+  const pdfRef = useRef(null);
 
   useEffect(() => {
     const fetchPdfs = async () => {
@@ -35,10 +39,25 @@ const PdfPage = ({ state }) => {
     fetchPdfs();
   }, [subject, unit]);
 
-  const handleViewPdf = (url) => {
+  const handleViewPdf = async (url) => {
     const encodedUrl = encodeURIComponent(url);
-    console.log("Constructed PDF URL:", decodeURIComponent(encodedUrl)); // Debugging line
     setSelectedPdfUrl(encodedUrl);
+
+    const loadingTask = pdfjsLib.getDocument(decodeURIComponent(encodedUrl));
+    const pdf = await loadingTask.promise;
+    const page = await pdf.getPage(1);
+
+    const viewport = page.getViewport({ scale: 1.5 });
+    const canvas = pdfRef.current;
+    const context = canvas.getContext("2d");
+    canvas.height = viewport.height;
+    canvas.width = viewport.width;
+
+    const renderContext = {
+      canvasContext: context,
+      viewport: viewport,
+    };
+    page.render(renderContext);
   };
 
   if (loading) return <Loader />;
@@ -67,14 +86,8 @@ const PdfPage = ({ state }) => {
         ))}
       </div>
       {selectedPdfUrl && (
-        <div className="pdf-viewer" onContextMenu={(e) => e.preventDefault()}>
-          <iframe
-            src={`${decodeURIComponent(
-              selectedPdfUrl
-            )}#toolbar=0&navpanes=0&scrollbar=0`}
-            title="PDF Viewer"
-            style={{ border: "none", width: "100%", height: "100%" }}
-          ></iframe>
+        <div className="pdf-viewer">
+          <canvas ref={pdfRef}></canvas>
         </div>
       )}
     </div>
