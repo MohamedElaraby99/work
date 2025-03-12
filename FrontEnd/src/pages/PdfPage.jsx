@@ -36,7 +36,9 @@ const PdfPage = ({ state }) => {
   }, [subject, unit]);
 
   const handleViewPdf = (url) => {
-    setSelectedPdfUrl(url);
+    const encodedUrl = encodeURIComponent(url);
+    console.log("Constructed PDF URL:", decodeURIComponent(encodedUrl)); // Debugging line
+    setSelectedPdfUrl(encodedUrl);
   };
 
   if (loading) return <Loader />;
@@ -65,13 +67,13 @@ const PdfPage = ({ state }) => {
         ))}
       </div>
       {selectedPdfUrl && (
-        <div className="pdf-viewer">
+        <div className="pdf-viewer" onContextMenu={(e) => e.preventDefault()}>
           <iframe
-            src={`${selectedPdfUrl}#toolbar=0&navpanes=0&scrollbar=0`}
+            src={`${decodeURIComponent(
+              selectedPdfUrl
+            )}#toolbar=0&navpanes=0&scrollbar=0`}
             title="PDF Viewer"
-            width="100%"
-            height="600px"
-            style={{ border: "none" }}
+            style={{ border: "none", width: "100%", height: "100%" }}
           ></iframe>
         </div>
       )}
