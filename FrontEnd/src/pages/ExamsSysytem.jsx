@@ -10,7 +10,9 @@ const ExamsSystem = () => {
   const examData = location.state?.exam;
 
   const [questionsArray] = useState(examData?.questions || []);
-  const [answers, setAnswers] = useState(examData?.questions || []);
+  const [answers, setAnswers] = useState(
+    examData?.questions.map((q) => ({ ...q, selectedAnswer: null })) || []
+  );
   const [submitted, setSubmitted] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [submissionResult, setSubmissionResult] = useState(null);
@@ -33,7 +35,7 @@ const ExamsSystem = () => {
         clearInterval(timer);
         setIsTimeUp(true);
         setTimeLeft(0);
-        handleSubmit(); // تقديم الامتحان تلقائيًا عند انتهاء الوقت
+        handleSubmit(); // Automatically submit the exam when time is up
       } else {
         setTimeLeft(timeRemaining);
         if (timeRemaining <= 5 * 60 * 1000 && !notificationSent) {
@@ -46,48 +48,85 @@ const ExamsSystem = () => {
       }
     }, 1000);
 
-    // منع الخروج من الصفحة
     const handleBeforeUnload = (event) => {
       if (!submitted && !isTimeUp) {
         event.preventDefault();
-        event.returnValue =
-          "هل أنت متأكد أنك تريد الخروج؟ سيتم تقديم الامتحان تلقائيًا.";
-        handleSubmit(); // تقديم الامتحان إذا تم تأكيد الخروج
-      }
-    };
-
-    // الكشف عن تبديل علامات التبويب أو تقليل الصفحة
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === "hidden" && !submitted && !isTimeUp) {
-        toast.error(
-          "تم الكشف عن محاولة الخروج! سيتم تقديم الامتحان تلقائيًا.",
-          {
-            position: "top-right",
-            autoClose: 2000,
-          }
+        const confirmation = window.confirm(
+          "هل أنت متأكد أنك تريد الخروج؟ سيتم تقديم الامتحان تلقائيًا إذا اخترت موافق."
         );
-        handleSubmit(); // تقديم الامتحان تلقائيًا
+        if (confirmation) {
+          handleSubmit(); // Submit the exam if "OK" is chosen
+        }
+        event.returnValue = ""; // Ensure the default browser alert is shown
       }
     };
 
+    const enterFullScreen = () => {
+      const element = document.documentElement;
+      if (element.requestFullscreen) {
+        element.requestFullscreen().catch((err) => {
+          console.error("Error attempting to enable full-screen mode:", err);
+        });
+      } else if (element.mozRequestFullScreen) {
+        element.mozRequestFullScreen().catch((err) => {
+          console.error("Error attempting to enable full-screen mode:", err);
+        });
+      } else if (element.webkitRequestFullscreen) {
+        element.webkitRequestFullscreen().catch((err) => {
+          console.error("Error attempting to enable full-screen mode:", err);
+        });
+      } else if (element.msRequestFullscreen) {
+        element.msRequestFullscreen().catch((err) => {
+          console.error("Error attempting to enable full-screen mode:", err);
+        });
+      }
+    };
+
+    const exitFullScreen = () => {
+      if (document.exitFullscreen) {
+        document.exitFullscreen().catch((err) => {
+          console.error("Error attempting to exit full-screen mode:", err);
+        });
+      } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen().catch((err) => {
+          console.error("Error attempting to exit full-screen mode:", err);
+        });
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen().catch((err) => {
+          console.error("Error attempting to exit full-screen mode:", err);
+        });
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen().catch((err) => {
+          console.error("Error attempting to exit full-screen mode:", err);
+        });
+      }
+    };
+
+    enterFullScreen();
     window.addEventListener("beforeunload", handleBeforeUnload);
-    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
       clearInterval(timer);
       window.removeEventListener("beforeunload", handleBeforeUnload);
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      if (
+        document.fullscreenElement ||
+        document.mozFullScreenElement ||
+        document.webkitFullscreenElement ||
+        document.msFullscreenElement
+      ) {
+        exitFullScreen();
+      }
     };
   }, [examData, notificationSent, submitted, isTimeUp]);
 
   const handleAnswerChange = (questionId, optionIndex) => {
-    const updatedAnswers = answers.map((answer) => {
-      if (questionId === answer?._id) {
-        return { ...answer, questionId, selectedAnswer: optionIndex };
-      }
-      return answer;
-    });
-    setAnswers(updatedAnswers);
+    setAnswers((prevAnswers) =>
+      prevAnswers.map((answer) =>
+        answer._id === questionId
+          ? { ...answer, selectedAnswer: optionIndex }
+          : answer
+      )
+    );
   };
 
   const handleSubmit = async () => {
@@ -104,7 +143,7 @@ const ExamsSystem = () => {
       const requestBody = {
         exam_id: examData.id,
         answers: answers.map((q) => ({
-          questionId: q.questionId || q._id, // التأكد من استخدام المعرف الصحيح
+          questionId: q._id,
           selectedAnswer: q.selectedAnswer,
         })),
       };
@@ -134,7 +173,7 @@ const ExamsSystem = () => {
         position: "top-right",
         autoClose: 3000,
       });
-      setSubmitted(true); // تعليم الامتحان كمقدم حتى في حالة الخطأ
+      setSubmitted(true);
     }
   };
 
@@ -200,10 +239,11 @@ const ExamsSystem = () => {
 
               <ul className="exam-options-list">
                 {q.options.map((option, optIndex) => {
-                  let optionClass = "exam-option";
-                  if (answers[index]?.selectedAnswer === optIndex) {
-                    optionClass += " exam-option-selected";
-                  }
+                  const optionClass = `exam-option ${
+                    answers[index]?.selectedAnswer === optIndex
+                      ? "exam-option-selected"
+                      : ""
+                  }`;
 
                   return (
                     <li key={optIndex} className={optionClass}>
