@@ -44,7 +44,7 @@ const LoginForm = ({ setRole }) => {
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("name", name);
       localStorage.setItem("stage", stage);
-      localStorage.setItem("subject", subject);
+      localStorage.setItem("subject", JSON.stringify(subject));
 
       if (rememberMe) {
         localStorage.setItem("userName", userName);
@@ -146,6 +146,17 @@ const LoginForm = ({ setRole }) => {
           </div>
         </div>
       </div>
+
+      {/* Attribution */}
+      <a
+        href="https://www.facebook.com/people/Fikra-Software-%D9%81%D9%83%D8%B1%D8%A9/61572824761047/?rdid=hu8NxgcddUoKHkUb&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1AN2gA2bMq%2F"
+        className="attribution"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        تصميم وتطوير شركة فكرة للبرمجيات - Fikra Software
+      </a>
+
       {/* Floating WhatsApp Button */}
       <a
         href="https://wa.me/201227245533"

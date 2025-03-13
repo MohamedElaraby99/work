@@ -23,56 +23,40 @@ const History = () => {
   // استرداد المرحلة الدراسية والدور و subject من localStorage
   const stage = localStorage.getItem("stage");
   const role = localStorage.getItem("role");
-  const subject = localStorage.getItem("subject");
+  const subjects = localStorage.getItem("subject");
 
   // فحص الاشتراك
   useEffect(() => {
-    if (
-      role === "student" &&
-      subject !== "تاريخ" &&
-      subject !== "تاريخ وجغرافيا"
-    ) {
+    if (role === "student" && !subjects.includes("تاريخ")) {
       setIsSubscribed(false);
     }
-  }, [role, subject]);
+  }, [role, subjects]);
 
   // بيانات الوحدات مع روابط الصفحات
   const courseUnits = {
-    videos: Array.from(
-      { length: stage === "ثالثة ثانوي" || role === "admin" ? 8 : 4 },
-      (_, i) => ({
-        id: i + 1,
-        title: `الوحدة ${i + 1}`,
-        path: `/history/unit/${i + 1}/videos`,
-      })
-    ),
+    videos: Array.from({ length: 8 }, (_, i) => ({
+      id: i + 1,
+      title: `الوحدة ${i + 1}`,
+      path: `/history/unit/${i + 1}/videos`,
+    })),
 
-    exams: Array.from(
-      { length: stage === "ثالثة ثانوي" || role === "admin" ? 8 : 4 },
-      (_, i) => ({
-        id: i + 1,
-        title: `الوحدة ${i + 1}`,
-        path: `/history/unit/${i + 1}/exams`,
-      })
-    ),
+    exams: Array.from({ length: 8 }, (_, i) => ({
+      id: i + 1,
+      title: `الوحدة ${i + 1}`,
+      path: `/history/unit/${i + 1}/exams`,
+    })),
 
-    assignments: Array.from(
-      { length: stage === "ثالثة ثانوي" || role === "admin" ? 8 : 4 },
-      (_, i) => ({
-        id: i + 1,
-        title: `الوحدة ${i + 1}`,
-        path: `/history/unit/${i + 1}/assignments`,
-      })
-    ),
+    assignments: Array.from({ length: 8 }, (_, i) => ({
+      id: i + 1,
+      title: `الوحدة ${i + 1}`,
+      path: `/history/unit/${i + 1}/assignments`,
+    })),
 
-    pdfs: Array.from(
-      { length: stage === "ثالثة ثانوي" || role === "admin" ? 8 : 4 },
-      (_, i) => ({
-        id: i + 1,
-        title: `الوحدة ${i + 1}`,
-        path: `/history/unit/${i + 1}/pdfs`,
-      })
-    ),
+    pdfs: Array.from({ length: 8 }, (_, i) => ({
+      id: i + 1,
+      title: `الوحدة ${i + 1}`,
+      path: `/history/unit/${i + 1}/pdfs`,
+    })),
   };
 
   const toggleSection = (section) => {
@@ -85,9 +69,56 @@ const History = () => {
   if (!isSubscribed) {
     return (
       <div className="history-container">
-        <header className="history-header expandable-section">
-          <h1>مادة التاريخ</h1>
-          <h2> مستر : احمد سعيد </h2>
+        <header className="history-header">
+          <div className="content-container">
+            <div className="contenttt">
+              {/* الصورة على اليسار */}
+              <div className="image-container">
+                <img
+                  src={require("./../images/MrahmedSaid.png")}
+                  alt="صورة المادة"
+                  className="history-image"
+                  style={{ border: "2px solid #ffffff" }}
+                />
+              </div>
+              {/* النص على اليمين */}
+              <div className="text-container">
+                <h1>مـادة الـتاريـخ</h1>
+                <p>مـقدم الـمادة</p>
+                <p className="history-subtitle">مـستر : احـمد السعيد</p>
+                <div className="social-linkss">
+                  <a
+                    href="https://www.facebook.com/share/1B8FQwvbrx/?mibextid=wwXIfr"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaFacebook />
+                  </a>
+                  <a
+                    href="https://www.instagram.com/ahmed_elsaiidd?igsh=MXdkenVsdDdiZThmcg%3D%3D&utm_source=qr"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaInstagram />
+                  </a>
+                  <a
+                    href="https://www.tiktok.com/@ahmedelsaid5?_t=ZS-8uXqjqzaElA&_r=1"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaTiktok />
+                  </a>
+                  <a
+                    href="https://wa.me/201279456731"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaWhatsapp />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
         </header>
         <p className="about-imag ">
           <img
@@ -118,11 +149,9 @@ const History = () => {
             </div>
             {/* النص على اليمين */}
             <div className="text-container">
-              <h1>
-                 مـادة الـتاريـخ
-              </h1>
+              <h1>مـادة الـتاريـخ</h1>
               <p>مـقدم الـمادة</p>
-              <p className="history-subtitle">مـستر : احـمد سـعيد</p>
+              <p className="history-subtitle">مـستر : احـمد السعيد</p>
               <div className="social-linkss">
                 <a
                   href="https://www.facebook.com/share/1B8FQwvbrx/?mibextid=wwXIfr"
@@ -211,7 +240,7 @@ const History = () => {
       {/* قسم الواجبات */}
       <section className="expandable-section">
         <h2 onClick={() => toggleSection("assignments")}>
-          <FaClipboardList /> الواجبات
+          <FaClipboardList /> التدريبات
           {expandedSections.assignments ? <FaChevronUp /> : <FaChevronDown />}
         </h2>
         {expandedSections.assignments && (

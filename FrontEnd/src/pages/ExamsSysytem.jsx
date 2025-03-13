@@ -3,56 +3,82 @@ import { useLocation } from "react-router-dom";
 import ResultComponent from "./ResultComponent";
 import "react-toastify/dist/ReactToastify.css";
 import "./../styles/ExamsSystem.css";
-
-// مكتبة للتنبيهات
 import { toast, ToastContainer } from "react-toastify";
 
 const ExamsSystem = () => {
   const location = useLocation();
   const examData = location.state?.exam;
 
-  const [questionsArray] = useState(examData?.questions || []); // الأسئلة الممررة
+  const [questionsArray] = useState(examData?.questions || []);
   const [answers, setAnswers] = useState(examData?.questions || []);
   const [submitted, setSubmitted] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [submissionResult, setSubmissionResult] = useState(null);
-
-  // حالات للتايمر وإدارة الوقت
-  const [timeLeft, setTimeLeft] = useState(null); // الوقت المتبقي
-  const [isTimeUp, setIsTimeUp] = useState(false); // عند انتهاء الوقت
-  const [notificationSent, setNotificationSent] = useState(false); // لتتبع إرسال التنبيه
+  const [timeLeft, setTimeLeft] = useState(null);
+  const [isTimeUp, setIsTimeUp] = useState(false);
+  const [notificationSent, setNotificationSent] = useState(false);
 
   useEffect(() => {
     if (!examData) return;
 
-    const examStartTime = new Date(examData.date).getTime(); // زمن البداية
-    const examDurationMs = examData.duration * 60 * 1000; // مدة الامتحان بالمللي ثانية
-    const examEndTime = examStartTime + examDurationMs; // توقيت انتهاء الامتحان
+    const examStartTime = new Date(examData.date).getTime();
+    const examDurationMs = examData.duration * 60 * 1000;
+    const examEndTime = examStartTime + examDurationMs;
 
-    // عداد التايمر
     const timer = setInterval(() => {
-      const currentTime = Date.now(); // الوقت الحالي
-      const timeRemaining = examEndTime - currentTime; // الوقت المتبقي
+      const currentTime = Date.now();
+      const timeRemaining = examEndTime - currentTime;
 
       if (timeRemaining <= 0) {
-        clearInterval(timer); // إنهاء المؤقت
-        setIsTimeUp(true); // تحديث الحالة لانتهاء الوقت
-        setTimeLeft(0); // الوقت المتبقي هو 0
+        clearInterval(timer);
+        setIsTimeUp(true);
+        setTimeLeft(0);
+        handleSubmit(); // تقديم الامتحان تلقائيًا عند انتهاء الوقت
       } else {
-        setTimeLeft(timeRemaining); // تحديث الوقت المتبقي
+        setTimeLeft(timeRemaining);
         if (timeRemaining <= 5 * 60 * 1000 && !notificationSent) {
-          // تنبيه عند اقتراب الامتحان من النهاية (5 دقائق)
           toast.warning("تنبيه: تبقت 5 دقائق فقط لإنهاء الامتحان!", {
             position: "top-right",
             autoClose: 3000,
           });
-          setNotificationSent(true); // تحديث الحالة لتجنب إرسال تنبيهات متعددة
+          setNotificationSent(true);
         }
       }
     }, 1000);
 
-    return () => clearInterval(timer); // تنظيف التايمر عند الخروج من المكون
-  }, [examData, notificationSent]);
+    // منع الخروج من الصفحة
+    const handleBeforeUnload = (event) => {
+      if (!submitted && !isTimeUp) {
+        event.preventDefault();
+        event.returnValue =
+          "هل أنت متأكد أنك تريد الخروج؟ سيتم تقديم الامتحان تلقائيًا.";
+        handleSubmit(); // تقديم الامتحان إذا تم تأكيد الخروج
+      }
+    };
+
+    // الكشف عن تبديل علامات التبويب أو تقليل الصفحة
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "hidden" && !submitted && !isTimeUp) {
+        toast.error(
+          "تم الكشف عن محاولة الخروج! سيتم تقديم الامتحان تلقائيًا.",
+          {
+            position: "top-right",
+            autoClose: 2000,
+          }
+        );
+        handleSubmit(); // تقديم الامتحان تلقائيًا
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      clearInterval(timer);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [examData, notificationSent, submitted, isTimeUp]);
 
   const handleAnswerChange = (questionId, optionIndex) => {
     const updatedAnswers = answers.map((answer) => {
@@ -68,14 +94,17 @@ const ExamsSystem = () => {
     try {
       const accessToken = localStorage.getItem("accessToken");
       if (!accessToken) {
-        alert("لم يتم العثور على التوكن! يرجى تسجيل الدخول.");
+        toast.error("لم يتم العثور على التوكن! يرجى تسجيل الدخول.", {
+          position: "top-right",
+          autoClose: 3000,
+        });
         return;
       }
 
       const requestBody = {
         exam_id: examData.id,
         answers: answers.map((q) => ({
-          questionId: q.questionId,
+          questionId: q.questionId || q._id, // التأكد من استخدام المعرف الصحيح
           selectedAnswer: q.selectedAnswer,
         })),
       };
@@ -93,7 +122,7 @@ const ExamsSystem = () => {
       );
 
       if (!response.ok) {
-        throw new Error("فشل في إرسال الإجابات. يرجى المحاولة لاحقًا.");
+        throw new Error("فشل في إرسال الإجابات.");
       }
 
       const result = await response.json();
@@ -101,7 +130,11 @@ const ExamsSystem = () => {
       setSubmitted(true);
     } catch (error) {
       console.error("حدث خطأ أثناء إرسال الإجابات:", error);
-      alert("حدث خطأ أثناء إرسال الإجابات. يرجى المحاولة لاحقًا.");
+      toast.error("حدث خطأ أثناء إرسال الإجابات. تم تقديم الامتحان.", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+      setSubmitted(true); // تعليم الامتحان كمقدم حتى في حالة الخطأ
     }
   };
 
@@ -132,6 +165,7 @@ const ExamsSystem = () => {
     return (
       <div className="time-up-message">
         <h2>انتهى وقت الامتحان.</h2>
+        <p>تم تقديم الامتحان تلقائيًا.</p>
       </div>
     );
   }
@@ -140,11 +174,11 @@ const ExamsSystem = () => {
     <div className="exam-system-container">
       <ToastContainer />
       <div className="exam-header">
-        <h2 className="exam-system-title">{examData.title}</h2>
+        <h2 className="exam-system-title">{examData?.title}</h2>
         <p className="timer-display">
-          <span className="timer">{formatTime(timeLeft)} </span> دقيقة
+          <span className="timer">{formatTime(timeLeft)}</span> دقيقة
         </p>
-        <p>{examData.description}</p>
+        <p>{examData?.description}</p>
       </div>
       {!submitted ? (
         <form className="exam-system-form">
@@ -207,7 +241,7 @@ const ExamsSystem = () => {
         <div className="submitted-message">
           <p>
             <span className="submitted-text">تم تقديم الامتحان.</span> اضغط على
-            زر عرض التفاصيل لمعرفة النتيجة. &#8595;
+            زر عرض التفاصيل لمعرفة النتيجة. ↓
           </p>
           <button
             type="button"

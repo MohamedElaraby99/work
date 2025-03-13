@@ -111,6 +111,9 @@ const addExam = async (req, res) => {
       subject,
       unit,
     } = req.body;
+
+    console.log("Request Body:", req.body); // Log the request body
+
     // Validate required fields
     if (!title) {
       return res.status(400).json({ message: "Exam title is required" });
@@ -121,13 +124,15 @@ const addExam = async (req, res) => {
     if (!subject) {
       return res.status(400).json({ message: "Exam subject is required" });
     }
+    if (typeof subject !== "string") {
+      return res.status(400).json({ message: "Subject must be a string" });
+    }
     if (!subjects.includes(subject)) {
       return res.status(400).json({ message: "المادة الدراسية غير صالحة" });
     }
     if (!date) {
       return res.status(400).json({ message: "Exam date is required" });
     }
-
     if (!unit) {
       return res.status(400).json({ message: "الوحدة مطلوبة" });
     }
@@ -206,6 +211,7 @@ const addExam = async (req, res) => {
     res.status(500).json({ message: "Error creating exam" });
   }
 };
+
 
 const updateExam = async (req, res) => {
   const { id } = req.params; // Exam ID from URL parameters

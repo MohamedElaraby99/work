@@ -67,6 +67,18 @@
   color: #007bff;
 }
 
+.checkbox-item {
+  display: flex;
+  align-items: right;
+  gap: 5px;
+}
+
+.edit-sectionn {
+  display: flex;
+  align-items: right;
+  gap: 5px;
+}
+
 .post-content p {
   margin: 0;
   font-size: 14px;
@@ -215,4 +227,21 @@
 
 .close-details-btn:hover {
   background-color: #c82333;
+}
+
+@media screen and (max-width: 768px) {
+  edit-sectionn {
+    flex-direction: column;
+  }
+  
+}
+
+@media screen and (max-width: 480px) {
+  .edit-sectionn {
+    flex-direction: column;
+  }
+
+  .checkbox-item {
+    flex-direction: column;
+  }
 }

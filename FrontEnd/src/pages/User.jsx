@@ -7,7 +7,7 @@ const UserPage = ({ onSignOut }) => {
     name: "",
     role: "",
     stage: "",
-    subject: "",
+    subject: [],
     username: "",
   });
   const navigate = useNavigate();
@@ -19,13 +19,16 @@ const UserPage = ({ onSignOut }) => {
       accessToken: localStorage.getItem("accessToken"),
       name: localStorage.getItem("name"),
       stage: localStorage.getItem("stage"),
-      subject: localStorage.getItem("subject"),
+      subject: JSON.parse(localStorage.getItem("subject")) || [],
     };
 
     if (!savedData.accessToken) {
       navigate("/login");
       return;
     }
+
+    // ترتيب المواد بشكل منتظم
+    savedData.subject.sort();
 
     setUserData(savedData);
   }, [navigate]);
@@ -58,7 +61,11 @@ const UserPage = ({ onSignOut }) => {
 
           <div className="info-item">
             <span className="label">المادة :</span>
-            <span className="value">{userData.subject || "غير محدد"}</span>
+            <span className="value">
+              {userData.subject.length > 0
+                ? userData.subject.join(", ")
+                : "غير محدد"}
+            </span>
           </div>
         </div>
 
