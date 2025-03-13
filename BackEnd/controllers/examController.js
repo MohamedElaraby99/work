@@ -212,7 +212,6 @@ const addExam = async (req, res) => {
   }
 };
 
-
 const updateExam = async (req, res) => {
   const { id } = req.params; // Exam ID from URL parameters
   const {
@@ -369,8 +368,10 @@ const submitExam = async (req, res) => {
     }
 
     // Check if the user has already submitted the exam
-    const existingSubmission = await Submission.findOne({ user_id, exam_id });
-    if (existingSubmission) {
+    let existingSubmission = await Submission.findOne({ user_id, exam_id });
+
+    // If it's an "امتحان", prevent multiple submissions
+    if (existingSubmission && exam.type === "امتحان") {
       return res
         .status(400)
         .json({ message: "You have already submitted this exam" });
@@ -405,16 +406,26 @@ const submitExam = async (req, res) => {
       };
     });
 
-    // Save the submission
-    const submission = new Submission({
-      user_id,
-      exam_id,
-      answers: detailedAnswers,
-      score,
-    });
-    await submission.save();
+    if (existingSubmission && exam.type === "تدريب") {
+      // If it's a training exam, update the submission
+      existingSubmission.answers = detailedAnswers;
+      existingSubmission.score = score;
+      await existingSubmission.save();
+      return res
+        .status(200)
+        .json({ message: "Training exam updated successfully", score });
+    } else {
+      // Save new submission
+      const submission = new Submission({
+        user_id,
+        exam_id,
+        answers: detailedAnswers,
+        score,
+      });
+      await submission.save();
 
-    res.status(201).json({ message: "Exam submitted successfully", score });
+      res.status(201).json({ message: "Exam submitted successfully", score });
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error submitting exam" });
