@@ -85,7 +85,7 @@ const History = () => {
               <div className="text-container">
                 <h1>مـادة الـتاريـخ</h1>
                 <p>مـقدم الـمادة</p>
-                <p className="history-subtitle">مـستر : احـمد سـعيد</p>
+                <p className="history-subtitle">مـستر : احـمد السعيد</p>
                 <div className="social-linkss">
                   <a
                     href="https://www.facebook.com/share/1B8FQwvbrx/?mibextid=wwXIfr"
@@ -151,7 +151,7 @@ const History = () => {
             <div className="text-container">
               <h1>مـادة الـتاريـخ</h1>
               <p>مـقدم الـمادة</p>
-              <p className="history-subtitle">مـستر : احـمد سـعيد</p>
+              <p className="history-subtitle">مـستر : احـمد السعيد</p>
               <div className="social-linkss">
                 <a
                   href="https://www.facebook.com/share/1B8FQwvbrx/?mibextid=wwXIfr"

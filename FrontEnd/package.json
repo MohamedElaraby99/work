@@ -30,8 +30,10 @@
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.1.1",
     "react-scripts": "5.0.1",
+    "react-slick": "^0.30.3",
     "react-toastify": "^11.0.2",
     "redux": "^5.0.1",
+    "slick-carousel": "^1.8.1",
     "tesseract.js": "^5.1.1"
   },
   "scripts": {
