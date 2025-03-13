@@ -69,47 +69,29 @@ const uploadFile = async (req, res) => {
       return res.status(400).json({ message: "الوحدة مطلوبة" });
     }
 
-    // Check for existing document
-    let existingFile = await File.findOne({ subject, stage, unit });
+    console.log(req.file);
 
     const fileUrl = `/uploads/${req.file.filename}`;
 
-    if (existingFile) {
-      // Update the existing file
-      existingFile.title = title;
-      existingFile.file = fileUrl;
-      await existingFile.save();
+    // Save metadata in a separate collection
+    const newfile = new File({
+      title,
+      stage,
+      file: fileUrl,
+      subject,
+      unit,
+    });
 
-      return res.status(200).json({
-        message: "تم تحديث الملف الحالي",
-        fileId: existingFile._id,
-        title: existingFile.title,
-        stage: existingFile.stage,
-        subject: existingFile.subject,
-        unit: existingFile.unit,
-        file: `${process.env.BASE_URL}${fileUrl}`,
-      });
-    } else {
-      // Save metadata in a separate collection
-      const newfile = new File({
-        title,
-        stage,
-        file: fileUrl,
-        subject,
-        unit,
-      });
+    await newfile.save();
 
-      await newfile.save();
-
-      res.status(201).json({
-        fileId: newfile._id,
-        title: newfile.title,
-        stage: newfile.stage,
-        subject: newfile.subject,
-        unit: newfile.unit,
-        file: `${process.env.BASE_URL}${fileUrl}`,
-      });
-    }
+    res.status(201).json({
+      fileId: newfile._id,
+      title: newfile.title,
+      stage: newfile.stage,
+      subject: newfile.subject,
+      unit: newfile.unit,
+      file: `${process.env.BASE_URL}${fileUrl}`, // Include the base URL
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "حدث خطأ أثناء رفع الملف وحفظ البيانات" });
@@ -246,18 +228,6 @@ const downloadFile = async (req, res) => {
     // Extract the file name from the file field
     const fileName = path.basename(file.file); // Extracts the file name
     const filePath = path.join(__dirname, "..", "uploads", fileName);
-
-    // Set headers to control caching and display
-    res.set({
-      "Content-Disposition": "inline",
-      'Content-Type': 'application/pdf',
-      "X-Content-Type-Options": "nosniff",
-      "X-Frame-Options": "SAMEORIGIN",
-      "X-Download-Options": "noopen",
-      "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
-      Pragma: "no-cache",
-      Expires: "0",
-    });
 
     res.download(filePath, file.title, (err) => {
       if (err) {
