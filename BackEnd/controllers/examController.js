@@ -424,7 +424,7 @@ const getExamDataForAdmin = async (req, res) => {
 
     // Fetch all exams for the given stage
     const exams = await Exam.find({ stage }).lean();
-    
+
     if (exams.length === 0) {
       return res.status(200).json([]);
     }

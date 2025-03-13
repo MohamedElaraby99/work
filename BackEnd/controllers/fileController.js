@@ -68,9 +68,6 @@ const uploadFile = async (req, res) => {
     if (!unit) {
       return res.status(400).json({ message: "الوحدة مطلوبة" });
     }
-
-    console.log(req.file);
-
     const fileUrl = `/uploads/${req.file.filename}`;
 
     // Save metadata in a separate collection
@@ -180,14 +177,14 @@ const updateFile = async (req, res) => {
 const deleteFile = async (req, res) => {
   const { id } = req.params;
   try {
-    // Find the file in the database
+    // البحث عن الملف في قاعدة البيانات
     const file = await File.findById(id);
 
     if (!file) {
       return res.status(404).json({ message: "الملف غير موجود" });
     }
 
-    // Construct the file path
+    // بناء مسار الملف
     const filePath = path.join(
       __dirname,
       "..",
@@ -195,8 +192,8 @@ const deleteFile = async (req, res) => {
       path.basename(file.file)
     );
 
-    if (filePath) {
-      // Delete the file from the file system
+    // التحقق مما إذا كان الملف موجودًا قبل محاولة حذفه
+    if (fs.existsSync(filePath)) {
       fs.unlink(filePath, (err) => {
         if (err) {
           console.error("Error deleting file:", err);
@@ -205,15 +202,19 @@ const deleteFile = async (req, res) => {
             .json({ message: "حدث خطأ أثناء حذف الملف من النظام" });
         }
       });
+    } else {
+      console.warn(
+        "الملف غير موجود في النظام، سيتم حذفه من قاعدة البيانات فقط."
+      );
     }
 
-    // Delete the file record from the database
+    // حذف سجل الملف من قاعدة البيانات
     await file.deleteOne();
 
     res.status(200).json({ message: "تم حذف الملف بنجاح" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "حدث خطاء اثناء حذف الملف" });
+    res.status(500).json({ message: "حدث خطأ أثناء حذف الملف" });
   }
 };
 
