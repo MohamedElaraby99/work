@@ -516,8 +516,12 @@ const getExamDataForAdmin = async (req, res) => {
       // Map answers to include question details
       const submissionsWithQuestions = examSubmissions.map((submission) => ({
         student: {
-          name: submission?.user_id?.name || "Unknown",
-          stage: submission?.user_id?.stage || stage,
+          name: submission?.user_id?.name || "غير معرف",
+          stage: submission?.user_id?.stage
+            ? stage
+            : submission?.user_id?.stage === ""
+            ? "مشرف"
+            : "غير معرف",
         },
         score: submission.score,
         status: "حضر", // "Did not attend"
