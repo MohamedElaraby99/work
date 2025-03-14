@@ -275,7 +275,7 @@
   bottom: 10px;
   width: 100%;
   z-index: 3;
-  height: 30px;
+  height: 20px;
 }
 
 .control-buttonn {
@@ -332,7 +332,7 @@
   }
   .timeline-container {
     font-size: xx-small;
-    height: 20px;
+    height: 17px;
   }
   .timeline-slider {
     height: 5px;

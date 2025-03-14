@@ -201,18 +201,18 @@ const VideoDetailsPage = () => {
 
               <div className="video-controls">
                 <button className="control-buttonn" onClick={handleBackward}>
-                  <svg viewBox="0 0 24 24" width="24" height="24" fill="white">
-                    <polygon points="15,3 1,12 15,21" />
-                    <rect x="17" y="3" width="2" height="18" />
+                  <svg viewBox="0 0 24 24" width="15" height="15" fill="white">
+                    <polygon points="9,3 23,12 9,21" />
+                    <rect x="5" y="3" width="2" height="18" />
                   </svg>
                 </button>
 
                 <button className="control-buttonn" onClick={handlePlayPause}>
                   {isPlaying ? (
                     <svg
-                      viewBox="0 0 24 24"
-                      width="24"
-                      height="24"
+                      viewBox="0 0 15 15"
+                      width="15"
+                      height="15"
                       fill="white"
                     >
                       <rect x="6" y="4" width="4" height="16" />
@@ -231,9 +231,9 @@ const VideoDetailsPage = () => {
                 </button>
 
                 <button className="control-buttonn" onClick={handleForward}>
-                  <svg viewBox="0 0 24 24" width="24" height="24" fill="white">
-                    <polygon points="9,3 23,12 9,21" />
-                    <rect x="5" y="3" width="2" height="18" />
+                  <svg viewBox="0 0 24 24" width="15" height="15" fill="white">
+                    <polygon points="15,3 1,12 15,21" />
+                    <rect x="17" y="3" width="2" height="18" />
                   </svg>
                 </button>
 
