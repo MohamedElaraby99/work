@@ -127,7 +127,6 @@ const VideoDetailsPage = () => {
     }
   };
 
-  // Added speed change handler
   const handleSpeedChange = (event) => {
     const newSpeed = parseFloat(event.target.value);
     setSpeed(newSpeed);
@@ -168,7 +167,7 @@ const VideoDetailsPage = () => {
         </div>
         <div className="video-details-page">
           <div className="video-player-container" ref={videoContainerRef}>
-            <div className="video-overlay"></div>
+            <div className="video-overlay" onClick={handlePlayPause}></div>
             <iframe
               id="youtube-player"
               src={videoEmbedUrl}
@@ -176,6 +175,16 @@ const VideoDetailsPage = () => {
               className={`video-player ${isFullscreen ? "fullscreen" : ""}`}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             ></iframe>
+            {/* زر التشغيل في المنتصف */}
+            <button
+              className="center-play-button"
+              onClick={handlePlayPause}
+              style={{ display: isPlaying ? "none" : "block" }}
+            >
+              <svg viewBox="0 0 24 24" width="50" height="50" fill="white">
+                <polygon points="5,3 19,12 5,21" />
+              </svg>
+            </button>
             <div className="video-con">
               <div className="timeline-container">
                 <span>{formatTime(progress)}</span>
@@ -192,15 +201,40 @@ const VideoDetailsPage = () => {
 
               <div className="video-controls">
                 <button className="control-buttonn" onClick={handleBackward}>
-                  →
+                  <svg viewBox="0 0 24 24" width="24" height="24" fill="white">
+                    <polygon points="15,3 1,12 15,21" />
+                    <rect x="17" y="3" width="2" height="18" />
+                  </svg>
                 </button>
 
                 <button className="control-buttonn" onClick={handlePlayPause}>
-                  {isPlaying ? " إيقاف" : " تشغيل"}
+                  {isPlaying ? (
+                    <svg
+                      viewBox="0 0 24 24"
+                      width="24"
+                      height="24"
+                      fill="white"
+                    >
+                      <rect x="6" y="4" width="4" height="16" />
+                      <rect x="14" y="4" width="4" height="16" />
+                    </svg>
+                  ) : (
+                    <svg
+                      viewBox="0 0 24 24"
+                      width="24"
+                      height="24"
+                      fill="white"
+                    >
+                      <polygon points="5,3 19,12 5,21" />
+                    </svg>
+                  )}
                 </button>
 
                 <button className="control-buttonn" onClick={handleForward}>
-                  ←
+                  <svg viewBox="0 0 24 24" width="24" height="24" fill="white">
+                    <polygon points="9,3 23,12 9,21" />
+                    <rect x="5" y="3" width="2" height="18" />
+                  </svg>
                 </button>
 
                 <select
@@ -226,7 +260,6 @@ const VideoDetailsPage = () => {
                   onChange={handleVolumeChange}
                 />
 
-                {/* Modified speed control */}
                 <select
                   className="control-select"
                   onChange={handleSpeedChange}
@@ -242,14 +275,34 @@ const VideoDetailsPage = () => {
                   className="control-buttonn"
                   onClick={handleFullscreenToggle}
                 >
-                  {isFullscreen ? "🔲 تصغير" : "⛶ تكبير"}
+                  {isFullscreen ? (
+                    <svg
+                      viewBox="0 0 24 24"
+                      width="24"
+                      height="24"
+                      fill="white"
+                    >
+                      <path d="M5 16h3v3h2v-5H5v2zm9-2h5v-2h-3v-3h-2v5zm-4 7v-2H5v-5H3v7h7zm11-7v-5h-5v-2h7v7h-2z" />
+                    </svg>
+                  ) : (
+                    <svg
+                      viewBox="0 0 24 24"
+                      width="24"
+                      height="24"
+                      fill="white"
+                    >
+                      <path d="M7 7H5v2H2v2h5V7zm10 0h2v4h5V9h-3V7h-4zm0 10v-2h3v-2h-5v4h2zm-10 0v-4H2v2h3v2h2z" />
+                    </svg>
+                  )}
                 </button>
 
                 <button
                   className="control-buttonn rotate-button"
                   onClick={handleRotateScreen}
                 >
-                  قلب الشاشة
+                  <svg viewBox="0 0 24 24" width="24" height="24" fill="white">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm2-10h-4v2h4v4l3-3-3-3z" />
+                  </svg>
                 </button>
               </div>
             </div>

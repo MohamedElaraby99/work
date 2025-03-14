@@ -24,6 +24,62 @@
   padding-bottom: 10px;
 }
 
+/* تحذير البداية */
+.warning-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.9);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.warning-modal {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  max-width: 500px;
+  text-align: center;
+  direction: rtl;
+}
+
+.warning-modal h3 {
+  color: #dc3545;
+  margin-bottom: 1rem;
+}
+
+.warning-modal ul {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.warning-modal li {
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  background: #ffe6e6;
+  border-radius: 5px;
+}
+
+.confirm-button {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 0.8rem 2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  margin-top: 1rem;
+}
+
+.confirm-button:hover {
+  background: #218838;
+}
+
 /* Form container for the questions */
 .exam-system-form {
   width: 100%;

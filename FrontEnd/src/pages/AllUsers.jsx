@@ -16,7 +16,7 @@ const AllUsers = () => {
     stage: "",
     password: "",
     role: "",
-    subject: "",
+    subject: [],
   });
   const [selectedTable, setSelectedTable] = useState("students");
   const [selectedStage, setSelectedStage] = useState("");
@@ -102,13 +102,13 @@ const AllUsers = () => {
 
     // إذا تم اختيار "رياضيات" بشكل عام
     if (selectedSubject === "رياضيات") {
-      return ["جبر", "هندسة", "مثلثات", "تفاضل", "إحصاء"].includes(
-        user.subject
+      return ["جبر", "هندسة", "مثلثات", "تفاضل", "إحصاء"].some((sub) =>
+        user.subject.includes(sub)
       );
     }
 
     // التصفية العادية للمواد الأخرى
-    return user.subject === selectedSubject;
+    return user.subject.includes(selectedSubject);
   };
 
   const students = filteredUsers.filter(
@@ -219,6 +219,7 @@ const AllUsers = () => {
                           name="subject"
                           value={editData.subject}
                           onChange={handleEditChange}
+                          multiple
                         >
                           <option value="تاريخ">تاريخ</option>
                           <option value="انجليزي">لغة انجليزية</option>

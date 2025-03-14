@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import ResultComponent from "./ResultComponent";
 import "react-toastify/dist/ReactToastify.css";
 import "./../styles/ExamsSystem.css";
@@ -7,6 +7,7 @@ import { toast, ToastContainer } from "react-toastify";
 
 const ExamsSystem = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const examData = location.state?.exam;
 
   const [questionsArray] = useState(examData?.questions || []);
@@ -19,9 +20,49 @@ const ExamsSystem = () => {
   const [timeLeft, setTimeLeft] = useState(null);
   const [isTimeUp, setIsTimeUp] = useState(false);
   const [notificationSent, setNotificationSent] = useState(false);
+  const [examSubmitted, setExamSubmitted] = useState(false);
+  const [showWarning, setShowWarning] = useState(true);
 
   useEffect(() => {
-    if (!examData) return;
+    const checkSubmission = async () => {
+      try {
+        const accessToken = localStorage.getItem("accessToken");
+        const response = await fetch(
+          `${process.env.REACT_APP_BASE_URL}/exams/check-submission/${examData.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+
+        if (response.ok) {
+          const result = await response.json();
+          if (result.submitted) {
+            setExamSubmitted(true);
+            toast.error("لقد قدمت هذا الامتحان مسبقاً!", { autoClose: 3000 });
+            setTimeout(() => navigate("/"), 3000);
+          }
+        }
+      } catch (error) {
+        console.error("Error checking submission:", error);
+      }
+    };
+
+    const submittedExams = JSON.parse(
+      localStorage.getItem("submittedExams") || "[]"
+    );
+    if (submittedExams.includes(examData?.id)) {
+      setExamSubmitted(true);
+      toast.error("لقد قدمت هذا الامتحان مسبقاً!", { autoClose: 3000 });
+      setTimeout(() => navigate("/"), 3000);
+    } else {
+      if (examData?.id) checkSubmission();
+    }
+  }, [examData?.id, navigate]);
+
+  useEffect(() => {
+    if (!examData || examSubmitted) return;
 
     const examStartTime = new Date(examData.date).getTime();
     const examDurationMs = examData.duration * 60 * 1000;
@@ -35,7 +76,7 @@ const ExamsSystem = () => {
         clearInterval(timer);
         setIsTimeUp(true);
         setTimeLeft(0);
-        handleSubmit(); // Automatically submit the exam when time is up
+        handleSubmit();
       } else {
         setTimeLeft(timeRemaining);
         if (timeRemaining <= 5 * 60 * 1000 && !notificationSent) {
@@ -51,73 +92,101 @@ const ExamsSystem = () => {
     const handleBeforeUnload = (event) => {
       if (!submitted && !isTimeUp) {
         event.preventDefault();
-        const confirmation = window.confirm(
-          "هل أنت متأكد أنك تريد الخروج؟ سيتم تقديم الامتحان تلقائيًا إذا اخترت موافق."
-        );
-        if (confirmation) {
-          handleSubmit(); // Submit the exam if "OK" is chosen
-        }
-        event.returnValue = ""; // Ensure the default browser alert is shown
+        handleSubmit();
+        event.returnValue = "";
       }
     };
 
     const enterFullScreen = () => {
       const element = document.documentElement;
       if (element.requestFullscreen) {
-        element.requestFullscreen().catch((err) => {
-          console.error("Error attempting to enable full-screen mode:", err);
-        });
+        element.requestFullscreen().catch(console.error);
       } else if (element.mozRequestFullScreen) {
-        element.mozRequestFullScreen().catch((err) => {
-          console.error("Error attempting to enable full-screen mode:", err);
-        });
+        element.mozRequestFullScreen().catch(console.error);
       } else if (element.webkitRequestFullscreen) {
-        element.webkitRequestFullscreen().catch((err) => {
-          console.error("Error attempting to enable full-screen mode:", err);
-        });
+        element.webkitRequestFullscreen().catch(console.error);
       } else if (element.msRequestFullscreen) {
-        element.msRequestFullscreen().catch((err) => {
-          console.error("Error attempting to enable full-screen mode:", err);
-        });
+        element.msRequestFullscreen().catch(console.error);
       }
     };
 
     const exitFullScreen = () => {
       if (document.exitFullscreen) {
-        document.exitFullscreen().catch((err) => {
-          console.error("Error attempting to exit full-screen mode:", err);
-        });
+        document.exitFullscreen().catch(console.error);
       } else if (document.mozCancelFullScreen) {
-        document.mozCancelFullScreen().catch((err) => {
-          console.error("Error attempting to exit full-screen mode:", err);
-        });
+        document.mozCancelFullScreen().catch(console.error);
       } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen().catch((err) => {
-          console.error("Error attempting to exit full-screen mode:", err);
-        });
+        document.webkitExitFullscreen().catch(console.error);
       } else if (document.msExitFullscreen) {
-        document.msExitFullscreen().catch((err) => {
-          console.error("Error attempting to exit full-screen mode:", err);
+        document.msExitFullscreen().catch(console.error);
+      }
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "hidden" && !submitted && !isTimeUp) {
+        handleSubmit();
+        toast.error("تم تقديم الامتحان تلقائياً بسبب تغيير الصفحة!", {
+          position: "top-right",
+          autoClose: 3000,
+        });
+      }
+    };
+
+    const disableTouchGestures = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    };
+
+    document.body.style.overflow = "hidden";
+    document.body.style.touchAction = "none";
+    document.addEventListener("touchmove", disableTouchGestures, {
+      passive: false,
+    });
+    document.addEventListener("gesturestart", disableTouchGestures);
+
+    const handleFullscreenChange = () => {
+      if (!document.fullscreenElement && !submitted && !isTimeUp) {
+        enterFullScreen();
+        toast.warning("الرجاء البقاء في وضع الملء الشاشة!", {
+          position: "top-right",
+          autoClose: 2000,
         });
       }
     };
 
     enterFullScreen();
     window.addEventListener("beforeunload", handleBeforeUnload);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
+
+    const fullscreenChecker = setInterval(() => {
+      if (!document.fullscreenElement && !submitted && !isTimeUp) {
+        enterFullScreen();
+      }
+    }, 1000);
 
     return () => {
       clearInterval(timer);
+      clearInterval(fullscreenChecker);
       window.removeEventListener("beforeunload", handleBeforeUnload);
-      if (
-        document.fullscreenElement ||
-        document.mozFullScreenElement ||
-        document.webkitFullscreenElement ||
-        document.msFullscreenElement
-      ) {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+      document.removeEventListener(
+        "webkitfullscreenchange",
+        handleFullscreenChange
+      );
+      document.removeEventListener("touchmove", disableTouchGestures);
+      document.removeEventListener("gesturestart", disableTouchGestures);
+      document.body.style.overflow = "";
+      document.body.style.touchAction = "";
+
+      if (document.fullscreenElement) {
         exitFullScreen();
       }
     };
-  }, [examData, notificationSent, submitted, isTimeUp]);
+  }, [examData, notificationSent, submitted, isTimeUp, examSubmitted]);
 
   const handleAnswerChange = (questionId, optionIndex) => {
     setAnswers((prevAnswers) =>
@@ -160,13 +229,21 @@ const ExamsSystem = () => {
         }
       );
 
-      if (!response.ok) {
-        throw new Error("فشل في إرسال الإجابات.");
-      }
+      if (!response.ok) throw new Error("فشل في إرسال الإجابات.");
 
       const result = await response.json();
       setSubmissionResult(result);
       setSubmitted(true);
+
+      const submittedExams = JSON.parse(
+        localStorage.getItem("submittedExams") || "[]"
+      );
+      localStorage.setItem(
+        "submittedExams",
+        JSON.stringify([...submittedExams, examData.id])
+      );
+
+      toast.dismiss("startWarning");
     } catch (error) {
       console.error("حدث خطأ أثناء إرسال الإجابات:", error);
       toast.error("حدث خطأ أثناء إرسال الإجابات. تم تقديم الامتحان.", {
@@ -190,6 +267,39 @@ const ExamsSystem = () => {
       .padStart(2, "0")}`;
   };
 
+  const WarningModal = () => (
+    <div className="warning-overlay">
+      <div className="warning-modal">
+        <h3>⚠️ انتبه!</h3>
+        <p>يمنع منعاً باتاً:</p>
+        <ul>
+          <li>محاولة الخروج من الصفحة</li>
+          <li>تبديل التبويبات أو التطبيقات</li>
+          <li>إعادة تحميل الصفحة</li>
+        </ul>
+        <p>سيؤدي أي من هذه الإجراءات إلى إلغاء الامتحان فوراً!</p>
+        <button
+          className="confirm-button"
+          onClick={() => {
+            setShowWarning(false);
+            toast.dismiss("startWarning");
+          }}
+        >
+          أوافق على الشروط
+        </button>
+      </div>
+    </div>
+  );
+
+  if (examSubmitted) {
+    return (
+      <div className="submitted-message">
+        <h2>لا يمكنك الوصول لهذا الامتحان</h2>
+        <p>لقد قمت بتقديم هذا الامتحان مسبقاً</p>
+      </div>
+    );
+  }
+
   if (showResult) {
     return (
       <ResultComponent
@@ -210,43 +320,47 @@ const ExamsSystem = () => {
   }
 
   return (
-    <div className="exam-system-container">
-      <ToastContainer />
-      <div className="exam-header">
-        <h2 className="exam-system-title">{examData?.title}</h2>
-        <p className="timer-display">
-          <span className="timer">{formatTime(timeLeft)}</span> دقيقة
-        </p>
-        <p>{examData?.description}</p>
-      </div>
-      {!submitted ? (
-        <form className="exam-system-form">
-          {questionsArray.map((q, index) => (
-            <div key={q._id} className="exam-question-container">
-              {q.image && (
-                <div className="exam-image-container">
-                  <img
-                    src={q.image}
-                    alt={`صورة للسؤال ${index + 1}`}
-                    className="exam-image"
-                  />
-                </div>
-              )}
+    <>
+      {showWarning && <WarningModal />}
 
-              <h3 className="exam-question">
-                السؤال {index + 1}: {q.question}
-              </h3>
+      <div className="exam-system-container">
+        <ToastContainer />
+        <div className="exam-header">
+          <h2 className="exam-system-title">{examData?.title}</h2>
+          <p className="timer-display">
+            <span className="timer">{formatTime(timeLeft)}</span> دقيقة
+          </p>
+          <p>{examData?.description}</p>
+        </div>
 
-              <ul className="exam-options-list">
-                {q.options.map((option, optIndex) => {
-                  const optionClass = `exam-option ${
-                    answers[index]?.selectedAnswer === optIndex
-                      ? "exam-option-selected"
-                      : ""
-                  }`;
+        {!submitted ? (
+          <form className="exam-system-form">
+            {questionsArray.map((q, index) => (
+              <div key={q._id} className="exam-question-container">
+                {q.image && (
+                  <div className="exam-image-container">
+                    <img
+                      src={q.image}
+                      alt={`صورة للسؤال ${index + 1}`}
+                      className="exam-image"
+                    />
+                  </div>
+                )}
 
-                  return (
-                    <li key={optIndex} className={optionClass}>
+                <h3 className="exam-question">
+                  السؤال {index + 1}: {q.question}
+                </h3>
+
+                <ul className="exam-options-list">
+                  {q.options.map((option, optIndex) => (
+                    <li
+                      key={optIndex}
+                      className={`exam-option ${
+                        answers[index]?.selectedAnswer === optIndex
+                          ? "exam-option-selected"
+                          : ""
+                      }`}
+                    >
                       <input
                         type="radio"
                         id={`option-${q._id}-${optIndex}`}
@@ -263,36 +377,36 @@ const ExamsSystem = () => {
                         {option}
                       </label>
                     </li>
-                  );
-                })}
-              </ul>
-            </div>
-          ))}
+                  ))}
+                </ul>
+              </div>
+            ))}
 
-          <button
-            type="button"
-            onClick={handleSubmit}
-            className="exam-submit-button"
-          >
-            تقديم الامتحان
-          </button>
-        </form>
-      ) : (
-        <div className="submitted-message">
-          <p>
-            <span className="submitted-text">تم تقديم الامتحان.</span> اضغط على
-            زر عرض التفاصيل لمعرفة النتيجة. ↓
-          </p>
-          <button
-            type="button"
-            onClick={handleShowResult}
-            className="show-result-button"
-          >
-            عرض التفاصيل
-          </button>
-        </div>
-      )}
-    </div>
+            <button
+              type="button"
+              onClick={handleSubmit}
+              className="exam-submit-button"
+            >
+              تقديم الامتحان
+            </button>
+          </form>
+        ) : (
+          <div className="submitted-message">
+            <p>
+              <span className="submitted-text">تم تقديم الامتحان.</span> اضغط
+              على زر عرض التفاصيل لمعرفة النتيجة. ↓
+            </p>
+            <button
+              type="button"
+              onClick={handleShowResult}
+              className="show-result-button"
+            >
+              عرض التفاصيل
+            </button>
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 
