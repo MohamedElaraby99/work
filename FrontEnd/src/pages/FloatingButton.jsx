@@ -11,7 +11,7 @@ const FloatingButton = () => {
   return (
     <div className="floating-button-container">
       <button className="floating-button" onClick={toggleIcons}>
-        {showIcons ? "Hide" : "تواصل معنا"}
+        {showIcons ? "إخفاء" : "تواصل معنا"}
       </button>
       {showIcons && (
         <div className="icon-container">
