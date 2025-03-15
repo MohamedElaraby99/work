@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./../styles/HomePage.css";
 import Loader from "./Loader";
+import About from "./about";
 
 const HomePage = () => {
   const [announcements, setAnnouncements] = useState([]);
@@ -42,9 +43,9 @@ const HomePage = () => {
         </h2>
         {loadingAnnouncements ? (
           <h2>
-          <span className="material-icons">campaign</span>
-         <Loader />
-        </h2>
+            <span className="material-icons">campaign</span>
+            <Loader />
+          </h2>
         ) : errorAnnouncements ? (
           <p className="error-message">{errorAnnouncements}</p>
         ) : announcements.length > 0 ? (
@@ -62,6 +63,14 @@ const HomePage = () => {
           <p>لا توجد إعلانات في الوقت الحالي.</p>
         )}
       </section>
+
+      {/* About Section */}
+      <About />
+      <div className="footer">
+        <p className="footer-text">
+          &copy; {new Date().getFullYear()} - منصة فور جي - جميع الحقوق - محفوظة
+        </p>
+      </div>
     </div>
   );
 };

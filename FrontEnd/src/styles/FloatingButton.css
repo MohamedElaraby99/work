@@ -1,0 +1,94 @@
+/* الحاوية الرئيسية */
+.floating-button-container {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 1000;
+  perspective: 1500px; /* زيادة التأثير ثلاثي الأبعاد */
+}
+
+/* زر الـ Share العائم */
+.floating-button {
+  background: linear-gradient(135deg, #ff6ec7, #00ddeb);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 14px 28px;
+  font-size: 18px;
+  font-weight: 700;
+  font-family: 'Arial', sans-serif;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(255, 110, 199, 0.8), 0 0 30px rgba(0, 221, 235, 0.6); /* توهج أقوى */
+  transition: all 0.4s ease;
+  transform: rotateX(0deg) rotateY(0deg);
+}
+
+.floating-button:hover {
+  transform: translateY(-10px) rotateX(20deg) rotateY(20deg); /* تأثير 3D أكثر درامية */
+  box-shadow: 0 0 30px rgba(255, 110, 199, 1), 0 0 50px rgba(0, 221, 235, 0.9); /* توهج أقوى */
+  background: linear-gradient(135deg, #ff8ed1, #00f0ff);
+}
+
+/* حاوية الأيقونات */
+.icon-container {
+  position: absolute;
+  bottom: 80px;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  animation: popIn 0.5s ease forwards;
+}
+
+/* الأيقونات */
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  text-decoration: none;
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+  transform: scale(1) rotate(0deg);
+}
+
+.icon:hover {
+  transform: scale(1.3) rotate(10deg); /* تكبير وتدوير أكثر */
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.9), 0 0 40px rgba(255, 255, 255, 0.7);
+}
+
+/* تخصيص الأيقونات حسب المنصة */
+.facebook {
+  background: radial-gradient(circle, #3b5998, #2a4373);
+}
+
+.whatsapp {
+  background: radial-gradient(circle, #25d366, #1da851);
+}
+
+/* لون الأيقونات داخل العناصر */
+.icon .material-icons {
+  color: #fff;
+  font-size: 32px;
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.6));
+}
+
+/* تأثير الظهور المتطور */
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.4);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-10px) scale(1.2);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

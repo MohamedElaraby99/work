@@ -12,7 +12,6 @@ import ExamsPage from "./pages/ExamsPage";
 import PdfPage from "./pages/PdfPage";
 import DashboardPage from "./pages/DashboardPage";
 import Layout from "./pages/Layout";
-import Footer from "./pages/Footer";
 import ExamDetails from "./pages/examDetails";
 import ExamsSystem from "./pages/ExamsSysytem";
 import UserPage from "./pages/User";
@@ -101,7 +100,7 @@ const App = () => {
               )}
               <Route path="*" element={<Navigate to="/home" />} />
             </Routes>
-            <Footer />
+            
           </Layout>
         )}
       </div>

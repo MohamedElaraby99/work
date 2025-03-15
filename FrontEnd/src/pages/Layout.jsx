@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./../styles/Layout.css";
+import FloatingButton from "./FloatingButton"; // Import the FloatingButton component
 
 const Layout = ({ children, role }) => {
   const navigate = useNavigate();
@@ -11,7 +12,6 @@ const Layout = ({ children, role }) => {
     setIsSidebarOpen((prevState) => !prevState);
   }, []);
 
-  // إدارة حالة التمرير
   useEffect(() => {
     if (isSidebarOpen) {
       document.body.classList.add("menu-open");
@@ -20,7 +20,6 @@ const Layout = ({ children, role }) => {
     }
   }, [isSidebarOpen]);
 
-  // إغلاق القائمة عند النقر خارجها
   const handleClickOutside = useCallback(
     (e) => {
       if (
@@ -34,7 +33,6 @@ const Layout = ({ children, role }) => {
     [isSidebarOpen]
   );
 
-  // إضافة/إزالة مستمع الأحداث
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
     return () => {
@@ -105,7 +103,7 @@ const Layout = ({ children, role }) => {
             </li>
             <li className={location.pathname === "/french" ? "active" : ""}>
               <Link to="/french">
-                <span class="material-icons">token</span>
+                <span className="material-icons">token</span>
                 اللغة الفرنسية
               </Link>
             </li>
@@ -128,6 +126,17 @@ const Layout = ({ children, role }) => {
               </li>
             )}
           </ul>
+          <FloatingButton />
+          <p className="developer">
+            <a
+              href="https://www.facebook.com/share/15yTFSwF4n/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer-link developer-link"
+            >
+               Fikra Software
+            </a>
+          </p>
         </aside>
 
         <div className="page-content">

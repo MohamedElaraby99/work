@@ -3,6 +3,9 @@
   color: #333; /* Dark text */
   padding: 0px 10px;
   text-align: center;
+  font-family: "cairo", sans-serif;
+  direction: rtl;
+  border-radius: 10px;
 }
 
 .about-container {
