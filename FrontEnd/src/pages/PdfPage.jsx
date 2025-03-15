@@ -8,7 +8,6 @@ import "./../styles/pdfs.css";
 import Loader from "./Loader";
 import { useLocation } from "react-router-dom";
 
-// تهيئة العامل لـ pdf.js
 pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
 
 const PdfPage = () => {
@@ -16,10 +15,12 @@ const PdfPage = () => {
   const { subject, unit } = location.state;
 
   const [pdfFiles, setPdfFiles] = useState([]);
-  const [loading, setLoading] = useState(true); // لتحميل قائمة الملفات
-  const [pdfLoading, setPdfLoading] = useState(false); // لتحميل صفحات PDF
+  const [loading, setLoading] = useState(true);
+  const [pdfLoading, setPdfLoading] = useState(false);
   const [error, setError] = useState(null);
   const [pdfPages, setPdfPages] = useState([]);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     const fetchPdfs = async () => {
@@ -45,7 +46,7 @@ const PdfPage = () => {
   }, [subject, unit]);
 
   const handleViewPdf = async (url) => {
-    setPdfLoading(true); // إظهار الـ Loader
+    setPdfLoading(true);
     try {
       const fullUrl = `${process.env.REACT_APP_PDF}${
         url.split("/uploads/")[1]
@@ -76,23 +77,38 @@ const PdfPage = () => {
       }
 
       setPdfPages(pages);
-      setPdfLoading(false); // إخفاء الـ Loader بعد اكتمال التحميل
+      setPdfLoading(false);
     } catch (error) {
       console.error("Error rendering PDF:", error);
       setError("حدث خطأ أثناء تحميل صفحات الملف.");
-      setPdfLoading(false); // إخفاء الـ Loader في حالة الخطأ
+      setPdfLoading(false);
     }
   };
 
-  // إعدادات السلايدر الأساسية بدون تحسينات
+  const handleClosePdf = () => {
+    setPdfPages([]);
+  };
+
+  const handleFullscreenToggle = () => {
+    const viewer = document.querySelector(".pdf-viewer");
+    if (!isFullscreen) {
+      viewer.requestFullscreen();
+      setIsFullscreen(true);
+    } else {
+      document.exitFullscreen();
+      setIsFullscreen(false);
+    }
+  };
+
   const sliderSettings = {
-    dots: false, // إظهار النقاط
-    infinite: true, // تكرار السلايدر
-    speed: 500, // سرعة الانتقال
-    slidesToShow: 1, // عرض صورة واحدة فقط
-    slidesToScroll: 1, // التمرير بصورة واحدة
-    rtl: true, // من اليمين إلى اليسار
-    arrows: true, // إظهار الأسهم
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    rtl: true,
+    arrows: true,
+    afterChange: (current) => setCurrentPage(current + 1), // تحديث الصفحة الحالية
   };
 
   if (loading) return <Loader />;
@@ -119,7 +135,7 @@ const PdfPage = () => {
       </div>
       {pdfLoading && <Loader />}
       {!pdfLoading && pdfPages.length > 0 && (
-        <div className="pdf-viewer" style={{ marginBottom: "60px" }}>
+        <div className="pdf-viewer">
           <Slider {...sliderSettings}>
             {pdfPages.map((page, index) => (
               <div
@@ -133,10 +149,30 @@ const PdfPage = () => {
                   style={{ width: "100%", userSelect: "none" }}
                   draggable="false"
                 />
-                <div />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "0",
+                    left: "0",
+                    width: "100%",
+                    height: "100%",
+                    zIndex: 10,
+                  }}
+                />
               </div>
             ))}
           </Slider>
+          <div className="pdf-controls">
+            <span className="page-counter">
+              صفحة {currentPage} من {pdfPages.length}
+            </span>
+            <button
+              onClick={handleFullscreenToggle}
+              className="fullscreen-button"
+            >
+              {isFullscreen ? "تصغير" : "تكبير"}
+            </button>
+          </div>
         </div>
       )}
     </div>
