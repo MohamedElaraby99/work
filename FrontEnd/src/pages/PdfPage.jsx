@@ -97,8 +97,10 @@ const PdfPage = () => {
     slidesToScroll: 1,
     rtl: true,
     arrows: true,
-    initialSlide: 0, // التأكد من البدء من الصفحة الأولى
+    initialSlide: 0, // البدء من الصفحة الأولى
     afterChange: (current) => setCurrentPage(current + 1), // تحديث الصفحة الحالية
+    swipe: true, // السماح بالتمرير باللمس
+    touchThreshold: 10, // تحسين حساسية اللمس
   };
 
   if (loading) return <Loader />;
@@ -132,8 +134,7 @@ const PdfPage = () => {
                 <img
                   src={page}
                   alt={`صفحة ${index + 1}`}
-                  style={{ width: "100%", userSelect: "none" }}
-                  draggable="false"
+                  className="pdf-image"
                 />
               </div>
             ))}

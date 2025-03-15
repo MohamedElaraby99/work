@@ -88,11 +88,16 @@
   position: relative;
 }
 
-.slick-slide img {
+/* صورة الـ PDF */
+.pdf-image {
   width: 100%;
   height: auto;
   border-radius: 15px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  /* السماح بالتكبير على الهاتف */
+  touch-action: pinch-zoom;
+  -webkit-user-select: auto;
+  user-select: auto;
 }
 
 /* أسهم التنقل */
@@ -170,7 +175,7 @@
 
 .close-button:hover {
   background: linear-gradient(135deg, #ff6b81, #ff4757);
-  transform: rotate(90deg); /* تأثير تدوير عصري */
+  transform: rotate(90deg);
 }
 
 /* التصميم المتجاوب */
