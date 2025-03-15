@@ -301,7 +301,7 @@ const AllVideos = () => {
                       className="edit-input"
                     />
                   ) : (
-                    video.notes
+                    truncateText(video.notes, 50)
                   )}
                 </td>
                 <td>
