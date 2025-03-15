@@ -97,10 +97,11 @@ const PdfPage = () => {
     slidesToScroll: 1,
     rtl: true,
     arrows: true,
-    initialSlide: 0, // البدء من الصفحة الأولى
+    initialSlide: 0, // التأكد من البدء من الصفحة الأولى
     afterChange: (current) => setCurrentPage(current + 1), // تحديث الصفحة الحالية
     swipe: true, // السماح بالتمرير باللمس
     touchThreshold: 10, // تحسين حساسية اللمس
+    swipeToSlide: true, // تحسين التمرير
   };
 
   if (loading) return <Loader />;
@@ -128,17 +129,19 @@ const PdfPage = () => {
       {pdfLoading && <Loader />}
       {!pdfLoading && pdfPages.length > 0 && (
         <div className="pdf-viewer">
-          <Slider {...sliderSettings}>
-            {pdfPages.map((page, index) => (
-              <div className="pdf-page" key={index}>
-                <img
-                  src={page}
-                  alt={`صفحة ${index + 1}`}
-                  className="pdf-image"
-                />
-              </div>
-            ))}
-          </Slider>
+          <div className="slider-container">
+            <Slider {...sliderSettings}>
+              {pdfPages.map((page, index) => (
+                <div className="pdf-page" key={index}>
+                  <img
+                    src={page}
+                    alt={`صفحة ${index + 1}`}
+                    className="pdf-image"
+                  />
+                </div>
+              ))}
+            </Slider>
+          </div>
           <div className="pdf-controls">
             <span className="page-counter">
               صفحة {currentPage} من {pdfPages.length}

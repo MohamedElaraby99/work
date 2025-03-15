@@ -79,13 +79,26 @@
   border-radius: 25px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
   padding: 30px;
-  overflow: hidden;
-  transition: all 0.3s ease;
+  overflow: visible; /* السماح بالتكبير خارج الحاوية */
+}
+
+/* حاوية السلايدر */
+.slider-container {
+  position: relative;
+  width: 100%;
+  overflow: visible; /* السماح بالتكبير */
 }
 
 /* السلايدر */
 .slick-slider {
   position: relative;
+  width: 100%;
+  overflow: visible; /* السماح بالتكبير */
+}
+
+/* صفحة الـ PDF */
+.pdf-page {
+  width: 100%;
 }
 
 /* صورة الـ PDF */
