@@ -6,13 +6,12 @@ import Loader from "./Loader";
 const AllVideos = () => {
   const [videos, setVideos] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedSubject, setSelectedSubject] = useState(""); // State for subject filter
-  const [selectedMathTopic, setSelectedMathTopic] = useState(""); // State for math subtopic filter
+  const [selectedSubject, setSelectedSubject] = useState("");
+  const [selectedMathTopic, setSelectedMathTopic] = useState("");
   const [editingVideo, setEditingVideo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch videos (lessons) from the API
   useEffect(() => {
     const fetchVideos = async () => {
       try {
@@ -48,7 +47,7 @@ const AllVideos = () => {
 
   const handleSubjectChange = (e) => {
     setSelectedSubject(e.target.value);
-    setSelectedMathTopic(""); // Reset math subtopic when subject changes
+    setSelectedMathTopic("");
   };
 
   const handleMathTopicChange = (e) => {
@@ -107,6 +106,13 @@ const AllVideos = () => {
   const handleEditChange = (e) => {
     const { name, value } = e.target;
     setEditingVideo({ ...editingVideo, [name]: value });
+  };
+
+  const truncateText = (text, maxLength) => {
+    if (text.length <= maxLength) {
+      return text;
+    }
+    return text.substring(0, maxLength) + "...";
   };
 
   const filteredVideos = videos.filter(
@@ -192,7 +198,7 @@ const AllVideos = () => {
                       className="edit-input"
                     />
                   ) : (
-                    video.title
+                    truncateText(video.title, 20)
                   )}
                 </td>
                 <td>
@@ -283,7 +289,7 @@ const AllVideos = () => {
                       className="edit-input"
                     />
                   ) : (
-                    video.description
+                    truncateText(video.description, 50)
                   )}
                 </td>
                 <td>
