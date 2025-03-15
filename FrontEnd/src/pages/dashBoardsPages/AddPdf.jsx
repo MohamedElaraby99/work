@@ -9,10 +9,11 @@ const AddPdf = () => {
     name: "",
     file: null,
     stage: "",
-    subject: "", // Keep subject as a string
-    mathTopic: "", // Use a separate state for math topic
+    subject: "",
+    mathTopic: "",
     unit: "",
   });
+  const [loading, setLoading] = useState(false); // State to track loading
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -56,7 +57,8 @@ const AddPdf = () => {
       return;
     }
 
-    // Determine the final subject value
+    setLoading(true); // Set loading to true when upload starts
+
     const finalSubject =
       pdfData.subject === "رياضيات" ? pdfData.mathTopic : pdfData.subject;
 
@@ -95,6 +97,8 @@ const AddPdf = () => {
       toast.error(
         error.response?.data?.message || "حدث خطأ أثناء إضافة الملف!"
       );
+    } finally {
+      setLoading(false); // Set loading to false when upload completes
     }
   };
 
@@ -221,10 +225,11 @@ const AddPdf = () => {
             </select>
           </div>
 
-          <button type="submit" className="submit-button">
-            إضافة ملف PDF
+          <button type="submit" className="submit-button" disabled={loading}>
+            {loading ? "جاري التحميل..." : "إضافة ملف PDF"}
           </button>
         </form>
+        {loading && <p>يرجى الانتظار، جاري تحميل الملف...</p>}
       </div>
     </div>
   );
