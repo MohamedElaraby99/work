@@ -128,26 +128,12 @@ const PdfPage = () => {
         <div className="pdf-viewer">
           <Slider {...sliderSettings}>
             {pdfPages.map((page, index) => (
-              <div
-                className="pdf-page"
-                key={index}
-                style={{ position: "relative" }}
-              >
+              <div className="pdf-page" key={index}>
                 <img
                   src={page}
                   alt={`صفحة ${index + 1}`}
                   style={{ width: "100%", userSelect: "none" }}
                   draggable="false"
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    top: "0",
-                    left: "0",
-                    width: "100%",
-                    height: "100%",
-                    zIndex: 10,
-                  }}
                 />
               </div>
             ))}
