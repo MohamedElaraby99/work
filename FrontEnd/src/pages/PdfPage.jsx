@@ -84,10 +84,6 @@ const PdfPage = () => {
     }
   };
 
-  const handleClosePdf = () => {
-    setPdfPages([]);
-  };
-
   // إعدادات السلايدر الأساسية بدون تحسينات
   const sliderSettings = {
     dots: false, // إظهار النقاط
@@ -126,23 +122,18 @@ const PdfPage = () => {
         <div className="pdf-viewer" style={{ marginBottom: "60px" }}>
           <Slider {...sliderSettings}>
             {pdfPages.map((page, index) => (
-              <div className="pdf-page" key={index} style={{ position: "relative" }}>
+              <div
+                className="pdf-page"
+                key={index}
+                style={{ position: "relative" }}
+              >
                 <img
                   src={page}
                   alt={`صفحة ${index + 1}`}
                   style={{ width: "100%", userSelect: "none" }}
                   draggable="false"
                 />
-                <div
-                  style={{
-                    position: "absolute",
-                    top: "0",
-                    left: "0",
-                    width: "100%",
-                    height: "100%",
-                    zIndex: 10,
-                  }}
-                />
+                <div />
               </div>
             ))}
           </Slider>
