@@ -19,7 +19,6 @@ const PdfPage = () => {
   const [pdfLoading, setPdfLoading] = useState(false);
   const [error, setError] = useState(null);
   const [pdfPages, setPdfPages] = useState([]);
-  const [isFullscreen, setIsFullscreen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -87,17 +86,7 @@ const PdfPage = () => {
 
   const handleClosePdf = () => {
     setPdfPages([]);
-  };
-
-  const handleFullscreenToggle = () => {
-    const viewer = document.querySelector(".pdf-viewer");
-    if (!isFullscreen) {
-      viewer.requestFullscreen();
-      setIsFullscreen(true);
-    } else {
-      document.exitFullscreen();
-      setIsFullscreen(false);
-    }
+    setCurrentPage(1); // إعادة تعيين الصفحة إلى الأولى
   };
 
   const sliderSettings = {
@@ -108,6 +97,7 @@ const PdfPage = () => {
     slidesToScroll: 1,
     rtl: true,
     arrows: true,
+    initialSlide: 0, // التأكد من البدء من الصفحة الأولى
     afterChange: (current) => setCurrentPage(current + 1), // تحديث الصفحة الحالية
   };
 
@@ -166,11 +156,8 @@ const PdfPage = () => {
             <span className="page-counter">
               صفحة {currentPage} من {pdfPages.length}
             </span>
-            <button
-              onClick={handleFullscreenToggle}
-              className="fullscreen-button"
-            >
-              {isFullscreen ? "تصغير" : "تكبير"}
+            <button onClick={handleClosePdf} className="close-button">
+              إغلاق
             </button>
           </div>
         </div>
