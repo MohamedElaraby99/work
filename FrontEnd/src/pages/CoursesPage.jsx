@@ -7,57 +7,82 @@ import Loader from "./Loader";
 const CoursesPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const {subject, unit} = location.state;
+  const { subject, unit } = location.state;
 
-  // حالة لتخزين الفيديوهات
   const [videos, setVideos] = useState([]);
-  const [loading, setLoading] = useState(true); // حالة التحميل
-  const [error, setError] = useState(null); // حالة الخطأ
+  const [filteredVideos, setFilteredVideos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [selectedStage, setSelectedStage] = useState(
+    localStorage.getItem("stage") || ""
+  ); // المرحلة الافتراضية من localStorage
+  const role = localStorage.getItem("role"); // جلب الدور من localStorage
 
-  // جلب الفيديوهات من API عند تحميل الصفحة
+  const stages = ["ثالثة إعدادي", "أولى ثانوي", "ثانية ثانوي", "ثالثة ثانوي"];
+
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const accessToken = localStorage.getItem("accessToken"); // الحصول على رمز المصادقة
-        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/lessons?subject=${subject}&unit=${unit}`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`, // تضمين التوكن
-          },
-        });
+        const accessToken = localStorage.getItem("accessToken");
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/lessons?subject=${subject}&unit=${unit}`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
 
-        setVideos(response.data); // تخزين البيانات القادمة من API
-        setError(null); // إعادة تعيين الخطأ إذا نجحت العملية
+        setVideos(response.data);
+        setFilteredVideos(response.data); // تعيين الفيديوهات الأولية
+        setError(null);
       } catch (err) {
-        setError("حدث خطأ أثناء تحميل الفيديوهات."); // التعامل مع الأخطاء
+        setError("حدث خطأ أثناء تحميل الفيديوهات.");
       } finally {
-        setLoading(false); // إنهاء حالة التحميل
+        setLoading(false);
       }
     };
 
     fetchVideos();
-  }, []);
+  }, [subject, unit]);
 
-  // استخراج Video ID من الرابط
+  // تصفية الفيديوهات بناءً على المرحلة الدراسية
+  useEffect(() => {
+    if (role !== "admin" && selectedStage) {
+      // إذا لم يكن أدمن، استخدم المرحلة من localStorage فقط
+      setFilteredVideos(
+        videos.filter((video) => video.stage === selectedStage)
+      );
+    } else if (selectedStage) {
+      // إذا كان أدمن وتم اختيار مرحلة، قم بالتصفية
+      setFilteredVideos(
+        videos.filter((video) => video.stage === selectedStage)
+      );
+    } else {
+      // إذا لم يتم اختيار مرحلة (الكل)، اعرض جميع الفيديوهات
+      setFilteredVideos(videos);
+    }
+  }, [selectedStage, videos, role]);
+
   const extractVideoId = (url) => {
     const regExp =
       /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
     const match = url.match(regExp);
-    return match ? match[1] : null; // إذا تم العثور على ID
+    return match ? match[1] : null;
   };
 
-  // التعامل مع النقر على فيديو
   const handleVideoClick = (video) => {
     navigate(`/video-details/${video._id}`, {
       state: { video },
-    }); // التنقل إلى صفحة التفاصيل مع id الفيديو
+    });
   };
 
   if (loading) {
-    return <Loader />; // عرض حالة التحميل
+    return <Loader />;
   }
 
   if (error) {
-    return <p className="error-message">{error}</p>; // عرض رسالة الخطأ إذا حدثت مشكلة
+    return <p className="error-message">{error}</p>;
   }
 
   return (
@@ -66,19 +91,40 @@ const CoursesPage = () => {
         <span className="material-icons">book</span>
         فيديوهات الشرح
       </h2>
+
+      {/* فلتر المرحلة الدراسية للأدمن فقط */}
+      {role === "admin" && (
+        <div className="stage-filter">
+          <label htmlFor="stage-select">اختر المرحلة الدراسية: </label>
+          <select
+            id="stage-select"
+            value={selectedStage}
+            onChange={(e) => setSelectedStage(e.target.value)}
+            className="stage-dropdown"
+          >
+            <option value="">الكل</option>
+            {stages.map((stage) => (
+              <option key={stage} value={stage}>
+                {stage}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+
       <section className="video-section">
         <div className="videos-grid">
-          {videos.map((video) => {
-            const videoId = extractVideoId(video.lesson_link); // استخراج Video ID
+          {filteredVideos.map((video) => {
+            const videoId = extractVideoId(video.lesson_link);
             const thumbnailUrl = videoId
               ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
-              : "https://via.placeholder.com/300x200.png?text=No+Thumbnail"; // صورة افتراضية
+              : "https://via.placeholder.com/300x200.png?text=No+Thumbnail";
 
             return (
               <div
                 className="video-container"
                 key={video._id}
-                onClick={() => handleVideoClick(video)} // تمرير id الفيديو
+                onClick={() => handleVideoClick(video)}
               >
                 <img
                   src={thumbnailUrl}

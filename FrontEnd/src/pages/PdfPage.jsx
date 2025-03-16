@@ -15,11 +15,18 @@ const PdfPage = () => {
   const { subject, unit } = location.state;
 
   const [pdfFiles, setPdfFiles] = useState([]);
+  const [filteredPdfFiles, setFilteredPdfFiles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [pdfLoading, setPdfLoading] = useState(false);
   const [error, setError] = useState(null);
   const [pdfPages, setPdfPages] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedStage, setSelectedStage] = useState(
+    localStorage.getItem("stage") || ""
+  ); // المرحلة الافتراضية من localStorage
+  const role = localStorage.getItem("role"); // جلب الدور من localStorage
+
+  const stages = ["ثالثة إعدادي", "أولى ثانوي", "ثانية ثانوي", "ثالثة ثانوي"];
 
   useEffect(() => {
     const fetchPdfs = async () => {
@@ -34,6 +41,7 @@ const PdfPage = () => {
           }
         );
         setPdfFiles(response.data);
+        setFilteredPdfFiles(response.data); // تعيين الملفات الأولية
         setLoading(false);
       } catch (err) {
         setError("حدث خطأ أثناء تحميل الملفات.");
@@ -43,6 +51,24 @@ const PdfPage = () => {
 
     fetchPdfs();
   }, [subject, unit]);
+
+  // تصفية ملفات الـ PDF بناءً على المرحلة الدراسية
+  useEffect(() => {
+    if (role !== "admin" && selectedStage) {
+      // إذا لم يكن أدمن، استخدم المرحلة من localStorage فقط
+      setFilteredPdfFiles(
+        pdfFiles.filter((pdf) => pdf.stage === selectedStage)
+      );
+    } else if (selectedStage) {
+      // إذا كان أدمن وتم اختيار مرحلة، قم بالتصفية
+      setFilteredPdfFiles(
+        pdfFiles.filter((pdf) => pdf.stage === selectedStage)
+      );
+    } else {
+      // إذا لم يتم اختيار مرحلة (الكل)، اعرض جميع الملفات
+      setFilteredPdfFiles(pdfFiles);
+    }
+  }, [selectedStage, pdfFiles, role]);
 
   const handleViewPdf = async (url) => {
     setPdfLoading(true);
@@ -86,7 +112,7 @@ const PdfPage = () => {
 
   const handleClosePdf = () => {
     setPdfPages([]);
-    setCurrentPage(1); // إعادة تعيين الصفحة إلى الأولى
+    setCurrentPage(1);
   };
 
   const sliderSettings = {
@@ -97,11 +123,11 @@ const PdfPage = () => {
     slidesToScroll: 1,
     rtl: true,
     arrows: true,
-    initialSlide: 0, // التأكد من البدء من الصفحة الأولى
-    afterChange: (current) => setCurrentPage(current + 1), // تحديث الصفحة الحالية
-    swipe: true, // السماح بالتمرير باللمس
-    touchThreshold: 10, // تحسين حساسية اللمس
-    swipeToSlide: true, // تحسين التمرير
+    initialSlide: 0,
+    afterChange: (current) => setCurrentPage(current + 1),
+    swipe: true,
+    touchThreshold: 10,
+    swipeToSlide: true,
   };
 
   if (loading) return <Loader />;
@@ -110,8 +136,29 @@ const PdfPage = () => {
   return (
     <div className="pdf-page">
       <h2>المذكرات أو الملخصات</h2>
+
+      {/* فلتر المرحلة الدراسية للأدمن فقط */}
+      {role === "admin" && (
+        <div className="stage-filter">
+          <label htmlFor="stage-select">اختر المرحلة الدراسية: </label>
+          <select
+            id="stage-select"
+            value={selectedStage}
+            onChange={(e) => setSelectedStage(e.target.value)}
+            className="stage-dropdown"
+          >
+            <option value="">الكل</option>
+            {stages.map((stage) => (
+              <option key={stage} value={stage}>
+                {stage}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+
       <div className="pdf-container">
-        {pdfFiles.map((pdf) => (
+        {filteredPdfFiles.map((pdf) => (
           <div key={pdf._id} className="pdf-card">
             <h3>{pdf.title}</h3>
             <div className="pdf-actions">

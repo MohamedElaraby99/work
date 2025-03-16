@@ -38,7 +38,7 @@ const Math = () => {
             {/* الصورة على اليسار */}
             <div className="image-container">
               <img
-                src={require("./../images/mromaryosef.png")}
+                src={require("./../images/mromaryosef.webp")}
                 alt="صورة المادة"
                 className="history-image"
                 style={{ border: "2px solid #ffffff" }}
@@ -102,7 +102,7 @@ const Math = () => {
             {/* الصورة على اليسار */}
             <div className="image-container">
               <img
-                src={require("./../images/mromaryosef.png")}
+                src={require("./../images/mromaryosef.webp")}
                 alt="صورة المادة"
                 className="history-image"
                 style={{ border: "2px solid #ffffff" }}

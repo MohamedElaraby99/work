@@ -9,14 +9,14 @@
 
 /* زر الـ Share العائم */
 .floating-button {
-  background: linear-gradient(135deg, #ff6ec7, #00ddeb);
+  background: linear-gradient(135deg, #1c1a55, #0256ff);
   color: #fff;
   border: none;
   border-radius: 50px;
-  padding: 14px 28px;
-  font-size: 18px;
+  padding: 14px 20px;
+  font-size: 14px;
   font-weight: 700;
-  font-family: 'Arial', sans-serif;
+  font-family: 'cairo', sans-serif;
   text-transform: uppercase;
   cursor: pointer;
   box-shadow: 0 0 20px rgba(255, 110, 199, 0.8), 0 0 30px rgba(0, 221, 235, 0.6); /* توهج أقوى */

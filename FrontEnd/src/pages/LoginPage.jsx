@@ -4,7 +4,7 @@ import axios from "axios";
 import "./../styles/LoginPage.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { FaWhatsapp } from "react-icons/fa"; // Import WhatsApp icon
+import { FaWhatsapp } from "react-icons/fa"; 
 
 const LoginForm = ({ setRole }) => {
   const [showPassword, setShowPassword] = useState(false);

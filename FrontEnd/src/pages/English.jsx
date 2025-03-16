@@ -36,25 +36,25 @@ const English = () => {
   const courseUnits = {
     videos: Array.from({ length: 6 }, (_, i) => ({
       id: i + 1,
-      title: `الوحدة ${i + 1}`,
+      title: `unit ${i + 1}`,
       path: `/english/unit/${i + 1}/videos`,
     })),
 
     exams: Array.from({ length: 6 }, (_, i) => ({
       id: i + 1,
-      title: `الوحدة ${i + 1}`,
+      title: `unit ${i + 1}`,
       path: `/english/unit/${i + 1}/exams`,
     })),
 
     assignments: Array.from({ length: 6 }, (_, i) => ({
       id: i + 1,
-      title: `الوحدة ${i + 1}`,
+      title: `unit ${i + 1}`,
       path: `/english/unit/${i + 1}/assignments`,
     })),
 
     pdfs: Array.from({ length: 6 }, (_, i) => ({
       id: i + 1,
-      title: `الوحدة ${i + 1}`,
+      title: `unit ${i + 1}`,
       path: `/english/unit/${i + 1}/pdfs`,
     })),
   };
@@ -75,7 +75,7 @@ const English = () => {
               {/* الصورة على اليسار */}
               <div className="image-container">
                 <img
-                  src={require("./../images/mrahmedgozy.png")}
+                  src={require("./../images/mrahmedgozy.webp")}
                   alt="صورة المادة"
                   className="history-image"
                   style={{ border: "2px solid #ccc" }} // إضافة الإطار هنا
@@ -140,7 +140,7 @@ const English = () => {
             {/* الصورة على اليسار */}
             <div className="image-container">
               <img
-                src={require("./../images/mrahmedgozy.png")}
+                src={require("./../images/mrahmedgozy.webp")}
                 alt="صورة المادة"
                 className="history-image"
                 style={{ border: "2px solid #ccc" }} // إضافة الإطار هنا

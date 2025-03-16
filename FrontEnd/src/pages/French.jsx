@@ -20,41 +20,55 @@ const French = () => {
   });
   const [isSubscribed, setIsSubscribed] = useState(true);
 
-  // استرداد المرحلة الدراسية والدور و subject من localStorage
+  // Retrieve the educational stage, role, and subjects from localStorage
   const stage = localStorage.getItem("stage");
   const role = localStorage.getItem("role");
   const subject = localStorage.getItem("subject");
 
-  // فحص الاشتراك
+  // Determine the number of units based on the stage
+  let unitCount;
+  switch (stage) {
+    case "أولى ثانوي":
+    case "ثانية ثانوي":
+      unitCount = 2;
+      break;
+    case "ثالثة ثانوي":
+      unitCount = 4;
+      break;
+    default:
+      unitCount = 4; // Default value if stage is not recognized
+  }
+
+  // Check subscription
   useEffect(() => {
     if (role === "student" && !subject.includes("فرنسي")) {
       setIsSubscribed(false);
     }
   }, [role, subject]);
 
-  // بيانات الوحدات مع روابط الصفحات
+  // Course units data with dynamic length based on the stage
   const courseUnits = {
-    videos: Array.from({ length: 4 }, (_, i) => ({
+    videos: Array.from({ length: unitCount }, (_, i) => ({
       id: i + 1,
-      title: `الوحدة ${i + 1}`,
+      title: `unité ${i + 1}`,
       path: `/frensh/unit/${i + 1}/videos`,
     })),
 
-    exams: Array.from({ length: 4 }, (_, i) => ({
+    exams: Array.from({ length: unitCount }, (_, i) => ({
       id: i + 1,
-      title: `الوحدة ${i + 1}`,
+      title: `unité ${i + 1}`,
       path: `/frensh/unit/${i + 1}/exams`,
     })),
 
-    assignments: Array.from({ length: 4 }, (_, i) => ({
+    assignments: Array.from({ length: unitCount }, (_, i) => ({
       id: i + 1,
-      title: `الوحدة ${i + 1}`,
+      title: `unité ${i + 1}`,
       path: `/frensh/unit/${i + 1}/assignments`,
     })),
 
-    pdfs: Array.from({ length: 4 }, (_, i) => ({
+    pdfs: Array.from({ length: unitCount }, (_, i) => ({
       id: i + 1,
-      title: `الوحدة ${i + 1}`,
+      title: `unité ${i + 1}`,
       path: `/frensh/unit/${i + 1}/pdfs`,
     })),
   };
@@ -72,16 +86,16 @@ const French = () => {
         <header className="history-header">
           <div className="contenttt">
             <div className="content-container">
-              {/* الصورة على اليسار */}
+              {/* Image on the left */}
               <div className="image-container">
                 <img
-                  src={require("./../images/mrahmedemad.png")}
-                  alt="صورة المادة"
+                  src={require("./../images/mrahmedemad.webp")}
+                  alt="Subject Image"
                   className="history-image"
                   style={{ border: "2px solid #ffffff" }}
                 />
               </div>
-              {/* النص على اليمين */}
+              {/* Text on the right */}
               <div className="text-container">
                 <h1>مادة اللغة الفرنسية</h1>
                 <p>مـقدم الـمادة</p>
@@ -137,16 +151,16 @@ const French = () => {
       <header className="history-header">
         <div className="contenttt">
           <div className="content-container">
-            {/* الصورة على اليسار */}
+            {/* Image on the left */}
             <div className="image-container">
               <img
-                src={require("./../images/mrahmedemad.png")}
-                alt="صورة المادة"
+                src={require("./../images/mrahmedemad.webp")}
+                alt="Subject Image"
                 className="history-image"
                 style={{ border: "2px solid #ffffff" }}
               />
             </div>
-            {/* النص على اليمين */}
+            {/* Text on the right */}
             <div className="text-container">
               <h1>مادة اللغة الفرنسية</h1>
               <p>مـقدم الـمادة</p>
@@ -186,7 +200,7 @@ const French = () => {
         </div>
       </header>
 
-      {/* قسم الفيديوهات */}
+      {/* Videos Section */}
       <section className="expandable-section">
         <h2 onClick={() => toggleSection("videos")}>
           <FaVideo /> الفيديوهات التعليمية
@@ -211,7 +225,7 @@ const French = () => {
         )}
       </section>
 
-      {/* قسم الامتحانات */}
+      {/* Exams Section */}
       <section className="expandable-section">
         <h2 onClick={() => toggleSection("exams")}>
           <FaClipboardList /> الامتحانات
@@ -240,7 +254,7 @@ const French = () => {
         )}
       </section>
 
-      {/* قسم الواجبات */}
+      {/* Assignments Section */}
       <section className="expandable-section">
         <h2 onClick={() => toggleSection("assignments")}>
           <FaClipboardList /> التدريبات
@@ -269,7 +283,7 @@ const French = () => {
         )}
       </section>
 
-      {/* قسم ملفات PDF */}
+      {/* PDFs Section */}
       <section className="expandable-section">
         <h2 onClick={() => toggleSection("pdfs")}>
           <FaFilePdf /> ملفات PDF

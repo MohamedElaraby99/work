@@ -20,39 +20,56 @@ const History = () => {
   });
   const [isSubscribed, setIsSubscribed] = useState(true);
 
-  // استرداد المرحلة الدراسية والدور و subject من localStorage
+  // Retrieve the educational stage, role, and subjects from localStorage
   const stage = localStorage.getItem("stage");
   const role = localStorage.getItem("role");
   const subjects = localStorage.getItem("subject");
 
-  // فحص الاشتراك
+  // Determine the number of units based on the stage
+  let unitCount;
+  switch (stage) {
+    case "ثالثة اعدادي":
+      unitCount = 4;
+      break;
+    case "أولى ثانوي":
+    case "ثانية ثانوي":
+      unitCount = 2;
+      break;
+    case "ثالثة ثانوي":
+      unitCount = 7;
+      break;
+    default:
+      unitCount = 8; // Default value if stage is not recognized
+  }
+
+  // Check subscription
   useEffect(() => {
     if (role === "student" && !subjects.includes("تاريخ")) {
       setIsSubscribed(false);
     }
   }, [role, subjects]);
 
-  // بيانات الوحدات مع روابط الصفحات
+  // Course units data with dynamic length based on the stage
   const courseUnits = {
-    videos: Array.from({ length: 8 }, (_, i) => ({
+    videos: Array.from({ length: unitCount }, (_, i) => ({
       id: i + 1,
       title: `الوحدة ${i + 1}`,
       path: `/history/unit/${i + 1}/videos`,
     })),
 
-    exams: Array.from({ length: 8 }, (_, i) => ({
+    exams: Array.from({ length: unitCount }, (_, i) => ({
       id: i + 1,
       title: `الوحدة ${i + 1}`,
       path: `/history/unit/${i + 1}/exams`,
     })),
 
-    assignments: Array.from({ length: 8 }, (_, i) => ({
+    assignments: Array.from({ length: unitCount }, (_, i) => ({
       id: i + 1,
       title: `الوحدة ${i + 1}`,
       path: `/history/unit/${i + 1}/assignments`,
     })),
 
-    pdfs: Array.from({ length: 8 }, (_, i) => ({
+    pdfs: Array.from({ length: unitCount }, (_, i) => ({
       id: i + 1,
       title: `الوحدة ${i + 1}`,
       path: `/history/unit/${i + 1}/pdfs`,
@@ -72,16 +89,16 @@ const History = () => {
         <header className="history-header">
           <div className="content-container">
             <div className="contenttt">
-              {/* الصورة على اليسار */}
+              {/* Image on the left */}
               <div className="image-container">
                 <img
-                  src={require("./../images/MrahmedSaid.png")}
-                  alt="صورة المادة"
+                  src={require("./../images/MrahmedSaid.webp")}
+                  alt="Subject Image"
                   className="history-image"
                   style={{ border: "2px solid #ffffff" }}
                 />
               </div>
-              {/* النص على اليمين */}
+              {/* Text on the right */}
               <div className="text-container">
                 <h1>مـادة الـتاريـخ</h1>
                 <p>مـقدم الـمادة</p>
@@ -138,16 +155,16 @@ const History = () => {
       <header className="history-header">
         <div className="content-container">
           <div className="contenttt">
-            {/* الصورة على اليسار */}
+            {/* Image on the left */}
             <div className="image-container">
               <img
-                src={require("./../images/MrahmedSaid.png")}
-                alt="صورة المادة"
+                src={require("./../images/MrahmedSaid.webp")}
+                alt="Subject Image"
                 className="history-image"
                 style={{ border: "2px solid #ffffff" }}
               />
             </div>
-            {/* النص على اليمين */}
+            {/* Text on the right */}
             <div className="text-container">
               <h1>مـادة الـتاريـخ</h1>
               <p>مـقدم الـمادة</p>
@@ -187,7 +204,7 @@ const History = () => {
         </div>
       </header>
 
-      {/* قسم الفيديوهات */}
+      {/* Videos Section */}
       <section className="expandable-section">
         <h2 onClick={() => toggleSection("videos")}>
           <FaVideo /> الفيديوهات التعليمية
@@ -212,7 +229,7 @@ const History = () => {
         )}
       </section>
 
-      {/* قسم الامتحانات */}
+      {/* Exams Section */}
       <section className="expandable-section">
         <h2 onClick={() => toggleSection("exams")}>
           <FaClipboardList /> الامتحانات
@@ -237,7 +254,7 @@ const History = () => {
         )}
       </section>
 
-      {/* قسم الواجبات */}
+      {/* Assignments Section */}
       <section className="expandable-section">
         <h2 onClick={() => toggleSection("assignments")}>
           <FaClipboardList /> التدريبات
@@ -262,7 +279,7 @@ const History = () => {
         )}
       </section>
 
-      {/* قسم ملفات PDF */}
+      {/* PDFs Section */}
       <section className="expandable-section">
         <h2 onClick={() => toggleSection("pdfs")}>
           <FaFilePdf /> ملفات PDF

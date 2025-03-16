@@ -20,41 +20,49 @@ const SelectMath = () => {
   const [isSubscribed, setIsSubscribed] = useState(true);
   const location = useLocation();
 
-  // استرداد المرحلة الدراسية والدور و subject من localStorage
+  // Retrieve the educational stage and role from localStorage
   const stage = localStorage.getItem("stage");
   const role = localStorage.getItem("role");
 
   // Retrieve the subject from location state
   const { subject } = location.state || {};
 
-  // فحص الاشتراك
+  // Determine the number of units based on the subject
+  let unitCount;
+  if (subject === "مثلثات" || subject === "إحصاء") {
+    unitCount = 5;
+  } else {
+    unitCount = 8; // Default value if subject is not recognized
+  }
+
+  // Check subscription
   // useEffect(() => {
   //   if (role === "student" && subject !== "جبر" && subject !== "هندسة") {
   //     setIsSubscribed(false);
   //   }
   // }, [role, subject]);
 
-  // بيانات الوحدات مع روابط الصفحات
+  // Course units data with dynamic length based on the subject
   const courseUnits = {
-    videos: Array.from({ length: 8 }, (_, i) => ({
+    videos: Array.from({ length: unitCount }, (_, i) => ({
       id: i + 1,
       title: `الوحدة ${i + 1}`,
       path: `/select-math/unit/${i + 1}/videos`,
     })),
 
-    exams: Array.from({ length: 8 }, (_, i) => ({
+    exams: Array.from({ length: unitCount }, (_, i) => ({
       id: i + 1,
       title: `الوحدة ${i + 1}`,
       path: `/select-math/unit/${i + 1}/exams`,
     })),
 
-    assignments: Array.from({ length: 8 }, (_, i) => ({
+    assignments: Array.from({ length: unitCount }, (_, i) => ({
       id: i + 1,
       title: `الوحدة ${i + 1}`,
       path: `/select-math/unit/${i + 1}/assignments`,
     })),
 
-    pdfs: Array.from({ length: 8 }, (_, i) => ({
+    pdfs: Array.from({ length: unitCount }, (_, i) => ({
       id: i + 1,
       title: `الوحدة ${i + 1}`,
       path: `/select-math/unit/${i + 1}/pdfs`,
@@ -72,7 +80,7 @@ const SelectMath = () => {
     return (
       <div className="history-container centerrr">
         <header className="history-header">
-          <h1>مادة الجغرافيا</h1>
+          <h1>مادة الرياضيات</h1>
         </header>
         <p className="about-imag ">
           <img
@@ -95,7 +103,7 @@ const SelectMath = () => {
         </h1>
       </header>
 
-      {/* قسم الفيديوهات */}
+      {/* Videos Section */}
       <section className="expandable-section">
         <h2 onClick={() => toggleSection("videos")}>
           <FaVideo /> الفيديوهات التعليمية
@@ -120,7 +128,7 @@ const SelectMath = () => {
         )}
       </section>
 
-      {/* قسم الامتحانات */}
+      {/* Exams Section */}
       <section className="expandable-section">
         <h2 onClick={() => toggleSection("exams")}>
           <FaClipboardList /> الامتحانات
@@ -149,7 +157,7 @@ const SelectMath = () => {
         )}
       </section>
 
-      {/* قسم الواجبات */}
+      {/* Assignments Section */}
       <section className="expandable-section">
         <h2 onClick={() => toggleSection("assignments")}>
           <FaClipboardList /> الواجبات
@@ -178,7 +186,7 @@ const SelectMath = () => {
         )}
       </section>
 
-      {/* قسم ملفات PDF */}
+      {/* PDFs Section */}
       <section className="expandable-section">
         <h2 onClick={() => toggleSection("pdfs")}>
           <FaFilePdf /> ملفات PDF
