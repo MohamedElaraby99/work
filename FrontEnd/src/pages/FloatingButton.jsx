@@ -29,7 +29,10 @@ const FloatingButton = () => {
             rel="noopener noreferrer"
             className="icon whatsapp"
           >
-            <span className="material-icons">chat</span>
+            <span class="material-icons">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp Icon" width="30" height="30">
+              </img>
+            </span>
           </a>
         </div>
       )}
