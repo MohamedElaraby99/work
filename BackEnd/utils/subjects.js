@@ -7,6 +7,8 @@ const subjects = [
   "مثلثات",
   "هندسة",
   "جبر",
+  "استاتيكا",
+  "ديناميكا"
 ];
 
 module.exports = subjects;
