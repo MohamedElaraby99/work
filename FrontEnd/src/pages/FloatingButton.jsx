@@ -11,12 +11,12 @@ const FloatingButton = () => {
   return (
     <div className="floating-button-container">
       <button className="floating-button" onClick={toggleIcons}>
-        {showIcons ? "إخفاء" : "تواصل معنا"}
+        {showIcons ? "إخفاء" : "مــنـصـة 4G"}
       </button>
       {showIcons && (
         <div className="icon-container">
           <a
-            href="https://www.facebook.com"
+            href="https://www.facebook.com/share/1B4UBmHgEh/"
             target="_blank"
             rel="noopener noreferrer"
             className="icon facebook"
@@ -30,8 +30,12 @@ const FloatingButton = () => {
             className="icon whatsapp"
           >
             <span class="material-icons">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp Icon" width="30" height="30">
-              </img>
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+                alt="WhatsApp Icon"
+                width="30"
+                height="30"
+              ></img>
             </span>
           </a>
         </div>
