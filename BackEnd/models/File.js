@@ -26,6 +26,10 @@ const fileMetadataSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    lesson_number: {
+      type: Number,
+      required: true,
+    },
   },
   { timestamps: true }
 );

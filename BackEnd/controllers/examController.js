@@ -10,25 +10,28 @@ const subjects = require("../utils/subjects");
 const getExamsWithScores = async (req, res) => {
   try {
     const { user_id, stage, role } = req;
-    const { subject, unit, type } = req.query;
+    const { subject, unit, type, lesson_number } = req.query;
 
     let exams;
     if (role === "admin") {
-      if (stage || subject || unit || type) {
+      if (stage || subject || unit || type || lesson_number) {
         exams = await Exam.find({
           stage: stage === "" ? { $exists: true } : stage,
           subject: subject === "" ? { $exists: true } : subject,
           unit: unit === "" ? { $exists: true } : unit,
           type: type === "" ? { $exists: true } : type,
+          lesson_number:
+            lesson_number === "" ? { $exists: true } : lesson_number,
         });
       } else exams = await Exam.find();
     } else if (role !== "admin") {
-      if (stage || subject || unit) {
+      if (stage || subject || unit || type || lesson_number) {
         exams = await Exam.find({
           stage,
           subject,
           unit,
           type,
+          lesson_number,
         });
       }
     } else {
@@ -88,6 +91,7 @@ const getExamsWithScores = async (req, res) => {
         attendance: role === "admin" ? undefined : attendance, // Admin doesn't need attendance
         status,
         stage: exam.stage,
+        lesson_number: exam.lesson_number,
       };
     });
     res.status(200).json(examsWithScores);
@@ -110,10 +114,8 @@ const addExam = async (req, res) => {
       type,
       subject,
       unit,
+      lesson_number,
     } = req.body;
-
-    console.log("Request Body:", req.body); // Log the request body
-
     // Validate required fields
     if (!title) {
       return res.status(400).json({ message: "Exam title is required" });
@@ -135,6 +137,9 @@ const addExam = async (req, res) => {
     }
     if (!unit) {
       return res.status(400).json({ message: "الوحدة مطلوبة" });
+    }
+    if (!lesson_number) {
+      return res.status(400).json({ message: " رقم الدرس مطلوب" });
     }
 
     const examDate = moment.tz(date, "Africa/Cairo");
@@ -200,6 +205,7 @@ const addExam = async (req, res) => {
       type,
       subject,
       unit,
+      lesson_number,
     });
 
     // Save to database
@@ -225,6 +231,7 @@ const updateExam = async (req, res) => {
     type,
     subject,
     unit,
+    lesson_number,
   } = req.body;
 
   try {
@@ -254,6 +261,10 @@ const updateExam = async (req, res) => {
 
     if (!unit) {
       return res.status(400).json({ message: "الوحدة مطلوبة" });
+    }
+
+    if (!lesson_number) {
+      return res.status(400).json({ message: " رقم الدرس مطلوب" });
     }
 
     if (!date) {
@@ -310,6 +321,7 @@ const updateExam = async (req, res) => {
     if (type) existingExam.type = type;
     if (subject) existingExam.subject = subject;
     if (unit) existingExam.unit = unit;
+    if (lesson_number) existingExam.lesson_number = lesson_number;
 
     // Save updated exam
     const updatedExam = await existingExam.save();
@@ -552,6 +564,7 @@ const getExamDataForAdmin = async (req, res) => {
         stage: exam.stage,
         subject: exam.subject,
         exam_status: status,
+        lesson_number: exam.lesson_number,
         submissions: [...submissionsWithQuestions, ...nonSubmittedStudents],
       };
     });
