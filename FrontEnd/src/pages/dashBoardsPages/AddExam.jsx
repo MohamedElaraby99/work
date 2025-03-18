@@ -20,6 +20,7 @@ const CreateExamComponent = () => {
     type: "",
     subject: "", // Ensure subject is a string
     unit: "",
+    lesson_number: "",
   });
 
   const handleAddQuestions = (importedQuestions) => {
@@ -48,6 +49,7 @@ const CreateExamComponent = () => {
       !examDetails.duration ||
       !examDetails.stage ||
       !examDetails.type ||
+      !examDetails.lesson_number ||
       !examDetails.subject || // Check if subject is not empty
       !examDetails.unit ||
       questions.length === 0
@@ -91,6 +93,7 @@ const CreateExamComponent = () => {
         type: "",
         subject: "",
         unit: "",
+        lesson_number: "",
       });
       setQuestions([]);
     } catch (error) {
@@ -193,6 +196,8 @@ const CreateExamComponent = () => {
             <option value="مثلثات">مثلثات</option>
             <option value="تفاضل">تفاضل</option>
             <option value="إحصاء">إحصاء</option>
+            <option value="استاتيكا">استاتيكا</option>
+            <option value="ديناميكا">ديناميكا</option>
           </select>
         </label>
 
@@ -214,6 +219,30 @@ const CreateExamComponent = () => {
             <option value="6">الوحدة السادسة</option>
             <option value="7">الوحدة السابعة</option>
             <option value="8">الوحدة الثامنة</option>
+          </select>
+        </label>
+
+        <label>
+          الدرس:
+          <select
+            id="unit"
+            name="unit"
+            value={examDetails.unit}
+            onChange={handleInputChange}
+          >
+            <option value="" disabled>
+              اختر الدرس
+            </option>
+            <option value="1">الدرس الاول</option>
+            <option value="2">الدرس الثاني</option>
+            <option value="3">الدرس الثالث</option>
+            <option value="4">الدرس الرابع</option>
+            <option value="5">الدرس الخامس</option>
+            <option value="6">الدرس السادس</option>
+            <option value="7">الدرس السابع</option>
+            <option value="8">الدرس الثامن</option>
+            <option value="9">الدرس التاسع</option>
+            <option value="10">الدرس العاشر</option>
           </select>
         </label>
       </div>

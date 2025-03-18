@@ -11,6 +11,7 @@ const AddVideo = () => {
     description: "",
     notes: "",
     unit: "",
+    lesson_number: "",
   });
 
   const [mathTopic, setMathTopic] = useState(""); // New state for math topic
@@ -30,8 +31,16 @@ const AddVideo = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { title, lesson_link, stage, description, notes, subject, unit } =
-      videoData;
+    const {
+      title,
+      lesson_link,
+      stage,
+      description,
+      notes,
+      subject,
+      unit,
+      lesson_number,
+    } = videoData;
 
     // Validate that fields are not empty
     if (
@@ -41,6 +50,7 @@ const AddVideo = () => {
       !description ||
       !notes ||
       !subject ||
+      !lesson_number ||
       !unit ||
       (subject === "رياضيات" && !mathTopic) // Ensure math topic is selected if subject is math
     ) {
@@ -58,6 +68,7 @@ const AddVideo = () => {
       notes,
       subject: subject === "رياضيات" ? mathTopic : subject, // Use math topic if subject is math
       unit,
+      lesson_number,
     };
 
     try {
@@ -88,6 +99,7 @@ const AddVideo = () => {
         description: "",
         notes: "",
         unit: "",
+        lesson_number: "",
       });
       setMathTopic(""); // Reset math topic
     } catch (err) {
@@ -135,7 +147,9 @@ const AddVideo = () => {
             value={videoData.subject}
             onChange={handleChange}
           >
-            <option value="" disabled>اختر المادة</option>
+            <option value="" disabled>
+              اختر المادة
+            </option>
             <option value="تاريخ">تاريخ</option>
             <option value="انجليزي">لغة انجليزية</option>
             <option value="فرنسي">لغة فرنسية</option>
@@ -160,6 +174,8 @@ const AddVideo = () => {
               <option value="مثلثات">مثلثات</option>
               <option value="تفاضل">تفاضل</option>
               <option value="إحصاء">إحصاء</option>
+              <option value="استاتيكا">استاتيكا</option>
+              <option value="ديناميكا">ديناميكا</option>
             </select>
           </div>
         )}
@@ -172,7 +188,9 @@ const AddVideo = () => {
             value={videoData.stage}
             onChange={handleChange}
           >
-            <option value="">اختر المرحلة الدراسية</option>
+            <option value="" disabled>
+              اختر المرحلة الدراسية
+            </option>
             <option value="ثالثة اعدادي">ثالثة اعدادي</option>
             <option value="أولى ثانوي">أولى ثانوي</option>
             <option value="ثانية ثانوي">ثانية ثانوي</option>
@@ -183,7 +201,9 @@ const AddVideo = () => {
         <div className="form-group">
           <label htmlFor="unit">اختر الوحدة:</label>
           <select name="unit" value={videoData.unit} onChange={handleChange}>
-            <option value="">اختر الوحدة</option>
+            <option value="" disabled>
+              اختر الوحدة
+            </option>
             <option value="1">الوحدة الأولى</option>
             <option value="2">الوحدة الثانية</option>
             <option value="3">الوحدة الثالثة</option>
@@ -192,6 +212,29 @@ const AddVideo = () => {
             <option value="6">الوحدة السادسة</option>
             <option value="7">الوحدة السابعة</option>
             <option value="8">الوحدة الثامنة</option>
+          </select>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="unit">اختر الدرس:</label>
+          <select
+            name="unit"
+            value={videoData.lesson_number}
+            onChange={handleChange}
+          >
+            <option value="" disabled>
+              اختر رقم الدرس
+            </option>
+            <option value="1">الدرس الاول</option>
+            <option value="2">الدرس الثاني</option>
+            <option value="3">الدرس الثالث</option>
+            <option value="4">الدرس الرابع</option>
+            <option value="5">الدرس الخامس</option>
+            <option value="6">الدرس السادس</option>
+            <option value="7">الدرس السابع</option>
+            <option value="8">الدرس الثامن</option>
+            <option value="9">الدرس التاسع</option>
+            <option value="10">الدرس العاشر</option>
           </select>
         </div>
 

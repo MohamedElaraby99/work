@@ -12,6 +12,7 @@ const AddPdf = () => {
     subject: "",
     mathTopic: "",
     unit: "",
+    lesson_number: "",
   });
   const [loading, setLoading] = useState(false); // State to track loading
 
@@ -51,7 +52,8 @@ const AddPdf = () => {
       !pdfData.file ||
       !pdfData.stage ||
       !pdfData.subject ||
-      !pdfData.unit
+      !pdfData.unit ||
+      !pdfData.lesson_number
     ) {
       toast.error("الرجاء ملء جميع الحقول");
       return;
@@ -68,6 +70,7 @@ const AddPdf = () => {
     formData.append("stage", pdfData.stage);
     formData.append("subject", finalSubject);
     formData.append("unit", pdfData.unit);
+    formData.append("lesson_number", pdfData.lesson_number);
 
     const accessToken = localStorage.getItem("accessToken");
 
@@ -91,6 +94,7 @@ const AddPdf = () => {
         subject: "",
         mathTopic: "",
         unit: "",
+        lesson_number: "",
       });
     } catch (error) {
       console.error("Error adding file:", error);
@@ -199,6 +203,8 @@ const AddPdf = () => {
                 <option value="مثلثات">حساب المثلثات</option>
                 <option value="تفاضل">التفاضل</option>
                 <option value="إحصاء">الإحصاء</option>
+                <option value="استاتيكا">استاتيكا</option>
+                <option value="ديناميكا">ديناميكا</option>
               </select>
             </div>
           )}
@@ -222,6 +228,30 @@ const AddPdf = () => {
               <option value="6">الوحدة السادسة</option>
               <option value="7">الوحدة السابعة</option>
               <option value="8">الوحدة الثامنة</option>
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="unit">اختر الدرس:</label>
+            <select
+              id="unit"
+              name="unit"
+              value={pdfData.lesson_number}
+              onChange={handleChange}
+            >
+              <option value="" disabled>
+                اختر الدرس
+              </option>
+              <option value="1">الدرس الاول</option>
+              <option value="2">الدرس الثاني</option>
+              <option value="3">الدرس الثالث</option>
+              <option value="4">الدرس الرابع</option>
+              <option value="5">الدرس الخامس</option>
+              <option value="6">الدرس السادس</option>
+              <option value="7">الدرس السابع</option>
+              <option value="8">الدرس الثامن</option>
+              <option value="9">الدرس التاسع</option>
+              <option value="10">الدرس العاشر</option>
             </select>
           </div>
 

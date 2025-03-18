@@ -64,7 +64,7 @@ const AddUser = () => {
 
     const requestData = {
       ...user,
-      subject: user.subject.filter(item => item !== 'رياضيات'),
+      subject: user.subject.filter((item) => item !== "رياضيات"),
     };
 
     try {
@@ -248,6 +248,26 @@ const AddUser = () => {
                           onChange={handleMathSubjectsChange}
                         />
                         إحصاء
+                      </label>
+                    </div>
+                    <div>
+                      <label>
+                        <input
+                          type="checkbox"
+                          value="استاتيكا"
+                          onChange={handleMathSubjectsChange}
+                        />
+                        استاتيكا
+                      </label>
+                    </div>
+                    <div>
+                      <label>
+                        <input
+                          type="checkbox"
+                          value="ديناميكا"
+                          onChange={handleMathSubjectsChange}
+                        />
+                        ديناميكا
                       </label>
                     </div>
                   </div>

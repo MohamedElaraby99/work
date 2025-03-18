@@ -131,11 +131,12 @@
 }
 
 .edit-button {
-  background-color: #3498db;
+  background-color: #ff8000;
   color: white;
   border: none;
   padding: 5px 10px;
   cursor: pointer;
+  margin-bottom: 5px;
 }
 
 .edit-button,
@@ -162,6 +163,7 @@
 
 .actionss:active {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 10px;

@@ -28,6 +28,8 @@ const CreatePostComponent = () => {
         { label: "تفاضل", value: "تفاضل" },
         { label: "مثلثات", value: "مثلثات" },
         { label: "إحصاء", value: "إحصاء" },
+        { label: "استاتيكا", value: "استاتيكا" },
+        { label: "ديناميكا", value: "ديناميكا" }, 
       ],
     },
   ];

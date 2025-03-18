@@ -93,7 +93,7 @@ const History = () => {
               <div className="image-container">
                 <img
                   src={require("./../images/MrahmedSaid.webp")}
-                  alt="Subject Image"
+                  alt="Subject"
                   className="history-image"
                   style={{ border: "2px solid #ffffff" }}
                 />
