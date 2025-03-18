@@ -234,8 +234,8 @@ const AddPdf = () => {
           <div className="form-group">
             <label htmlFor="unit">اختر الدرس:</label>
             <select
-              id="unit"
-              name="unit"
+              id="lesson_number"
+              name="lesson_number"
               value={pdfData.lesson_number}
               onChange={handleChange}
             >

@@ -216,9 +216,9 @@ const AddVideo = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="unit">اختر الدرس:</label>
+          <label htmlFor="lesson_number">اختر الدرس:</label>
           <select
-            name="unit"
+            name="lesson_number"
             value={videoData.lesson_number}
             onChange={handleChange}
           >

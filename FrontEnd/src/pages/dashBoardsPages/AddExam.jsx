@@ -68,6 +68,7 @@ const CreateExamComponent = () => {
       type: examDetails.type,
       subject: examDetails.subject, // Send subject as a string
       unit: examDetails.unit,
+      lesson_number: parseInt(examDetails.lesson_number, 10),
     };
 
     try {
@@ -225,9 +226,9 @@ const CreateExamComponent = () => {
         <label>
           الدرس:
           <select
-            id="unit"
-            name="unit"
-            value={examDetails.unit}
+            id="lesson_number"
+            name="lesson_number"
+            value={examDetails.lesson_number}
             onChange={handleInputChange}
           >
             <option value="" disabled>
