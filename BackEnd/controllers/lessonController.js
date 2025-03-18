@@ -5,15 +5,16 @@ const subjects = require("../utils/subjects");
 const getAllLessons = async (req, res) => {
   try {
     const { role, stage } = req;
-    const { subject, unit } = req.query;
+    const { subject, unit, lesson_number } = req.query;
 
     let lessons;
     if (role === "admin") {
-      if (stage || subject || unit) {
+      if (stage || subject || unit || lesson) {
         lessons = await Lesson.find({
           stage: stage === "" ? { $exists: true } : stage,
           subject: subject === "" ? { $exists: true } : subject,
           unit: unit === "" ? { $exists: true } : unit,
+          lesson_number: lesson_number === "" ? { $exists: true } : lesson_number,
         });
       } else lessons = await Lesson.find();
     } else if (role !== "admin") {
@@ -22,6 +23,7 @@ const getAllLessons = async (req, res) => {
           stage,
           subject,
           unit,
+          lesson_number,
         });
       }
     } else {
@@ -35,13 +37,24 @@ const getAllLessons = async (req, res) => {
 };
 
 const createLesson = async (req, res) => {
-  const { title, lesson_link, stage, description, notes, subject, unit } =
-    req.body;
+  const {
+    title,
+    lesson_link,
+    stage,
+    description,
+    notes,
+    subject,
+    unit,
+    lesson_number,
+  } = req.body;
   if (!title) {
     return res.status(400).json({ message: " العنوان مطلوب" });
   }
   if (!lesson_link) {
     return res.status(400).json({ message: " رابط الفيديو مطلوب" });
+  }
+  if (!lesson_number) {
+    return res.status(400).json({ message: " رقم الفيديو مطلوب" });
   }
   if (!stage) {
     return res.status(400).json({ message: "المرحلة الدراسية مطلوبة" });
@@ -68,6 +81,7 @@ const createLesson = async (req, res) => {
       notes,
       subject,
       unit,
+      lesson_number,
     });
     await lesson.save();
 
@@ -81,13 +95,24 @@ const createLesson = async (req, res) => {
 
 const updateLesson = async (req, res) => {
   const { id } = req.params;
-  const { title, lesson_link, stage, description, notes, subject, unit } =
-    req.body;
+  const {
+    title,
+    lesson_link,
+    stage,
+    description,
+    notes,
+    subject,
+    unit,
+    lesson_number,
+  } = req.body;
   if (!title) {
     return res.status(400).json({ message: "العنوان مطلوب" });
   }
   if (!lesson_link) {
     return res.status(400).json({ message: " رابط الفيديو مطلوب" });
+  }
+  if (!lesson_number) {
+    return res.status(400).json({ message: " رقم الفيديو مطلوب" });
   }
   if (!stage) {
     return res.status(400).json({ message: "المرحلة الدراسية مطلوبة" });

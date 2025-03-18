@@ -7,24 +7,27 @@ const subjects = require("../utils/subjects");
 const getFiles = async (req, res) => {
   try {
     const { role, stage } = req;
-    const { subject, unit } = req.query;
-    console.log(subject, unit, "");
+    const { subject, unit, lesson_number } = req.query;
+
     let files;
 
     if (role === "admin") {
-      if (stage || subject || unit) {
+      if (stage || subject || unit || lesson_number) {
         files = await File.find({
           stage: stage === "" ? { $exists: true } : stage,
           subject: subject === "" ? { $exists: true } : subject,
           unit: unit === "" ? { $exists: true } : unit,
+          lesson_number:
+            lesson_number === "" ? { $exists: true } : lesson_number,
         });
       } else files = await File.find();
     } else if (role !== "admin") {
-      if (stage || subject || unit) {
+      if (stage || subject || unit || lesson_number) {
         files = await File.find({
           stage,
           subject,
           unit,
+          lesson_number,
         });
       }
     } else {
@@ -47,7 +50,7 @@ const getFiles = async (req, res) => {
 // Upload a file with metadata
 const uploadFile = async (req, res) => {
   try {
-    const { title, stage, subject, unit } = req.body;
+    const { title, stage, subject, unit, lesson_number } = req.body;
 
     // Validate required fields
     if (!req.file) {
@@ -68,6 +71,9 @@ const uploadFile = async (req, res) => {
     if (!unit) {
       return res.status(400).json({ message: "الوحدة مطلوبة" });
     }
+    if (!lesson_number) {
+      return res.status(400).json({ message: " رقم الدرس مطلوب" });
+    }
     const fileUrl = `/uploads/${req.file.filename}`;
 
     // Save metadata in a separate collection
@@ -77,6 +83,7 @@ const uploadFile = async (req, res) => {
       file: fileUrl,
       subject,
       unit,
+      lesson_number,
     });
 
     await newfile.save();
@@ -88,6 +95,7 @@ const uploadFile = async (req, res) => {
       subject: newfile.subject,
       unit: newfile.unit,
       file: `${process.env.BASE_URL}${fileUrl}`, // Include the base URL
+      lesson_number: newfile.lesson_number,
     });
   } catch (error) {
     console.error(error);
@@ -98,7 +106,7 @@ const uploadFile = async (req, res) => {
 const updateFile = async (req, res) => {
   const { id } = req.params;
   try {
-    const { title, stage, subject } = req.body;
+    const { title, stage, subject, unit, lesson_number } = req.body;
     // Validate required fields
     if (!title) {
       return res.status(400).json({ message: "العنوان مطلوب" });
@@ -115,6 +123,10 @@ const updateFile = async (req, res) => {
     }
     if (!unit) {
       return res.status(400).json({ message: "الوحدة مطلوبة" });
+    }
+
+    if (!lesson_number) {
+      return res.status(400).json({ message: " رقم الدرس مطلوب" });
     }
 
     // Fetch the existing file record
