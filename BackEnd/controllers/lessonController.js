@@ -9,7 +9,7 @@ const getAllLessons = async (req, res) => {
 
     let lessons;
     if (role === "admin") {
-      if (stage || subject || unit || lesson) {
+      if (stage || subject || unit ) {
         lessons = await Lesson.find({
           stage: stage === "" ? { $exists: true } : stage,
           subject: subject === "" ? { $exists: true } : subject,

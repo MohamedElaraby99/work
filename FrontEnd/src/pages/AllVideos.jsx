@@ -180,6 +180,7 @@ const AllVideos = () => {
               <th>المرحلة الدراسية</th>
               <th>المادة الدراسية</th>
               <th>الوحدة</th>
+              <th>الدرس</th>
               <th>الوصف</th>
               <th>الملاحظات</th>
               <th>الإجراءات</th>
@@ -278,6 +279,25 @@ const AllVideos = () => {
                   </td>
                 ) : (
                   <td>{video.unit}</td>
+                )}
+
+                {editingVideo && editingVideo._id === video._id ? (
+                  <td>
+                    <select
+                      name="lesson_number"
+                      value={editingVideo.lesson_number}
+                      onChange={handleEditChange}
+                    >
+                      <option value="1">الدرس الاول</option>
+                      <option value="2">الدرس الثاني</option>
+                      <option value="3">الدرس الثالث</option>
+                      <option value="4">الدرس الرابع</option>
+                      <option value="5">الدرس الخامس</option>
+                      <option value="6">الدرس السادس</option>
+                    </select>
+                  </td>
+                ) : (
+                  <td>{video.lesson_number}</td>
                 )}
 
                 <td>
