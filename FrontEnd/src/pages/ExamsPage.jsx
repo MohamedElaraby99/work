@@ -14,7 +14,7 @@ const ExamsPage = () => {
   const role = localStorage.getItem("role"); // جلب الدور من localStorage
 
   const location = useLocation();
-  const { subject = "", unit = "", type = "" } = location.state || {};
+  const { subject = "", unit = "", type = "", lesson = "" } = location.state || {};
 
   const stages = ["ثالثة إعدادي", "أولى ثانوي", "ثانية ثانوي", "ثالثة ثانوي"];
 
@@ -24,7 +24,7 @@ const ExamsPage = () => {
         setLoading(true);
         const accessToken = localStorage.getItem("accessToken");
         const response = await fetch(
-          `${process.env.REACT_APP_BASE_URL}/exams?subject=${subject}&unit=${unit}&type=${type}`,
+          `${process.env.REACT_APP_BASE_URL}/exams?subject=${subject}&unit=${unit}&type=${type}&lesson_number=${lesson}`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -49,7 +49,7 @@ const ExamsPage = () => {
     };
 
     fetchExams();
-  }, [subject, unit, type]);
+  }, [subject, unit, type , lesson]);
 
   // تصفية الامتحانات بناءً على المرحلة الدراسية
   useEffect(() => {

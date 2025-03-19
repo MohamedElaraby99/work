@@ -32,52 +32,53 @@ const Math = () => {
 
   if (!isSubscribed) {
     return (
-      <div className="history-container centerrr">
-        <header className="history-header">
+      <div className="history-container modern-layout">
+        <header className="history-header modern-header">
           <div className="content-container">
-            {/* الصورة على اليسار */}
-            <div className="image-container">
-              <img
-                src={require("./../images/mromaryosef.webp")}
-                alt="صورة المادة"
-                className="history-image"
-                style={{ border: "2px solid #ffffff" }}
-              />
-            </div>
-            {/* النص على اليمين */}
-            <div className="text-container">
-              <h1>مادة الرياضيات</h1>
-              <p>مـقدم الـمادة</p>
-              <p className="history-subtitle">مـستر : عـمر يـوسف</p>
-              <div className="social-linkss">
-                <a
-                  href="https://www.facebook.com/share/19yU5KnbG8/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FaFacebook />
-                </a>
-                <a
-                  href="https://www.instagram.com/omar.youssef.4?igsh=azE3dnFvY2Qxcnp6"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FaInstagram />
-                </a>
-                <a
-                  href="https://www.tiktok.com/@omar.youssef4?_t=ZS-8uXqV9WSu1g&_r=1"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FaTiktok />
-                </a>
-                <a
-                  href="https://wa.me/201090736119"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FaWhatsapp />
-                </a>
+            <div className="contenttt">
+              <div className="image-container">
+                <img
+                  src={require("./../images/mromaryosef.webp")}
+                  alt="صورة المادة"
+                  className="history-image"
+                  style={{ border: "2px solid #ffffff" }}
+                />
+              </div>
+              {/* النص على اليمين */}
+              <div className="text-container">
+                <h1>مادة الرياضيات</h1>
+                <p>مـقدم الـمادة</p>
+                <p className="history-subtitle">مـستر : عـمر يـوسف</p>
+                <div className="social-linkss">
+                  <a
+                    href="https://www.facebook.com/share/19yU5KnbG8/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaFacebook />
+                  </a>
+                  <a
+                    href="https://www.instagram.com/omar.youssef.4?igsh=azE3dnFvY2Qxcnp6"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaInstagram />
+                  </a>
+                  <a
+                    href="https://www.tiktok.com/@omar.youssef4?_t=ZS-8uXqV9WSu1g&_r=1"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaTiktok />
+                  </a>
+                  <a
+                    href="https://wa.me/201090736119"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FaWhatsapp />
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -95,11 +96,10 @@ const Math = () => {
   }
 
   return (
-    <div className="history-container">
-      <div className="contentt">
-        <header className="history-header">
-          <div className="content-container">
-            {/* الصورة على اليسار */}
+    <div className="history-container modern-layout">
+      <header className="history-header modern-header">
+        <div className="contentt">
+          <div className="contenttt">
             <div className="image-container">
               <img
                 src={require("./../images/mromaryosef.webp")}
@@ -145,8 +145,8 @@ const Math = () => {
               </div>
             </div>
           </div>
-        </header>
-      </div>
+        </div>
+      </header>
 
       <div className="subjects-list">
         <div
@@ -158,6 +158,7 @@ const Math = () => {
             borderRadius: "15px",
             backgroundColor: "#014385",
             color: "#ffffff",
+            width: "fit-content",
             boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
           }}
         >
@@ -221,6 +222,33 @@ const Math = () => {
             }
           >
             <FaChartBar /> الإحصاء
+          </div>
+        )}
+
+        {(role === "admin" || subject.includes("استاتيكا")) && (
+          <div
+            className="subject-item"
+            onClick={() =>
+              navigate("/select-math", {
+                state: { subject: "استاتيكا" },
+              })
+            }
+          >
+            <FaRulerCombined /> الاستاتيكا
+          </div>
+        )}
+
+        {(role === "admin" || subject.includes("ديناميكا")) && (
+          <div
+            className="subject-item"
+            onClick={() =>
+              navigate("/select-math", {
+                state: { subject: "ديناميكا" },
+              })
+            }
+          >
+            <FaRulerCombined />
+            الديناميكا
           </div>
         )}
       </div>

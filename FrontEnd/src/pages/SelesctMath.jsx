@@ -11,14 +11,10 @@ import "./../styles/Math.css";
 
 const SelectMath = () => {
   const navigate = useNavigate();
-  const [expandedSections, setExpandedSections] = useState({
-    videos: false,
-    exams: false,
-    assignments: false,
-    pdfs: false,
-  });
-  const [isSubscribed, setIsSubscribed] = useState(true);
   const location = useLocation();
+  const [selectedUnit, setSelectedUnit] = useState(null); // الوحدة المختارة
+  const [selectedLesson, setSelectedLesson] = useState(null); // الدرس المختار
+  const [isSubscribed, setIsSubscribed] = useState(true);
 
   // Retrieve the educational stage and role from localStorage
   const stage = localStorage.getItem("stage");
@@ -35,54 +31,39 @@ const SelectMath = () => {
     unitCount = 8; // Default value if subject is not recognized
   }
 
-  // Check subscription
-  // useEffect(() => {
-  //   if (role === "student" && subject !== "جبر" && subject !== "هندسة") {
-  //     setIsSubscribed(false);
-  //   }
-  // }, [role, subject]);
+  // Check subscription (تم تعليق المنطق الأصلي، يمكن تعديله حسب الحاجة)
+  useEffect(() => {
+    // يمكنك إضافة منطق الاشتراك هنا إذا لزم الأمر
+    // على سبيل المثال:
+    // if (role === "student" && !subject) {
+    //   setIsSubscribed(false);
+    // }
+  }, [role, subject]);
 
-  // Course units data with dynamic length based on the subject
-  const courseUnits = {
-    videos: Array.from({ length: unitCount }, (_, i) => ({
-      id: i + 1,
-      title: `الوحدة ${i + 1}`,
-      path: `/select-math/unit/${i + 1}/videos`,
-    })),
+  // بيانات الوحدات مع الدروس
+  const courseUnits = Array.from({ length: unitCount }, (_, i) => ({
+    id: i + 1,
+    title: `الوحدة ${i + 1}`,
+    lessons: [1, 2, 3], // الدروس كأرقام فقط (يمكنك تعديل العدد حسب الحاجة)
+  }));
 
-    exams: Array.from({ length: unitCount }, (_, i) => ({
-      id: i + 1,
-      title: `الوحدة ${i + 1}`,
-      path: `/select-math/unit/${i + 1}/exams`,
-    })),
 
-    assignments: Array.from({ length: unitCount }, (_, i) => ({
-      id: i + 1,
-      title: `الوحدة ${i + 1}`,
-      path: `/select-math/unit/${i + 1}/assignments`,
-    })),
-
-    pdfs: Array.from({ length: unitCount }, (_, i) => ({
-      id: i + 1,
-      title: `الوحدة ${i + 1}`,
-      path: `/select-math/unit/${i + 1}/pdfs`,
-    })),
+  const handleUnitClick = (unitId) => {
+    setSelectedUnit(selectedUnit === unitId ? null : unitId); // تبديل الحالة
+    setSelectedLesson(null); // إعادة تعيين الدرس
   };
 
-  const toggleSection = (section) => {
-    setExpandedSections((prev) => ({
-      ...prev,
-      [section]: !prev[section],
-    }));
+  const handleLessonClick = (lessonNumber) => {
+    setSelectedLesson(selectedLesson === lessonNumber ? null : lessonNumber); // تبديل الحالة
   };
 
   if (!isSubscribed) {
     return (
-      <div className="history-container centerrr">
-        <header className="history-header">
+      <div className="history-container modern-layout">
+        <header className="history-header modern-header">
           <h1>مادة الرياضيات</h1>
         </header>
-        <p className="about-imag ">
+        <p className="about-imag">
           <img
             src={require("./../images/pngwing.com.png")}
             alt="Not Allowed"
@@ -95,123 +76,110 @@ const SelectMath = () => {
   }
 
   return (
-    <div className="history-container">
-      <header className="history-header">
-        <h1>
+    <div className="history-container modern-layout">
+      <header className="history-header modern-header">
+        <h1 className="iconnn">
           <span className="material-icons iconnn">calculate</span>
-          مادة {subject}
+          مادة الـ{subject}
         </h1>
       </header>
 
-      {/* Videos Section */}
-      <section className="expandable-section">
-        <h2 onClick={() => toggleSection("videos")}>
-          <FaVideo /> الفيديوهات التعليمية
-          {expandedSections.videos ? <FaChevronUp /> : <FaChevronDown />}
-        </h2>
-        {expandedSections.videos && (
-          <div className="units-list">
-            {courseUnits.videos.map((unit) => (
+      <section className="units-section">
+        <h2 className="section-title">الوحدات الدراسية</h2>
+        <div className="units-grid">
+          {courseUnits.map((unit) => (
+            <div key={unit.id} className="unit-card">
               <div
-                key={unit.id}
-                className="unit-item"
-                onClick={() =>
-                  navigate("/courses", {
-                    state: { subject: subject, unit: unit.id },
-                  })
-                }
+                className="unit-header"
+                onClick={() => handleUnitClick(unit.id)}
               >
-                {unit.title}
+                <span>{unit.title}</span>
+                {selectedUnit === unit.id ? <FaChevronUp /> : <FaChevronDown />}
               </div>
-            ))}
-          </div>
-        )}
-      </section>
-
-      {/* Exams Section */}
-      <section className="expandable-section">
-        <h2 onClick={() => toggleSection("exams")}>
-          <FaClipboardList /> الامتحانات
-          {expandedSections.exams ? <FaChevronUp /> : <FaChevronDown />}
-        </h2>
-        {expandedSections.exams && (
-          <div className="units-list">
-            {courseUnits.exams.map((unit) => (
-              <div
-                key={unit.id}
-                className="unit-item"
-                onClick={() =>
-                  navigate("/exams", {
-                    state: {
-                      subject: subject,
-                      unit: unit.id,
-                      type: "امتحان",
-                    },
-                  })
-                }
-              >
-                {unit.title}
-              </div>
-            ))}
-          </div>
-        )}
-      </section>
-
-      {/* Assignments Section */}
-      <section className="expandable-section">
-        <h2 onClick={() => toggleSection("assignments")}>
-          <FaClipboardList /> الواجبات
-          {expandedSections.assignments ? <FaChevronUp /> : <FaChevronDown />}
-        </h2>
-        {expandedSections.assignments && (
-          <div className="units-list">
-            {courseUnits.assignments.map((unit) => (
-              <div
-                key={unit.id}
-                className="unit-item"
-                onClick={() =>
-                  navigate("/exams", {
-                    state: {
-                      subject: subject,
-                      unit: unit.id,
-                      type: "تدريب",
-                    },
-                  })
-                }
-              >
-                {unit.title}
-              </div>
-            ))}
-          </div>
-        )}
-      </section>
-
-      {/* PDFs Section */}
-      <section className="expandable-section">
-        <h2 onClick={() => toggleSection("pdfs")}>
-          <FaFilePdf /> ملفات PDF
-          {expandedSections.pdfs ? <FaChevronUp /> : <FaChevronDown />}
-        </h2>
-        {expandedSections.pdfs && (
-          <div className="units-list">
-            {courseUnits.pdfs.map((unit) => (
-              <div
-                key={unit.id}
-                className="unit-item"
-                onClick={() =>
-                  navigate("/pdf", {
-                    state: {
-                      subject: subject,
-                      unit: unit.id,
-                    },
-                  })
-                }
-              >
-                {unit.title}
-              </div>
-            ))}
-          </div>
-        )}
+              {selectedUnit === unit.id && (
+                <div className="lessons-container">
+                  {unit.lessons.map((lessonNumber) => (
+                    <div key={lessonNumber} className="lesson-card">
+                      <div
+                        className="lesson-header"
+                        onClick={() => handleLessonClick(lessonNumber)}
+                      >
+                        <span>الدرس {lessonNumber}</span>
+                        {selectedLesson === lessonNumber ? (
+                          <FaChevronUp />
+                        ) : (
+                          <FaChevronDown />
+                        )}
+                      </div>
+                      {selectedLesson === lessonNumber && (
+                        <div className="content-options">
+                          <div
+                            className="content-option"
+                            onClick={() =>
+                              navigate("/courses", {
+                                state: {
+                                  subject: subject,
+                                  unit: unit.id,
+                                  lesson: lessonNumber,
+                                },
+                              })
+                            }
+                          >
+                            <FaVideo /> الفيديوهات التعليمية
+                          </div>
+                          <div
+                            className="content-option"
+                            onClick={() =>
+                              navigate("/exams", {
+                                state: {
+                                  subject: subject,
+                                  unit: unit.id,
+                                  lesson: lessonNumber,
+                                  type: "امتحان",
+                                },
+                              })
+                            }
+                          >
+                            <FaClipboardList /> الامتحانات
+                          </div>
+                          <div
+                            className="content-option"
+                            onClick={() =>
+                              navigate("/exams", {
+                                state: {
+                                  subject: subject,
+                                  unit: unit.id,
+                                  lesson: lessonNumber,
+                                  type: "تدريب",
+                                },
+                              })
+                            }
+                          >
+                            <FaClipboardList /> التدريبات
+                          </div>
+                          <div
+                            className="content-option"
+                            onClick={() =>
+                              navigate("/pdf", {
+                                state: {
+                                  subject: subject,
+                                  unit: unit.id,
+                                  lesson: lessonNumber,
+                                },
+                              })
+                            }
+                          >
+                            <FaFilePdf /> ملفات PDF
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
       </section>
     </div>
   );

@@ -12,12 +12,8 @@ import { FaFacebook, FaInstagram, FaTiktok, FaWhatsapp } from "react-icons/fa";
 
 const English = () => {
   const navigate = useNavigate();
-  const [expandedSections, setExpandedSections] = useState({
-    videos: false,
-    exams: false,
-    assignments: false,
-    pdfs: false,
-  });
+  const [selectedUnit, setSelectedUnit] = useState(null); // الوحدة المختارة
+  const [selectedLesson, setSelectedLesson] = useState(null); // الدرس المختار
   const [isSubscribed, setIsSubscribed] = useState(true);
 
   // استرداد المرحلة الدراسية والدور و subject من localStorage
@@ -27,65 +23,46 @@ const English = () => {
 
   // فحص الاشتراك
   useEffect(() => {
-    if (role === "student" && !subject.includes("انجليزي") ) {
+    if (role === "student" && !subject.includes("انجليزي")) {
       setIsSubscribed(false);
     }
   }, [role, subject]);
 
-  // بيانات الوحدات مع روابط الصفحات
-  const courseUnits = {
-    videos: Array.from({ length: 6 }, (_, i) => ({
-      id: i + 1,
-      title: `unit ${i + 1}`,
-      path: `/english/unit/${i + 1}/videos`,
-    })),
+  // بيانات الوحدات مع الدروس
+  const courseUnits = Array.from({ length: 6 }, (_, i) => ({
+    id: i + 1,
+    title: `الوحدة ${i + 1}`,
+    lessons: [1, 2, 3], // الدروس كأرقام فقط (يمكنك تعديل العدد حسب الحاجة)
+  }));
 
-    exams: Array.from({ length: 6 }, (_, i) => ({
-      id: i + 1,
-      title: `unit ${i + 1}`,
-      path: `/english/unit/${i + 1}/exams`,
-    })),
 
-    assignments: Array.from({ length: 6 }, (_, i) => ({
-      id: i + 1,
-      title: `unit ${i + 1}`,
-      path: `/english/unit/${i + 1}/assignments`,
-    })),
-
-    pdfs: Array.from({ length: 6 }, (_, i) => ({
-      id: i + 1,
-      title: `unit ${i + 1}`,
-      path: `/english/unit/${i + 1}/pdfs`,
-    })),
+  const handleUnitClick = (unitId) => {
+    setSelectedUnit(selectedUnit === unitId ? null : unitId); // تبديل الحالة
+    setSelectedLesson(null); // إعادة تعيين الدرس
   };
 
-  const toggleSection = (section) => {
-    setExpandedSections((prev) => ({
-      ...prev,
-      [section]: !prev[section],
-    }));
+  const handleLessonClick = (lessonNumber) => {
+    setSelectedLesson(selectedLesson === lessonNumber ? null : lessonNumber); // تبديل الحالة
   };
 
   if (!isSubscribed) {
     return (
-      <div className="history-container centerrr">
-        <header className="history-header">
-          <div className="contenttt">
-            <div className="content-container">
-              {/* الصورة على اليسار */}
+      <div className="history-container modern-layout">
+        <header className="history-header modern-header">
+          <div className="content-container">
+            <div className="contenttt">
               <div className="image-container">
                 <img
                   src={require("./../images/mrahmedgozy.webp")}
-                  alt="صورة المادة"
+                  alt="Subject"
                   className="history-image"
-                  style={{ border: "2px solid #ccc" }} // إضافة الإطار هنا
+                  style={{ border: "2px solid #ccc" }}
                 />
               </div>
-              {/* النص على اليمين */}
               <div className="text-container">
                 <h1>مادة اللغة الانجليزية</h1>
                 <p>مـقدم الـمادة</p>
-                <p className="history-subtitle"> Mr- Ahmed Ghozy </p>
+                <p className="history-subtitle">Mr - Ahmed Ghozy</p>
                 <div className="social-linkss">
                   <a
                     href="https://www.facebook.com/share/18tQGTuUgK/?mibextid=wwXIfr"
@@ -102,7 +79,7 @@ const English = () => {
                     <FaInstagram />
                   </a>
                   <a
-                    href="https://www.tiktok.com/@aoghozy?_r=1&_d=ea9clh1ahih945&sec_uid=MS4wLjABAAAAyPj4PpzeHkZ8_9lADwsubWWKanLxVRoK3HJR_1q6wBrOHB-t4-WuoCRIjdpe7029&share_author_id=6957505322089759749&sharer_language=en&source=h5_m&u_code=dib232gf07eeie&timestamp=1741566718&user_id=6957505322089759749&sec_user_id=MS4wLjABAAAAyPj4PpzeHkZ8_9lADwsubWWKanLxVRoK3HJR_1q6wBrOHB-t4-WuoCRIjdpe7029&utm_source=copy&utm_campaign=client_share&utm_medium=android&share_iid=7441054284672026376&share_link_id=36a45378-244d-4545-a12c-1426c0093f32&share_app_id=1233&ugbiz_name=ACCOUNT&ug_btm=b8727%2Cb0229&social_share_type=5&enable_checksum=1"
+                    href="https://www.tiktok.com/@aoghozy?_r=1&_d=ea9clh1ahih945&sec_uid=MS4wLjABAAAAyPj4PpzeHkZ8_9lADwsubWWKanLxVRoK3HJR_1q6wBrOHB-t4-WuoCRIjdpe7029&share_author_id=6957505322089759749&sharer_language=en&source=h5_m&u_code=dib232gf07eeie×tamp=1741566718&user_id=6957505322089759749&sec_user_id=MS4wLjABAAAAyPj4PpzeHkZ8_9lADwsubWWKanLxVRoK3HJR_1q6wBrOHB-t4-WuoCRIjdpe7029&utm_source=copy&utm_campaign=client_share&utm_medium=android&share_iid=7441054284672026376&share_link_id=36a45378-244d-4545-a12c-1426c0093f32&share_app_id=1233&ugbiz_name=ACCOUNT&ug_btm=b8727%2Cb0229&social_share_type=5&enable_checksum=1"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -120,7 +97,7 @@ const English = () => {
             </div>
           </div>
         </header>
-        <p className="about-imag ">
+        <p className="about-imag">
           <img
             src={require("./../images/pngwing.com.png")}
             alt="Not Allowed"
@@ -133,24 +110,22 @@ const English = () => {
   }
 
   return (
-    <div className="history-container">
-      <header className="history-header">
-        <div className="contenttt">
-          <div className="content-container">
-            {/* الصورة على اليسار */}
+    <div className="history-container modern-layout">
+      <header className="history-header modern-header">
+        <div className="content-container">
+          <div className="contenttt">
             <div className="image-container">
               <img
                 src={require("./../images/mrahmedgozy.webp")}
-                alt="صورة المادة"
+                alt="Subject"
                 className="history-image"
-                style={{ border: "2px solid #ccc" }} // إضافة الإطار هنا
+                style={{ border: "2px solid #ccc" }}
               />
             </div>
-            {/* النص على اليمين */}
             <div className="text-container">
               <h1>مادة اللغة الانجليزية</h1>
               <p>مـقدم الـمادة</p>
-              <p className="history-subtitle"> Mr- Ahmed Ghozy </p>
+              <p className="history-subtitle">Mr - Ahmed Ghozy</p>
               <div className="social-linkss">
                 <a
                   href="https://www.facebook.com/share/18tQGTuUgK/?mibextid=wwXIfr"
@@ -167,7 +142,7 @@ const English = () => {
                   <FaInstagram />
                 </a>
                 <a
-                  href="https://www.tiktok.com/@aoghozy?_r=1&_d=ea9clh1ahih945&sec_uid=MS4wLjABAAAAyPj4PpzeHkZ8_9lADwsubWWKanLxVRoK3HJR_1q6wBrOHB-t4-WuoCRIjdpe7029&share_author_id=6957505322089759749&sharer_language=en&source=h5_m&u_code=dib232gf07eeie&timestamp=1741566718&user_id=6957505322089759749&sec_user_id=MS4wLjABAAAAyPj4PpzeHkZ8_9lADwsubWWKanLxVRoK3HJR_1q6wBrOHB-t4-WuoCRIjdpe7029&utm_source=copy&utm_campaign=client_share&utm_medium=android&share_iid=7441054284672026376&share_link_id=36a45378-244d-4545-a12c-1426c0093f32&share_app_id=1233&ugbiz_name=ACCOUNT&ug_btm=b8727%2Cb0229&social_share_type=5&enable_checksum=1"
+                  href="https://www.tiktok.com/@aoghozy?_r=1&_d=ea9clh1ahih945&sec_uid=MS4wLjABAAAAyPj4PpzeHkZ8_9lADwsubWWKanLxVRoK3HJR_1q6wBrOHB-t4-WuoCRIjdpe7029&share_author_id=6957505322089759749&sharer_language=en&source=h5_m&u_code=dib232gf07eeie×tamp=1741566718&user_id=6957505322089759749&sec_user_id=MS4wLjABAAAAyPj4PpzeHkZ8_9lADwsubWWKanLxVRoK3HJR_1q6wBrOHB-t4-WuoCRIjdpe7029&utm_source=copy&utm_campaign=client_share&utm_medium=android&share_iid=7441054284672026376&share_link_id=36a45378-244d-4545-a12c-1426c0093f32&share_app_id=1233&ugbiz_name=ACCOUNT&ug_btm=b8727%2Cb0229&social_share_type=5&enable_checksum=1"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -186,115 +161,102 @@ const English = () => {
         </div>
       </header>
 
-      {/* قسم الفيديوهات */}
-      <section className="expandable-section">
-        <h2 onClick={() => toggleSection("videos")}>
-          <FaVideo /> الفيديوهات التعليمية
-          {expandedSections.videos ? <FaChevronUp /> : <FaChevronDown />}
-        </h2>
-        {expandedSections.videos && (
-          <div className="units-list">
-            {courseUnits.videos.map((unit) => (
+      <section className="units-section">
+        <h2 className="section-title">الوحدات الدراسية</h2>
+        <div className="units-grid">
+          {courseUnits.map((unit) => (
+            <div key={unit.id} className="unit-card">
               <div
-                key={unit.id}
-                className="unit-item"
-                onClick={() =>
-                  navigate("/courses", {
-                    state: { subject: "انجليزي", unit: unit.id },
-                  })
-                }
+                className="unit-header"
+                onClick={() => handleUnitClick(unit.id)}
               >
-                {unit.title}
+                <span>{unit.title}</span>
+                {selectedUnit === unit.id ? <FaChevronUp /> : <FaChevronDown />}
               </div>
-            ))}
-          </div>
-        )}
-      </section>
-
-      {/* قسم الامتحانات */}
-      <section className="expandable-section">
-        <h2 onClick={() => toggleSection("exams")}>
-          <FaClipboardList /> الامتحانات
-          {expandedSections.exams ? <FaChevronUp /> : <FaChevronDown />}
-        </h2>
-        {expandedSections.exams && (
-          <div className="units-list">
-            {courseUnits.exams.map((unit) => (
-              <div
-                key={unit.id}
-                className="unit-item"
-                onClick={() =>
-                  navigate("/exams", {
-                    state: {
-                      subject: "انجليزي",
-                      unit: unit.id,
-                      type: "امتحان",
-                    },
-                  })
-                }
-              >
-                {unit.title}
-              </div>
-            ))}
-          </div>
-        )}
-      </section>
-
-      {/* قسم الواجبات */}
-      <section className="expandable-section">
-        <h2 onClick={() => toggleSection("assignments")}>
-          <FaClipboardList /> التدريبات
-          {expandedSections.assignments ? <FaChevronUp /> : <FaChevronDown />}
-        </h2>
-        {expandedSections.assignments && (
-          <div className="units-list">
-            {courseUnits.assignments.map((unit) => (
-              <div
-                key={unit.id}
-                className="unit-item"
-                onClick={() =>
-                  navigate("/exams", {
-                    state: {
-                      subject: "انجليزي",
-                      unit: unit.id,
-                      type: "تدريب",
-                    },
-                  })
-                }
-              >
-                {unit.title}
-              </div>
-            ))}
-          </div>
-        )}
-      </section>
-
-      {/* قسم ملفات PDF */}
-      <section className="expandable-section">
-        <h2 onClick={() => toggleSection("pdfs")}>
-          <FaFilePdf /> ملفات PDF
-          {expandedSections.pdfs ? <FaChevronUp /> : <FaChevronDown />}
-        </h2>
-        {expandedSections.pdfs && (
-          <div className="units-list">
-            {courseUnits.pdfs.map((unit) => (
-              <div
-                key={unit.id}
-                className="unit-item"
-                onClick={() =>
-                  navigate("/pdf", {
-                    state: {
-                      subject: "انجليزي",
-                      unit: unit.id,
-                    },
-                  })
-                }
-              >
-                {unit.title}
-              </div>
-            ))}
-          </div>
-        )}
+              {selectedUnit === unit.id && (
+                <div className="lessons-container">
+                  {unit.lessons.map((lessonNumber) => (
+                    <div key={lessonNumber} className="lesson-card">
+                      <div
+                        className="lesson-header"
+                        onClick={() => handleLessonClick(lessonNumber)}
+                      >
+                        <span>الدرس {lessonNumber}</span>
+                        {selectedLesson === lessonNumber ? (
+                          <FaChevronUp />
+                        ) : (
+                          <FaChevronDown />
+                        )}
+                      </div>
+                      {selectedLesson === lessonNumber && (
+                        <div className="content-options">
+                          <div
+                            className="content-option"
+                            onClick={() =>
+                              navigate("/courses", {
+                                state: {
+                                  subject: "انجليزي",
+                                  unit: unit.id,
+                                  lesson: lessonNumber,
+                                },
+                              })
+                            }
+                          >
+                            <FaVideo /> الفيديوهات التعليمية
+                          </div>
+                          <div
+                            className="content-option"
+                            onClick={() =>
+                              navigate("/exams", {
+                                state: {
+                                  subject: "انجليزي",
+                                  unit: unit.id,
+                                  lesson: lessonNumber,
+                                  type: "امتحان",
+                                },
+                              })
+                            }
+                          >
+                            <FaClipboardList /> الامتحانات
+                          </div>
+                          <div
+                            className="content-option"
+                            onClick={() =>
+                              navigate("/exams", {
+                                state: {
+                                  subject: "انجليزي",
+                                  unit: unit.id,
+                                  lesson: lessonNumber,
+                                  type: "تدريب",
+                                },
+                              })
+                            }
+                          >
+                            <FaClipboardList /> التدريبات
+                          </div>
+                          <div
+                            className="content-option"
+                            onClick={() =>
+                              navigate("/pdf", {
+                                state: {
+                                  subject: "انجليزي",
+                                  unit: unit.id,
+                                  lesson: lessonNumber,
+                                },
+                              })
+                            }
+                          >
+                            <FaFilePdf /> ملفات PDF
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
       </section>
     </div>
   );

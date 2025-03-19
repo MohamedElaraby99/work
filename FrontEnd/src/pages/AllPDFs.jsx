@@ -13,6 +13,7 @@ const AllPDFs = () => {
     stage: "",
     subject: "",
     unit: "",
+    lesson_number: "",
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -111,6 +112,7 @@ const AllPDFs = () => {
           file: editData.file,
           subject: editData.subject,
           unit: editData.unit,
+          lesson_number: editData.lesson_number,
         },
         {
           headers: {
@@ -232,6 +234,7 @@ const AllPDFs = () => {
               <th>المرحلة الدراسية</th>
               <th>المادة الدراسية</th>
               <th>الوحدة الدراسية</th>
+              <th> رقم الدرس</th>
               <th>رابط الملف</th>
               <th>الإجراءات</th>
             </tr>
@@ -274,7 +277,7 @@ const AllPDFs = () => {
                         onChange={handleEditChange}
                       >
                         <option value="disabled" disabled>
-                          اختر المادة{" "}
+                          اختر المادة
                         </option>
                         <option value="تاريخ">تاريخ</option>
                         <option value="انجليزي">لغة انجليزية</option>
@@ -307,6 +310,15 @@ const AllPDFs = () => {
                       </select>
                     </td>
                     <td>
+                      <input
+                        type="text"
+                        name="lesson_number"
+                        value={editData.lesson_number}
+                        onChange={handleEditChange}
+                        className="edit-input"
+                      />
+                    </td>
+                    <td>
                       <a
                         href={editData.file}
                         target="_blank"
@@ -334,6 +346,7 @@ const AllPDFs = () => {
                     <td>{pdf.stage}</td>
                     <td>{pdf.subject}</td>
                     <td>{pdf.unit}</td>
+                    <td>{pdf.lesson_number}</td>
                     <td>
                       <button
                         onClick={() =>

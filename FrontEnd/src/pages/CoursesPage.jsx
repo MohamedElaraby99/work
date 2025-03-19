@@ -7,7 +7,7 @@ import Loader from "./Loader";
 const CoursesPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { subject, unit } = location.state;
+  const { subject, unit, lesson } = location.state;
 
   const [videos, setVideos] = useState([]);
   const [filteredVideos, setFilteredVideos] = useState([]);
@@ -25,7 +25,7 @@ const CoursesPage = () => {
       try {
         const accessToken = localStorage.getItem("accessToken");
         const response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/lessons?subject=${subject}&unit=${unit}`,
+          `${process.env.REACT_APP_BASE_URL}/lessons?subject=${subject}&unit=${unit}&lesson_number=${lesson}`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -44,7 +44,7 @@ const CoursesPage = () => {
     };
 
     fetchVideos();
-  }, [subject, unit]);
+  }, [subject, unit, lesson]);
 
   // تصفية الفيديوهات بناءً على المرحلة الدراسية
   useEffect(() => {

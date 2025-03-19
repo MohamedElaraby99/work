@@ -12,7 +12,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.j
 
 const PdfPage = () => {
   const location = useLocation();
-  const { subject, unit } = location.state;
+  const { subject, unit, lesson } = location.state;
 
   const [pdfFiles, setPdfFiles] = useState([]);
   const [filteredPdfFiles, setFilteredPdfFiles] = useState([]);
@@ -33,7 +33,7 @@ const PdfPage = () => {
       try {
         const accessToken = localStorage.getItem("accessToken");
         const response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/files?subject=${subject}&unit=${unit}`,
+          `${process.env.REACT_APP_BASE_URL}/files?subject=${subject}&unit=${unit}&lesson_number=${lesson}`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
@@ -50,7 +50,7 @@ const PdfPage = () => {
     };
 
     fetchPdfs();
-  }, [subject, unit]);
+  }, [subject, unit, lesson]);
 
   // تصفية ملفات الـ PDF بناءً على المرحلة الدراسية
   useEffect(() => {
