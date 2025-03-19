@@ -161,13 +161,6 @@
   transform: scale(0.95);
 }
 
-.actionss:active {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-}
 
 @media screen and (max-width: 768px) {
   .videos-table {
