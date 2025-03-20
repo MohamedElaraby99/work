@@ -29,8 +29,8 @@ import AllPostsComponent from "./pages/AllPostsComponent";
 import ScrollToTop from "./components/ScrollTop";
 import About from "./pages/about";
 import ResultComponent from "./pages/ResultComponent";
-import Arabic1 from "./pages/Arabic1";
-import Arabic2 from "./pages/Arabic2";
+import Chemistry from "./pages/chemistry";
+import Science from "./pages/science";
 import Ai from "./pages/AiChat";
 
 
@@ -66,8 +66,8 @@ const App = () => {
             <Routes>
               <Route path="/home" element={<HomePage />} />
               <Route path="/courses" element={<CoursesPage />} />
-              <Route path="/arabic1" element={<Arabic1 />} />
-              <Route path="/arabic2" element={<Arabic2 />} />
+              <Route path="/science" element={<Science />} />
+              <Route path="/chemistry" element={<Chemistry />} />
               <Route path="/video-details/:id" element={<VideoDetailsPage />} />
               <Route path="/exams" element={<ExamsPage />} />
               <Route path="/exams/details/:id" element={<ExamDetails />} />

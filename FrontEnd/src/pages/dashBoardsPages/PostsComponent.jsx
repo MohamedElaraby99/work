@@ -10,43 +10,18 @@ const CreatePostComponent = () => {
   const [selectedYears, setSelectedYears] = useState([]);
   const [selectedSubjects, setSelectedSubjects] = useState([]);
 
-  // المراحل العربية
-  const arabicYears = [
-    "1 ابتدائي",
-    "2 ابتدائي",
-    "3 ابتدائي",
-    "4 ابتدائي",
-    "5 ابتدائي",
-    "6 ابتدائي",
-    "1 إعدادي",
-    "2 إعدادي",
-    "3 إعدادي",
-    "1 ثانوي",
-    "2 ثانوي",
-    "3 ثانوي",
-  ];
-
-  // المراحل الإنجليزية
-  const englishYears = [
-    "KG 1",
-    "KG 2",
-    "Grade 1",
-    "Grade 2",
-    "Grade 3",
-    "Grade 4",
-    "Grade 5",
-    "Grade 6",
-    "Grade 7",
-    "Grade 8",
-    "Grade 9",
-    "Grade 10",
-    "Grade 11",
-  ];
-
-  // المواد الدراسية
+  // المواد الدراسية مع المراحل المرتبطة بها
   const subjects = [
-    { label: "لغة عربية", value: "arabic1", years: arabicYears },
-    { label: "Arabic", value: "arabic2", years: englishYears },
+    {
+      label: "كيمياء",
+      value: "chemistry",
+      years: ["1 ثانوي", "2 ثانوي", "3 ثانوي"],
+    },
+    {
+      label: "علوم طبيعية",
+      value: "science",
+      years: ["1 ثانوي", "2 ثانوي", "3 ثانوي"],
+    },
   ];
 
   // Toggle selected years

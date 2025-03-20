@@ -9,9 +9,9 @@ import {
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "./../styles/Math.css";
-import { FaFacebook, FaInstagram, FaTiktok, FaWhatsapp } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaWhatsapp } from "react-icons/fa";
 
-const Arabic1 = () => {
+const Science = () => {
   const navigate = useNavigate();
   const [selectedUnit, setSelectedUnit] = useState(null); // الوحدة المختارة
   const [selectedLesson, setSelectedLesson] = useState(null); // الدرس المختار
@@ -33,10 +33,10 @@ const Arabic1 = () => {
       unitCount = 2;
       break;
     case "ثالثة ثانوي":
-      unitCount = 7;
+      unitCount = 4;
       break;
     default:
-      unitCount = 8;
+      unitCount = 4;
   }
 
   // Check subscription
@@ -70,16 +70,16 @@ const Arabic1 = () => {
             <div className="contenttt">
               <div className="image-container">
                 <img
-                  src={require("./../images/mralielian.png")}
+                  src={require("./../images/mongezlogo.png")}
                   alt="Subject"
                   className="history-image"
                   style={{ border: "2px solid #ffffff" }}
                 />
               </div>
               <div className="text-container">
-                <h1> مـادة الـلغة الـعربية </h1>
-                <p>مـقدم الـمادة</p>
-                <p className="history-subtitle">مـستر : عـلي عـليان</p>
+                <h1>Arabic language</h1>
+                <p>Presenter</p>
+                <p className="history-subtitle"> Mr : Ali Elian </p>
                 <div className="social-linkss">
                   <a
                     href="https://www.facebook.com/ali.alyan.92"
@@ -128,58 +128,62 @@ const Arabic1 = () => {
 
   return (
     <div className="history-container modern-layout">
-      <header className="history-header modern-header">
+      <header className="history-header">
         <div className="content-container">
-          <div className="contenttt">
-            <div className="image-container">
-              <img
-                src={require("./../images/mralielian.png")}
-                alt="Subject"
-                className="history-image"
-                style={{ border: "2px solid #ffffff" }}
-              />
-            </div>
-            <div className="text-container">
-              <h1> مـادة الـلغة الـعربية </h1>
-              <p>مـقدم الـمادة</p>
-              <p className="history-subtitle">مـستر : عـلي عـليان</p>
-              <div className="social-linkss">
-                <a
-                  href="https://www.facebook.com/ali.alyan.92"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FaFacebook />
-                </a>
-                <a
-                  href="https://www.instagram.com/ali23121982/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FaInstagram />
-                </a>
-                <a
-                  href="https://www.linkedin.com/in/%D8%B9%D9%84%D9%8A-%D9%85%D8%AD%D9%85%D8%AF-%D8%B9%D9%84%D9%8A%D8%A7%D9%86-a42859105/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FaLinkedin />
-                </a>
-                <a
-                  href="https://wa.me/201126529544"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FaWhatsapp />
-                </a>
+          <header className="history-header modern-header">
+            <div className="content-container">
+              <div className="contenttt">
+                <div className="image-container">
+                  <img
+                    src={require("./../images/mongezlogo.png")}
+                    alt="Subject"
+                    className="history-image"
+                    style={{ border: "2px solid #ffffff" }}
+                  />
+                </div>
+                <div className="text-container">
+                  <h1> مـادة الـعلوم الـطبيعية </h1>
+                  <p>مـقدم الـمادة</p>
+                  <p className="history-subtitle">مـستر : مـحمود عـبدالـعزيز</p>
+                  <div className="social-linkss">
+                    <a
+                      href="https://www.facebook.com/ali.alyan.92"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FaFacebook />
+                    </a>
+                    <a
+                      href="https://www.instagram.com/ali23121982/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FaInstagram />
+                    </a>
+                    <a
+                      href="https://www.linkedin.com/in/%D8%B9%D9%84%D9%8A-%D9%85%D8%AD%D9%85%D8%AF-%D8%B9%D9%84%D9%8A%D8%A7%D9%86-a42859105/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FaLinkedin />
+                    </a>
+                    <a
+                      href="https://wa.me/201126529544"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FaWhatsapp />
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
+          </header>
         </div>
       </header>
 
       <section className="units-section">
-        <h2 className="section-title">الوحدات الدراسية</h2>
+        <h2 className="section-title">الـوحدات الـدراسية</h2>
         <div className="units-grid">
           {courseUnits.map((unit) => (
             <div key={unit.id} className="unit-card">
@@ -279,4 +283,4 @@ const Arabic1 = () => {
   );
 };
 
-export default Arabic1;
+export default Science;

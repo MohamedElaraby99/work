@@ -68,7 +68,7 @@ const HomePage = () => {
       <About />
       <div className="footer">
         <p className="footer-text">
-          &copy; {new Date().getFullYear()} - منصة Ali Elian- جميع الحقوق - محفوظة
+          &copy; {new Date().getFullYear()} - منصة المنجز - جميع الحقوق - محفوظة
         </p>
       </div>
     </div>

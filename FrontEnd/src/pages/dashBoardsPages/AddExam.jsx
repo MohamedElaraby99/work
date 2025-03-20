@@ -172,8 +172,8 @@ const CreateExamComponent = () => {
             <option value="" disabled>
               اختر المادة
             </option>
-            <option value="arabic1">لغة عربية</option>
-            <option value="arabic2">Arabic</option>
+            <option value="chemistry">كيمياء</option>
+            <option value="science">علوم طبيعية</option>
           </select>
         </label>
         <label>

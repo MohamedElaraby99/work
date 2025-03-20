@@ -76,7 +76,7 @@ const LoginForm = ({ setRole }) => {
             <div className="left-side">
               <img
                 className="left-side-image"
-                src={require("./../images/alielianlogo.png")}
+                src={require("./../images/mongezlogo.png")}
                 alt=""
               />
             </div>
@@ -86,10 +86,10 @@ const LoginForm = ({ setRole }) => {
             <div className="login-form-container">
               <img
                 className="leftt-side-image"
-                src={require("./../images/alielianlogo.png")}
+                src={require("./../images/mongezlogo.png")}
                 alt=""
               />
-              <p className="login-page-title">Ali Elian Platform</p>
+              <p className="login-page-title">منصة المنجز</p>
               <p className="login-title">تسجيل الدخول</p>
               <form onSubmit={handleLogin} className="login-form">
                 <div className="input-containerr">

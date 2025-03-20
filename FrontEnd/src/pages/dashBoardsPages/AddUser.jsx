@@ -151,11 +151,11 @@ const AddUser = () => {
                       <input
                         type="checkbox"
                         name="subject"
-                        value="arabic1"
-                        checked={user.subject.includes("arabic1")}
+                        value="chemistry"
+                        checked={user.subject.includes("chemistry")}
                         onChange={handleChange}
                       />
-                      لغة عربية
+                      كيمياء
                     </label>
                   </div>
                   <div></div>
@@ -164,11 +164,11 @@ const AddUser = () => {
                       <input
                         type="checkbox"
                         name="subject"
-                        value="arabic2"
-                        checked={user.subject.includes("arabic2")}
+                        value="science"
+                        checked={user.subject.includes("science")}
                         onChange={handleChange}
                       />
-                      Arabic
+                      علوم طبيعية
                     </label>
                   </div>
                   <div></div>

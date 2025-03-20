@@ -44,7 +44,7 @@
   font-size: 1.5rem;
   font-weight: 900;
   margin-bottom: 0.5rem;
-  color: #ffffff;
+  color: #122557;
   display: flex;
   justify-content: center;
 }
@@ -66,15 +66,15 @@
 }
 
 .left-side-image {
-  width: 100%;
-  height: 80%;
+  width: 80%;
+  height: 70%;
   object-fit: cover;
 }
 
 @media (max-width: 1099px) {
   .left-side-image {
     width: 100%;
-    height: 55%;
+    height: 50%;
     object-fit: cover;
   }
 }
@@ -82,7 +82,7 @@
 @media (max-width: 1210px) {
   .left-side-image {
     width: 100%;
-    height: 67%;
+    height: 60%;
     object-fit: cover;
   }
 }

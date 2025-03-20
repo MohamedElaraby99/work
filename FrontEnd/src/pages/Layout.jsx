@@ -55,10 +55,10 @@ const Layout = ({ children, role }) => {
         <div className="logo-container" onClick={() => navigate("/home")}>
           <img
             className="logo"
-            src={require("./../images/alielianlogo.png")}
-            alt="alielian logo"
+            src={require("./../images/mongezlogo.png")}
+            alt="mongez logo"
           />
-          <h1>AliElian Platform</h1>
+          <h1>منصة المنجز</h1>
         </div>
 
         <div className="user-menu">
@@ -82,22 +82,16 @@ const Layout = ({ children, role }) => {
                 <span className="material-icons">home</span> الرئيسية
               </Link>
             </li>
-            <li className={location.pathname === "/arabic1" ? "active" : ""}>
-              <Link to="/arabic1">
-                <span className="material-icons">school</span>
-                اللغة العربية
+            <li className={location.pathname === "/chemistry" ? "active" : ""}>
+              <Link to="/chemistry">
+                <span className="material-icons">science</span>
+                كيمياء
               </Link>
             </li>
-            <li
-              className={
-                location.pathname === "/arabic2" 
-                  ? "active"
-                  : ""
-              }
-            >
-              <Link to="/arabic2">
-                <span className="material-icons">language</span>
-                Arabic
+            <li className={location.pathname === "/science" ? "active" : ""}>
+              <Link to="/science">
+                <span className="material-icons">biotech</span>
+                علوم طبيعية
               </Link>
             </li>
 
