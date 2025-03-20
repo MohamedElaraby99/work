@@ -5,10 +5,11 @@ import {
   FaClipboardList,
   FaChevronDown,
   FaChevronUp,
+  FaLinkedin,
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "./../styles/Math.css";
-import { FaFacebook, FaInstagram, FaTiktok, FaWhatsapp } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaWhatsapp } from "react-icons/fa";
 
 const Arabic2 = () => {
   const navigate = useNavigate();
@@ -81,33 +82,33 @@ const Arabic2 = () => {
                 <p className="history-subtitle"> Mr : Ali Elian </p>
                 <div className="social-linkss">
                   <a
-                    href="https://www.facebook.com/share/1B8FQwvbrx/?mibextid=wwXIfr"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <FaFacebook />
-                  </a>
-                  <a
-                    href="https://www.instagram.com/ahmed_elsaiidd?igsh=MXdkenVsdDdiZThmcg%3D%3D&utm_source=qr"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <FaInstagram />
-                  </a>
-                  <a
-                    href="https://www.tiktok.com/@ahmedelsaid5?_t=ZS-8uXqjqzaElA&_r=1"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <FaTiktok />
-                  </a>
-                  <a
-                    href="https://wa.me/201279456731"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <FaWhatsapp />
-                  </a>
+                                    href="https://www.facebook.com/ali.alyan.92"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                  >
+                                    <FaFacebook />
+                                  </a>
+                                  <a
+                                    href="https://www.instagram.com/ali23121982/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                  >
+                                    <FaInstagram />
+                                  </a>
+                                  <a
+                                    href="https://www.linkedin.com/in/%D8%B9%D9%84%D9%8A-%D9%85%D8%AD%D9%85%D8%AF-%D8%B9%D9%84%D9%8A%D8%A7%D9%86-a42859105/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                  >
+                                    <FaLinkedin />
+                                  </a>
+                                  <a
+                                    href="https://wa.me/201126529544"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                  >
+                                    <FaWhatsapp />
+                                  </a>
                 </div>
               </div>
             </div>
@@ -146,28 +147,28 @@ const Arabic2 = () => {
                   <p className="history-subtitle"> Mr : Ali Elian </p>
                   <div className="social-linkss">
                     <a
-                      href="https://www.facebook.com/share/1B8FQwvbrx/?mibextid=wwXIfr"
+                      href="https://www.facebook.com/ali.alyan.92"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
                       <FaFacebook />
                     </a>
                     <a
-                      href="https://www.instagram.com/ahmed_elsaiidd?igsh=MXdkenVsdDdiZThmcg%3D%3D&utm_source=qr"
+                      href="https://www.instagram.com/ali23121982/"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
                       <FaInstagram />
                     </a>
                     <a
-                      href="https://www.tiktok.com/@ahmedelsaid5?_t=ZS-8uXqjqzaElA&_r=1"
+                      href="https://www.linkedin.com/in/%D8%B9%D9%84%D9%8A-%D9%85%D8%AD%D9%85%D8%AF-%D8%B9%D9%84%D9%8A%D8%A7%D9%86-a42859105/"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <FaTiktok />
+                      <FaLinkedin />
                     </a>
                     <a
-                      href="https://wa.me/201279456731"
+                      href="https://wa.me/201126529544"
                       target="_blank"
                       rel="noopener noreferrer"
                     >

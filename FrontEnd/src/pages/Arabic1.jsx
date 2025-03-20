@@ -5,6 +5,7 @@ import {
   FaClipboardList,
   FaChevronDown,
   FaChevronUp,
+  FaLinkedin,
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "./../styles/Math.css";
@@ -81,28 +82,28 @@ const Arabic1 = () => {
                 <p className="history-subtitle">مـستر : عـلي عـليان</p>
                 <div className="social-linkss">
                   <a
-                    href="https://www.facebook.com/share/1B8FQwvbrx/?mibextid=wwXIfr"
+                    href="https://www.facebook.com/ali.alyan.92"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <FaFacebook />
                   </a>
                   <a
-                    href="https://www.instagram.com/ahmed_elsaiidd?igsh=MXdkenVsdDdiZThmcg%3D%3D&utm_source=qr"
+                    href="https://www.instagram.com/ali23121982/"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <FaInstagram />
                   </a>
                   <a
-                    href="https://www.tiktok.com/@ahmedelsaid5?_t=ZS-8uXqjqzaElA&_r=1"
+                    href="https://www.linkedin.com/in/%D8%B9%D9%84%D9%8A-%D9%85%D8%AD%D9%85%D8%AF-%D8%B9%D9%84%D9%8A%D8%A7%D9%86-a42859105/"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <FaTiktok />
+                    <FaLinkedin />
                   </a>
                   <a
-                    href="https://wa.me/201279456731"
+                    href="https://wa.me/201126529544"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -144,28 +145,28 @@ const Arabic1 = () => {
               <p className="history-subtitle">مـستر : عـلي عـليان</p>
               <div className="social-linkss">
                 <a
-                  href="https://www.facebook.com/share/1B8FQwvbrx/?mibextid=wwXIfr"
+                  href="https://www.facebook.com/ali.alyan.92"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   <FaFacebook />
                 </a>
                 <a
-                  href="https://www.instagram.com/ahmed_elsaiidd?igsh=MXdkenVsdDdiZThmcg%3D%3D&utm_source=qr"
+                  href="https://www.instagram.com/ali23121982/"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   <FaInstagram />
                 </a>
                 <a
-                  href="https://www.tiktok.com/@ahmedelsaid5?_t=ZS-8uXqjqzaElA&_r=1"
+                  href="https://www.linkedin.com/in/%D8%B9%D9%84%D9%8A-%D9%85%D8%AD%D9%85%D8%AF-%D8%B9%D9%84%D9%8A%D8%A7%D9%86-a42859105/"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <FaTiktok />
+                  <FaLinkedin />
                 </a>
                 <a
-                  href="https://wa.me/201279456731"
+                  href="https://wa.me/201126529544"
                   target="_blank"
                   rel="noopener noreferrer"
                 >

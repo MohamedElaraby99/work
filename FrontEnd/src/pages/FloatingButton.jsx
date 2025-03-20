@@ -21,31 +21,31 @@ const FloatingButton = () => {
             rel="noopener noreferrer"
             className="icon facebook"
           >
-            <span className="material-icons">facebook</span>
+            <i className="fab fa-facebook-f"></i>
           </a>
           <a
             href="https://www.instagram.com/ali23121982/"
             target="_blank"
             rel="noopener noreferrer"
-            className="icon whatsapp"
+            className="icon instagram"
           >
-            <span class="material-icons">instagram</span>
+            <i className="fab fa-instagram"></i>
           </a>
           <a
             href="https://www.youtube.com/@%D8%A3.%D8%B9%D9%84%D9%8A%D9%85%D8%AD%D9%85%D8%AF%D8%B9%D9%84%D9%8A%D8%A7%D9%86"
             target="_blank"
             rel="noopener noreferrer"
-            className="icon whatsapp"
+            className="icon youtube"
           >
-            <span class="material-icons">instagram</span>
+            <i className="fab fa-youtube"></i>
           </a>
           <a
             href="https://www.linkedin.com/in/%D8%B9%D9%84%D9%8A-%D9%85%D8%AD%D9%85%D8%AF-%D8%B9%D9%84%D9%8A%D8%A7%D9%86-a42859105/"
             target="_blank"
             rel="noopener noreferrer"
-            className="icon whatsapp"
+            className="icon linkedin"
           >
-            <span class="material-icons">instagram</span>
+            <i className="fab fa-linkedin-in"></i>
           </a>
         </div>
       )}
