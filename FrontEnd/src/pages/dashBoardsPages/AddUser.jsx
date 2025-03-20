@@ -151,128 +151,29 @@ const AddUser = () => {
                       <input
                         type="checkbox"
                         name="subject"
-                        value="تاريخ"
-                        checked={user.subject.includes("تاريخ")}
+                        value="arabic1"
+                        checked={user.subject.includes("arabic1")}
                         onChange={handleChange}
                       />
-                      تاريخ
+                      لغة عربية
                     </label>
                   </div>
+                  <div></div>
                   <div>
                     <label>
                       <input
                         type="checkbox"
                         name="subject"
-                        value="رياضيات"
-                        checked={user.subject.includes("رياضيات")}
+                        value="arabic2"
+                        checked={user.subject.includes("arabic2")}
                         onChange={handleChange}
                       />
-                      رياضيات
+                      Arabic
                     </label>
                   </div>
-                  <div>
-                    <label>
-                      <input
-                        type="checkbox"
-                        name="subject"
-                        value="فرنسي"
-                        checked={user.subject.includes("فرنسي")}
-                        onChange={handleChange}
-                      />
-                      لغة فرنسية
-                    </label>
-                  </div>
-                  <div>
-                    <label>
-                      <input
-                        type="checkbox"
-                        name="subject"
-                        value="انجليزي"
-                        checked={user.subject.includes("انجليزي")}
-                        onChange={handleChange}
-                      />
-                      لغة انجليزية
-                    </label>
-                  </div>
+                  <div></div>
                 </div>
               </div>
-              {user.subject.includes("رياضيات") && (
-                <div className="form-group">
-                  <label>اختر مواد الرياضيات:</label>
-                  <div className="subject-checkboxes">
-                    <div>
-                      <label>
-                        <input
-                          type="checkbox"
-                          value="جبر"
-                          onChange={handleMathSubjectsChange}
-                        />
-                        جبر
-                      </label>
-                    </div>
-                    <div>
-                      <label>
-                        <input
-                          type="checkbox"
-                          value="هندسة"
-                          onChange={handleMathSubjectsChange}
-                        />
-                        هندسة
-                      </label>
-                    </div>
-                    <div>
-                      <label>
-                        <input
-                          type="checkbox"
-                          value="مثلثات"
-                          onChange={handleMathSubjectsChange}
-                        />
-                        حساب مثلثات
-                      </label>
-                    </div>
-                    <div>
-                      <label>
-                        <input
-                          type="checkbox"
-                          value="تفاضل"
-                          onChange={handleMathSubjectsChange}
-                        />
-                        تفاضل
-                      </label>
-                    </div>
-                    <div>
-                      <label>
-                        <input
-                          type="checkbox"
-                          value="إحصاء"
-                          onChange={handleMathSubjectsChange}
-                        />
-                        إحصاء
-                      </label>
-                    </div>
-                    <div>
-                      <label>
-                        <input
-                          type="checkbox"
-                          value="استاتيكا"
-                          onChange={handleMathSubjectsChange}
-                        />
-                        استاتيكا
-                      </label>
-                    </div>
-                    <div>
-                      <label>
-                        <input
-                          type="checkbox"
-                          value="ديناميكا"
-                          onChange={handleMathSubjectsChange}
-                        />
-                        ديناميكا
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              )}
             </>
           )}
           {user.role === "student" && (
@@ -284,11 +185,38 @@ const AddUser = () => {
                 value={user.stage}
                 onChange={(e) => setUser({ ...user, stage: e.target.value })}
               >
-                <option value="">اختر المرحلة الدراسية</option>
-                <option value="ثالثة اعدادي">ثالثة اعدادي</option>
-                <option value="أولى ثانوي">أولى ثانوي</option>
-                <option value="ثانية ثانوي">ثانية ثانوي</option>
-                <option value="ثالثة ثانوي">ثالثة ثانوي</option>
+                <option value="" disabled>
+                  اختر المرحلة الدراسية
+                </option>
+                <optgroup label="لغة عربية">
+                  <option value="arabic_grade1">1 ابتدائي</option>
+                  <option value="arabic_grade2">2 ابتدائي</option>
+                  <option value="arabic_grade3">3 ابتدائي</option>
+                  <option value="arabic_grade4">4 ابتدائي</option>
+                  <option value="arabic_grade5">5 ابتدائي</option>
+                  <option value="arabic_grade6">6 ابتدائي</option>
+                  <option value="arabic_grade7">1 إعدادي</option>
+                  <option value="arabic_grade8">2 إعدادي</option>
+                  <option value="arabic_grade9">3 إعدادي</option>
+                  <option value="arabic_grade10">1 ثانوي</option>
+                  <option value="arabic_grade11">2 ثانوي</option>
+                  <option value="arabic_grade12">3 ثانوي</option>
+                </optgroup>
+                <optgroup label="Arabic">
+                  <option value="arabic_kg1">KG 1</option>
+                  <option value="arabic_kg2">KG 2</option>
+                  <option value="arabic_grade1">Grade 1</option>
+                  <option value="arabic_grade2">Grade 2</option>
+                  <option value="arabic_grade3">Grade 3</option>
+                  <option value="arabic_grade4">Grade 4</option>
+                  <option value="arabic_grade5">Grade 5</option>
+                  <option value="arabic_grade6">Grade 6</option>
+                  <option value="arabic_grade7">Grade 7</option>
+                  <option value="arabic_grade8">Grade 8</option>
+                  <option value="arabic_grade9">Grade 9</option>
+                  <option value="arabic_grade10">Grade 10</option>
+                  <option value="arabic_grade11">Grade 11</option>
+                </optgroup>
               </select>
             </div>
           )}

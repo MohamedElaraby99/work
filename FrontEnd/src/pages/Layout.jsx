@@ -55,10 +55,10 @@ const Layout = ({ children, role }) => {
         <div className="logo-container" onClick={() => navigate("/home")}>
           <img
             className="logo"
-            src={require("./../images/4GLogo.png")}
-            alt="محمود توكل"
+            src={require("./../images/alielianlogo.png")}
+            alt="alielian logo"
           />
-          <h1>مـنـصـة 4G</h1>
+          <h1>AliElian Platform</h1>
         </div>
 
         <div className="user-menu">
@@ -82,35 +82,22 @@ const Layout = ({ children, role }) => {
                 <span className="material-icons">home</span> الرئيسية
               </Link>
             </li>
-            <li className={location.pathname === "/history" ? "active" : ""}>
-              <Link to="/history">
-                <span className="material-icons">history_edu</span>
-                التاريخ
+            <li className={location.pathname === "/arabic1" ? "active" : ""}>
+              <Link to="/arabic1">
+                <span className="material-icons">school</span>
+                اللغة العربية
               </Link>
             </li>
             <li
               className={
-                location.pathname === "/math" ||
-                location.pathname === "/select-math"
+                location.pathname === "/arabic2" 
                   ? "active"
                   : ""
               }
             >
-              <Link to="/math">
-                <span className="material-icons">calculate</span>
-                الرياضيات
-              </Link>
-            </li>
-            <li className={location.pathname === "/french" ? "active" : ""}>
-              <Link to="/french">
-                <span className="material-icons">token</span>
-                اللغة الفرنسية
-              </Link>
-            </li>
-            <li className={location.pathname === "/english" ? "active" : ""}>
-              <Link to="/english">
-                <span className="material-icons">g_translate</span>
-                اللغة الانجليزية
+              <Link to="/arabic2">
+                <span className="material-icons">language</span>
+                Arabic
               </Link>
             </li>
 
@@ -134,7 +121,7 @@ const Layout = ({ children, role }) => {
               rel="noopener noreferrer"
               className="footer-link developer-link"
             >
-               Fikra Software
+              Fikra Software
             </a>
           </p>
         </aside>

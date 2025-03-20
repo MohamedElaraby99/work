@@ -11,12 +11,12 @@ const FloatingButton = () => {
   return (
     <div className="floating-button-container">
       <button className="floating-button" onClick={toggleIcons}>
-        {showIcons ? "إخفاء" : "مــنـصـة 4G"}
+        {showIcons ? "إخفاء" : "Ali Elian"}
       </button>
       {showIcons && (
         <div className="icon-container">
           <a
-            href="https://www.facebook.com/share/1B4UBmHgEh/"
+            href="https://www.facebook.com/ali.alyan.92"
             target="_blank"
             rel="noopener noreferrer"
             className="icon facebook"
@@ -24,19 +24,28 @@ const FloatingButton = () => {
             <span className="material-icons">facebook</span>
           </a>
           <a
-            href={`https://wa.me/201227245533`}
+            href="https://www.instagram.com/ali23121982/"
             target="_blank"
             rel="noopener noreferrer"
             className="icon whatsapp"
           >
-            <span class="material-icons">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
-                alt="WhatsApp Icon"
-                width="30"
-                height="30"
-              ></img>
-            </span>
+            <span class="material-icons">instagram</span>
+          </a>
+          <a
+            href="https://www.youtube.com/@%D8%A3.%D8%B9%D9%84%D9%8A%D9%85%D8%AD%D9%85%D8%AF%D8%B9%D9%84%D9%8A%D8%A7%D9%86"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="icon whatsapp"
+          >
+            <span class="material-icons">instagram</span>
+          </a>
+          <a
+            href="https://www.linkedin.com/in/%D8%B9%D9%84%D9%8A-%D9%85%D8%AD%D9%85%D8%AF-%D8%B9%D9%84%D9%8A%D8%A7%D9%86-a42859105/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="icon whatsapp"
+          >
+            <span class="material-icons">instagram</span>
           </a>
         </div>
       )}

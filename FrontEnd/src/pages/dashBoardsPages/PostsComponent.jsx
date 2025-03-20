@@ -5,33 +5,48 @@ import "react-toastify/dist/ReactToastify.css";
 import "./../../styles/dashboard/addPosts.css";
 
 const CreatePostComponent = () => {
-  // States for form fields
   const [title, setTitle] = useState("");
   const [details, setDetails] = useState("");
   const [selectedYears, setSelectedYears] = useState([]);
   const [selectedSubjects, setSelectedSubjects] = useState([]);
-  const [isMathExpanded, setIsMathExpanded] = useState(false);
 
-  // List of years
-  const years = ["ثالثة اعدادي", "أولى ثانوي", "ثانية ثانوي", "ثالثة ثانوي"];
+  // المراحل العربية
+  const arabicYears = [
+    "1 ابتدائي",
+    "2 ابتدائي",
+    "3 ابتدائي",
+    "4 ابتدائي",
+    "5 ابتدائي",
+    "6 ابتدائي",
+    "1 إعدادي",
+    "2 إعدادي",
+    "3 إعدادي",
+    "1 ثانوي",
+    "2 ثانوي",
+    "3 ثانوي",
+  ];
 
-  // List of subjects
+  // المراحل الإنجليزية
+  const englishYears = [
+    "KG 1",
+    "KG 2",
+    "Grade 1",
+    "Grade 2",
+    "Grade 3",
+    "Grade 4",
+    "Grade 5",
+    "Grade 6",
+    "Grade 7",
+    "Grade 8",
+    "Grade 9",
+    "Grade 10",
+    "Grade 11",
+  ];
+
+  // المواد الدراسية
   const subjects = [
-    { label: "تاريخ", value: "تاريخ" },
-    { label: "لغة فرنسية", value: "فرنسي" },
-    { label: "لغة انجليزية", value: "انجليزي" },
-    {
-      label: "رياضيات",
-      options: [
-        { label: "جبر", value: "جبر" },
-        { label: "هندسة", value: "هندسة" },
-        { label: "تفاضل", value: "تفاضل" },
-        { label: "مثلثات", value: "مثلثات" },
-        { label: "إحصاء", value: "إحصاء" },
-        { label: "استاتيكا", value: "استاتيكا" },
-        { label: "ديناميكا", value: "ديناميكا" }, 
-      ],
-    },
+    { label: "لغة عربية", value: "arabic1", years: arabicYears },
+    { label: "Arabic", value: "arabic2", years: englishYears },
   ];
 
   // Toggle selected years
@@ -50,15 +65,6 @@ const CreatePostComponent = () => {
     );
   };
 
-  // Toggle math options visibility
-  const toggleMathOptions = () => {
-    setIsMathExpanded(!isMathExpanded);
-    if (!isMathExpanded) {
-      // Remove "رياضيات" from selected subjects when expanding
-      setSelectedSubjects((prev) => prev.filter((s) => s !== "رياضيات"));
-    }
-  };
-
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -73,19 +79,17 @@ const CreatePostComponent = () => {
       return;
     }
 
-    const newPost = {
-      title,
-      description: details,
-      stage: selectedYears,
-      subject: selectedSubjects.filter((s) => s !== "رياضيات"), // Exclude "رياضيات"
-    };
-
     try {
       const accessToken = localStorage.getItem("accessToken");
 
       await axios.post(
         `${process.env.REACT_APP_BASE_URL}/announcements`,
-        newPost,
+        {
+          title,
+          details,
+          years: selectedYears,
+          subjects: selectedSubjects,
+        },
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -98,7 +102,6 @@ const CreatePostComponent = () => {
       setDetails("");
       setSelectedYears([]);
       setSelectedSubjects([]);
-      setIsMathExpanded(false);
 
       toast.success("تم إنشاء الإعلان بنجاح!");
     } catch (error) {
@@ -138,68 +141,35 @@ const CreatePostComponent = () => {
           ></textarea>
         </div>
 
-        <div className="form-group">
-          <label>السنة الدراسية الموجهة:</label>
+        <div className="form-group years-subjects">
+          <label>السنة الدراسية الموجهة والمادة الدراسية:</label>
           <div className="years-checkboxes">
-            {years.map((year) => (
-              <div key={year} className="checkbox-item">
-                <input
-                  type="checkbox"
-                  id={year}
-                  checked={selectedYears.includes(year)}
-                  onChange={() => handleYearToggle(year)}
-                />
-                <label htmlFor={year}>{year}</label>
+            {subjects.map((subject) => (
+              <div key={subject.value} className="subject-group">
+                <div className="checkbox-item">
+                  <input
+                    type="checkbox"
+                    id={subject.value}
+                    checked={selectedSubjects.includes(subject.value)}
+                    onChange={() => handleSubjectToggle(subject.value)}
+                  />
+                  <label htmlFor={subject.value}>{subject.label}</label>
+                </div>
+                {/* عرض المراحل المرتبطة بالمادة */}
+                {subject.years.map((year) => (
+                  <div key={year} className="checkbox-item year-subitem">
+                    <input
+                      type="checkbox"
+                      id={`${subject.value}-${year}`}
+                      checked={selectedYears.includes(year)}
+                      onChange={() => handleYearToggle(year)}
+                      disabled={!selectedSubjects.includes(subject.value)} // تعطيل الخيار إذا لم يتم اختيار المادة
+                    />
+                    <label htmlFor={`${subject.value}-${year}`}>{year}</label>
+                  </div>
+                ))}
               </div>
             ))}
-          </div>
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="subject">المادة الدراسية :</label>
-          <div className="years-checkboxes">
-            {subjects.map((subjectGroup) =>
-              subjectGroup.options ? (
-                <div key={subjectGroup.value} className="checkbox-item">
-                  <input
-                    type="checkbox"
-                    id={subjectGroup.value}
-                    checked={isMathExpanded}
-                    onChange={toggleMathOptions}
-                  />
-                  <label htmlFor={subjectGroup.value}>
-                    {subjectGroup.label}
-                  </label>
-                  {isMathExpanded && (
-                    <div className="sub-options">
-                      {subjectGroup.options.map((option) => (
-                        <div key={option.value} className="checkbox-item">
-                          <input
-                            type="checkbox"
-                            id={option.value}
-                            checked={selectedSubjects.includes(option.value)}
-                            onChange={() => handleSubjectToggle(option.value)}
-                          />
-                          <label htmlFor={option.value}>{option.label}</label>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <div key={subjectGroup.value} className="checkbox-item">
-                  <input
-                    type="checkbox"
-                    id={subjectGroup.value}
-                    checked={selectedSubjects.includes(subjectGroup.value)}
-                    onChange={() => handleSubjectToggle(subjectGroup.value)}
-                  />
-                  <label htmlFor={subjectGroup.value}>
-                    {subjectGroup.label}
-                  </label>
-                </div>
-              )
-            )}
           </div>
         </div>
 

@@ -117,13 +117,7 @@ const AllVideos = () => {
 
   const filteredVideos = videos.filter(
     (video) =>
-      (video.title.includes(searchTerm) || video.stage.includes(searchTerm)) &&
-      (selectedSubject === "" ||
-        selectedSubject === "رياضيات" ||
-        video.subject === selectedSubject) &&
-      (selectedSubject !== "رياضيات" ||
-        selectedMathTopic === "" ||
-        video.subject === selectedMathTopic)
+      video.title.includes(searchTerm) || video.stage.includes(searchTerm)
   );
 
   if (loading) {
@@ -151,25 +145,9 @@ const AllVideos = () => {
           className="subject-filter"
         >
           <option value="">كل المواد</option>
-          <option value="تاريخ">تاريخ</option>
-          <option value="انجليزي">لغة انجليزية</option>
-          <option value="فرنسي">لغة فرنسية</option>
-          <option value="رياضيات">رياضيات</option>
+          <option value="arabic1">لغة عربية</option>
+          <option value="arabic2">Arabic</option>
         </select>
-        {selectedSubject === "رياضيات" && (
-          <select
-            value={selectedMathTopic}
-            onChange={handleMathTopicChange}
-            className="subject-filter"
-          >
-            <option value="">كل مواد الرياضيات</option>
-            <option value="جبر">جبر</option>
-            <option value="هندسة">هندسة</option>
-            <option value="مثلثات">مثلثات</option>
-            <option value="تفاضل">تفاضل</option>
-            <option value="إحصاء">إحصاء</option>
-          </select>
-        )}
       </div>
       <div className="videos-table">
         <table>

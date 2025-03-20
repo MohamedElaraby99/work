@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import "./../styles/Math.css";
 import { FaFacebook, FaInstagram, FaTiktok, FaWhatsapp } from "react-icons/fa";
 
-const History = () => {
+const Arabic1 = () => {
   const navigate = useNavigate();
   const [selectedUnit, setSelectedUnit] = useState(null); // الوحدة المختارة
   const [selectedLesson, setSelectedLesson] = useState(null); // الدرس المختار
@@ -69,16 +69,16 @@ const History = () => {
             <div className="contenttt">
               <div className="image-container">
                 <img
-                  src={require("./../images/MrahmedSaid.webp")}
+                  src={require("./../images/mralielian.png")}
                   alt="Subject"
                   className="history-image"
                   style={{ border: "2px solid #ffffff" }}
                 />
               </div>
               <div className="text-container">
-                <h1>مـادة الـتاريـخ</h1>
+                <h1> مـادة الـلغة الـعربية </h1>
                 <p>مـقدم الـمادة</p>
-                <p className="history-subtitle">مـستر : احـمد السعيد</p>
+                <p className="history-subtitle">مـستر : عـلي عـليان</p>
                 <div className="social-linkss">
                   <a
                     href="https://www.facebook.com/share/1B8FQwvbrx/?mibextid=wwXIfr"
@@ -132,16 +132,16 @@ const History = () => {
           <div className="contenttt">
             <div className="image-container">
               <img
-                src={require("./../images/MrahmedSaid.webp")}
+                src={require("./../images/mralielian.png")}
                 alt="Subject"
                 className="history-image"
                 style={{ border: "2px solid #ffffff" }}
               />
             </div>
             <div className="text-container">
-              <h1>مـادة الـتاريـخ</h1>
+              <h1> مـادة الـلغة الـعربية </h1>
               <p>مـقدم الـمادة</p>
-              <p className="history-subtitle">مـستر : احـمد السعيد</p>
+              <p className="history-subtitle">مـستر : عـلي عـليان</p>
               <div className="social-linkss">
                 <a
                   href="https://www.facebook.com/share/1B8FQwvbrx/?mibextid=wwXIfr"
@@ -278,4 +278,4 @@ const History = () => {
   );
 };
 
-export default History;
+export default Arabic1;

@@ -109,6 +109,12 @@
   transform: translateY(0);
 }
 
+.years-subjects {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
 /* Responsive styles */
 @media (max-width: 768px) {
   .create-post-component {
@@ -135,4 +141,13 @@
   .years-checkboxes {
     gap: 10px;
   }
+  .years-subjects {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
+}
+

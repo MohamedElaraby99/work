@@ -192,10 +192,7 @@ const AllPDFs = () => {
 
     const matchesSubject =
       selectedSubject === "" ||
-      pdf.subject === selectedSubject ||
-      (selectedSubject === "رياضيات" &&
-        ["جبر", "هندسة", "تفاضل", "إحصاء"].includes(pdf.subject));
-
+      pdf.subject === selectedSubject 
     return matchesSearch && matchesSubject;
   });
 
@@ -220,10 +217,8 @@ const AllPDFs = () => {
           className="subject-filter"
         >
           <option value="">كل المواد</option>
-          <option value="تاريخ">تاريخ</option>
-          <option value="انجليزي">لغة انجليزية</option>
-          <option value="فرنسي">لغة فرنسية</option>
-          <option value="رياضيات">رياضيات</option>
+          <option value="arabic1">لغة عربية</option>
+          <option value="arabic2">Arabic</option>
         </select>
       </div>
       <div className="pdfs-table">

@@ -29,12 +29,10 @@ import AllPostsComponent from "./pages/AllPostsComponent";
 import ScrollToTop from "./components/ScrollTop";
 import About from "./pages/about";
 import ResultComponent from "./pages/ResultComponent";
-import History from "./pages/History";
-import Math from "./pages/Math";
+import Arabic1 from "./pages/Arabic1";
+import Arabic2 from "./pages/Arabic2";
 import Ai from "./pages/AiChat";
-import French from "./pages/French";
-import English from "./pages/English";
-import SelesctMath from "./pages/SelesctMath";
+
 
 const App = () => {
   const [role, setRole] = useState(null);
@@ -68,11 +66,8 @@ const App = () => {
             <Routes>
               <Route path="/home" element={<HomePage />} />
               <Route path="/courses" element={<CoursesPage />} />
-              <Route path="/history" element={<History />} />
-              <Route path="/math" element={<Math />} />
-              <Route path="/french" element={<French />} />
-              <Route path="/english" element={<English />} />
-              <Route path="/select-math" element={<SelesctMath />} />
+              <Route path="/arabic1" element={<Arabic1 />} />
+              <Route path="/arabic2" element={<Arabic2 />} />
               <Route path="/video-details/:id" element={<VideoDetailsPage />} />
               <Route path="/exams" element={<ExamsPage />} />
               <Route path="/exams/details/:id" element={<ExamDetails />} />
@@ -100,7 +95,6 @@ const App = () => {
               )}
               <Route path="*" element={<Navigate to="/home" />} />
             </Routes>
-            
           </Layout>
         )}
       </div>

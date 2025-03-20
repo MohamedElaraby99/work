@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import "./../styles/Math.css";
 import { FaFacebook, FaInstagram, FaTiktok, FaWhatsapp } from "react-icons/fa";
 
-const French = () => {
+const Arabic2 = () => {
   const navigate = useNavigate();
   const [selectedUnit, setSelectedUnit] = useState(null); // الوحدة المختارة
   const [selectedLesson, setSelectedLesson] = useState(null); // الدرس المختار
@@ -19,33 +19,36 @@ const French = () => {
   // Retrieve the educational stage, role, and subjects from localStorage
   const stage = localStorage.getItem("stage");
   const role = localStorage.getItem("role");
-  const subject = localStorage.getItem("subject");
+  const subjects = localStorage.getItem("subject");
 
   // Determine the number of units based on the stage
   let unitCount;
   switch (stage) {
+    case "ثالثة اعدادي":
+      unitCount = 4;
+      break;
     case "أولى ثانوي":
     case "ثانية ثانوي":
       unitCount = 2;
       break;
     case "ثالثة ثانوي":
-      unitCount = 4;
+      unitCount = 7;
       break;
     default:
-      unitCount = 4; // Default value if stage is not recognized
+      unitCount = 8;
   }
 
   // Check subscription
   useEffect(() => {
-    if (role === "student" && !subject.includes("فرنسي")) {
+    if (role === "student" && !subjects.includes("تاريخ")) {
       setIsSubscribed(false);
     }
-  }, [role, subject]);
+  }, [role, subjects]);
 
-  // بيانات الوحدات مع الدروس
+  // بيانات الوحدات مع الدروس (الدروس كأرقام فقط)
   const courseUnits = Array.from({ length: unitCount }, (_, i) => ({
     id: i + 1,
-    title: `الوحدة ${i + 1}`,
+    title: `Unit ${i + 1}`,
     lessons: [1, 2, 3], // الدروس كأرقام فقط (يمكنك تعديل العدد حسب الحاجة)
   }));
 
@@ -60,46 +63,46 @@ const French = () => {
 
   if (!isSubscribed) {
     return (
-      <div className="history-container modern-layout">
-        <header className="history-header modern-header">
+      <div className="history-container">
+        <header className="history-header">
           <div className="content-container">
             <div className="contenttt">
               <div className="image-container">
                 <img
-                  src={require("./../images/mrahmedemad.webp")}
+                  src={require("./../images/mralielian.png")}
                   alt="Subject"
                   className="history-image"
                   style={{ border: "2px solid #ffffff" }}
                 />
               </div>
               <div className="text-container">
-                <h1>مادة اللغة الفرنسية</h1>
-                <p>مـقدم الـمادة</p>
-                <p className="history-subtitle">Mr - Ahmed Emad</p>
+                <h1>Arabic language</h1>
+                <p>Presenter</p>
+                <p className="history-subtitle"> Mr : Ali Elian </p>
                 <div className="social-linkss">
                   <a
-                    href="https://www.facebook.com/share/1HpuLsGQV1/"
+                    href="https://www.facebook.com/share/1B8FQwvbrx/?mibextid=wwXIfr"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <FaFacebook />
                   </a>
                   <a
-                    href="https://www.instagram.com/ahmed_emad53?igsh=MWFqeW5taDIzYWg1eQ=="
+                    href="https://www.instagram.com/ahmed_elsaiidd?igsh=MXdkenVsdDdiZThmcg%3D%3D&utm_source=qr"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <FaInstagram />
                   </a>
                   <a
-                    href="https://www.tiktok.com/@el_msu?_t=ZS-8uXqULmMc5J&_r=1"
+                    href="https://www.tiktok.com/@ahmedelsaid5?_t=ZS-8uXqjqzaElA&_r=1"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <FaTiktok />
                   </a>
                   <a
-                    href="https://wa.me/201277037363"
+                    href="https://wa.me/201279456731"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -124,58 +127,62 @@ const French = () => {
 
   return (
     <div className="history-container modern-layout">
-      <header className="history-header modern-header">
+      <header className="history-header">
         <div className="content-container">
-          <div className="contenttt">
-            <div className="image-container">
-              <img
-                src={require("./../images/mrahmedemad.webp")}
-                alt="Subject"
-                className="history-image"
-                style={{ border: "2px solid #ffffff" }}
-              />
-            </div>
-            <div className="text-container">
-              <h1>مادة اللغة الفرنسية</h1>
-              <p>مـقدم الـمادة</p>
-              <p className="history-subtitle">Mr - Ahmed Emad</p>
-              <div className="social-linkss">
-                <a
-                  href="https://www.facebook.com/share/1HpuLsGQV1/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FaFacebook />
-                </a>
-                <a
-                  href="https://www.instagram.com/ahmed_emad53?igsh=MWFqeW5taDIzYWg1eQ=="
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FaInstagram />
-                </a>
-                <a
-                  href="https://www.tiktok.com/@el_msu?_t=ZS-8uXqULmMc5J&_r=1"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FaTiktok />
-                </a>
-                <a
-                  href="https://wa.me/201277037363"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FaWhatsapp />
-                </a>
+          <header className="history-header modern-header">
+            <div className="content-container">
+              <div className="contenttt">
+                <div className="image-container">
+                  <img
+                    src={require("./../images/mralielian.png")}
+                    alt="Subject"
+                    className="history-image"
+                    style={{ border: "2px solid #ffffff" }}
+                  />
+                </div>
+                <div className="text-container">
+                  <h1>Arabic language</h1>
+                  <p>Presenter</p>
+                  <p className="history-subtitle"> Mr : Ali Elian </p>
+                  <div className="social-linkss">
+                    <a
+                      href="https://www.facebook.com/share/1B8FQwvbrx/?mibextid=wwXIfr"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FaFacebook />
+                    </a>
+                    <a
+                      href="https://www.instagram.com/ahmed_elsaiidd?igsh=MXdkenVsdDdiZThmcg%3D%3D&utm_source=qr"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FaInstagram />
+                    </a>
+                    <a
+                      href="https://www.tiktok.com/@ahmedelsaid5?_t=ZS-8uXqjqzaElA&_r=1"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FaTiktok />
+                    </a>
+                    <a
+                      href="https://wa.me/201279456731"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FaWhatsapp />
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
+          </header>
         </div>
       </header>
 
       <section className="units-section">
-        <h2 className="section-title">الوحدات الدراسية</h2>
+        <h2 className="section-title">Study units </h2>
         <div className="units-grid">
           {courseUnits.map((unit) => (
             <div key={unit.id} className="unit-card">
@@ -194,7 +201,7 @@ const French = () => {
                         className="lesson-header"
                         onClick={() => handleLessonClick(lessonNumber)}
                       >
-                        <span>الدرس {lessonNumber}</span>
+                        <span>Lesson {lessonNumber}</span>
                         {selectedLesson === lessonNumber ? (
                           <FaChevronUp />
                         ) : (
@@ -208,9 +215,9 @@ const French = () => {
                             onClick={() =>
                               navigate("/courses", {
                                 state: {
-                                  subject: "فرنسي",
+                                  subject: "تاريخ",
                                   unit: unit.id,
-                                  lesson: lessonNumber,
+                                  lesson: lessonNumber, // تمرير رقم الدرس مباشرة
                                 },
                               })
                             }
@@ -222,9 +229,9 @@ const French = () => {
                             onClick={() =>
                               navigate("/exams", {
                                 state: {
-                                  subject: "فرنسي",
+                                  subject: "تاريخ",
                                   unit: unit.id,
-                                  lesson: lessonNumber,
+                                  lesson: lessonNumber, // تمرير رقم الدرس مباشرة
                                   type: "امتحان",
                                 },
                               })
@@ -237,9 +244,9 @@ const French = () => {
                             onClick={() =>
                               navigate("/exams", {
                                 state: {
-                                  subject: "فرنسي",
+                                  subject: "تاريخ",
                                   unit: unit.id,
-                                  lesson: lessonNumber,
+                                  lesson: lessonNumber, // تمرير رقم الدرس مباشرة
                                   type: "تدريب",
                                 },
                               })
@@ -252,9 +259,9 @@ const French = () => {
                             onClick={() =>
                               navigate("/pdf", {
                                 state: {
-                                  subject: "فرنسي",
+                                  subject: "تاريخ",
                                   unit: unit.id,
-                                  lesson: lessonNumber,
+                                  lesson: lessonNumber, // تمرير رقم الدرس مباشرة
                                 },
                               })
                             }
@@ -275,4 +282,4 @@ const French = () => {
   );
 };
 
-export default French;
+export default Arabic2;

@@ -150,35 +150,10 @@ const AddVideo = () => {
             <option value="" disabled>
               اختر المادة
             </option>
-            <option value="تاريخ">تاريخ</option>
-            <option value="انجليزي">لغة انجليزية</option>
-            <option value="فرنسي">لغة فرنسية</option>
-            <option value="رياضيات">رياضيات</option>
+            <option value="arabic1">لغة عربية</option>
+            <option value="arabic2">Arabic</option>
           </select>
         </div>
-
-        {videoData.subject === "رياضيات" && (
-          <div className="form-group">
-            <label htmlFor="mathTopic">اختر مادة الرياضيات:</label>
-            <select
-              id="mathTopic"
-              name="mathTopic"
-              value={mathTopic}
-              onChange={handleMathTopicChange}
-            >
-              <option value="" disabled>
-                اختر الموضوع
-              </option>
-              <option value="جبر">جبر</option>
-              <option value="هندسة">هندسة</option>
-              <option value="مثلثات">مثلثات</option>
-              <option value="تفاضل">تفاضل</option>
-              <option value="إحصاء">إحصاء</option>
-              <option value="استاتيكا">استاتيكا</option>
-              <option value="ديناميكا">ديناميكا</option>
-            </select>
-          </div>
-        )}
 
         <div className="form-group">
           <label htmlFor="stage">المرحلة الدراسية:</label>
@@ -191,10 +166,35 @@ const AddVideo = () => {
             <option value="" disabled>
               اختر المرحلة الدراسية
             </option>
-            <option value="ثالثة اعدادي">ثالثة اعدادي</option>
-            <option value="أولى ثانوي">أولى ثانوي</option>
-            <option value="ثانية ثانوي">ثانية ثانوي</option>
-            <option value="ثالثة ثانوي">ثالثة ثانوي</option>
+            <optgroup label="لغة عربية">
+              <option value="arabic_grade1">1 ابتدائي</option>
+              <option value="arabic_grade2">2 ابتدائي</option>
+              <option value="arabic_grade3">3 ابتدائي</option>
+              <option value="arabic_grade4">4 ابتدائي</option>
+              <option value="arabic_grade5">5 ابتدائي</option>
+              <option value="arabic_grade6">6 ابتدائي</option>
+              <option value="arabic_grade7">1 إعدادي</option>
+              <option value="arabic_grade8">2 إعدادي</option>
+              <option value="arabic_grade9">3 إعدادي</option>
+              <option value="arabic_grade10">1 ثانوي</option>
+              <option value="arabic_grade11">2 ثانوي</option>
+              <option value="arabic_grade12">3 ثانوي</option>
+            </optgroup>
+            <optgroup label="Arabic">
+              <option value="arabic_kg1">KG 1</option>
+              <option value="arabic_kg2">KG 2</option>
+              <option value="arabic_grade1">Grade 1</option>
+              <option value="arabic_grade2">Grade 2</option>
+              <option value="arabic_grade3">Grade 3</option>
+              <option value="arabic_grade4">Grade 4</option>
+              <option value="arabic_grade5">Grade 5</option>
+              <option value="arabic_grade6">Grade 6</option>
+              <option value="arabic_grade7">Grade 7</option>
+              <option value="arabic_grade8">Grade 8</option>
+              <option value="arabic_grade9">Grade 9</option>
+              <option value="arabic_grade10">Grade 10</option>
+              <option value="arabic_grade11">Grade 11</option>
+            </optgroup>
           </select>
         </div>
 

@@ -76,7 +76,7 @@ const LoginForm = ({ setRole }) => {
             <div className="left-side">
               <img
                 className="left-side-image"
-                src={require("./../images/4GLogo.png")}
+                src={require("./../images/alielianlogo.png")}
                 alt=""
               />
             </div>
@@ -86,10 +86,10 @@ const LoginForm = ({ setRole }) => {
             <div className="login-form-container">
               <img
                 className="leftt-side-image"
-                src={require("./../images/4GLogo.png")}
+                src={require("./../images/alielianlogo.png")}
                 alt=""
               />
-              <p className="login-page-title">مـنـصـة 4G</p>
+              <p className="login-page-title">Ali Elian Platform</p>
               <p className="login-title">تسجيل الدخول</p>
               <form onSubmit={handleLogin} className="login-form">
                 <div className="input-containerr">
@@ -159,7 +159,7 @@ const LoginForm = ({ setRole }) => {
 
       {/* Floating WhatsApp Button */}
       <a
-        href="https://wa.me/201227245533"
+        href="https://wa.me/201143982522"
         className="floating-whatsapp-button"
         target="_blank"
         rel="noopener noreferrer"
