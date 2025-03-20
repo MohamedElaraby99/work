@@ -102,7 +102,7 @@ const Layout = ({ children, role }) => {
                 }
               >
                 <Link to="/dashboard">
-                  <span className="material-icons">settings</span> التحكم
+                  <span className="material-icons">settings</span> الـتحكم
                 </Link>
               </li>
             )}

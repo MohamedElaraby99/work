@@ -5,11 +5,10 @@ import {
   FaClipboardList,
   FaChevronDown,
   FaChevronUp,
-  FaLinkedin,
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "./../styles/Math.css";
-import { FaFacebook, FaInstagram, FaWhatsapp } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaWhatsapp, FaYoutube } from "react-icons/fa";
 
 const Chemistry = () => {
   const navigate = useNavigate();
@@ -70,7 +69,7 @@ const Chemistry = () => {
             <div className="contenttt">
               <div className="image-container">
                 <img
-                  src={require("./../images/mongezlogo.png")}
+                  src={require("./../images/mrmahmoud.png")}
                   alt="Subject"
                   className="history-image"
                   style={{ border: "2px solid #ffffff" }}
@@ -82,28 +81,21 @@ const Chemistry = () => {
                 <p className="history-subtitle">مـستر : عـلي عـليان</p>
                 <div className="social-linkss">
                   <a
-                    href="https://www.facebook.com/ali.alyan.92"
+                    href="https://www.facebook.com/people/MrMahmoud-Abdel-Aziz/100070094625467/?mibextid=ZbWKwL"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <FaFacebook />
                   </a>
                   <a
-                    href="https://www.instagram.com/ali23121982/"
+                    href="http://www.youtube.com/@mahmoudAbdel_Aziz"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <FaInstagram />
+                    <FaYoutube />
                   </a>
                   <a
-                    href="https://www.linkedin.com/in/%D8%B9%D9%84%D9%8A-%D9%85%D8%AD%D9%85%D8%AF-%D8%B9%D9%84%D9%8A%D8%A7%D9%86-a42859105/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <FaLinkedin />
-                  </a>
-                  <a
-                    href="https://wa.me/201126529544"
+                    href="https://wa.me/201125800332"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -133,7 +125,7 @@ const Chemistry = () => {
           <div className="contenttt">
             <div className="image-container">
               <img
-                src={require("./../images/mongezlogo.png")}
+                src={require("./../images/mrmahmoud.png")}
                 alt="Subject"
                 className="history-image"
                 style={{ border: "2px solid #ffffff" }}
@@ -145,28 +137,21 @@ const Chemistry = () => {
               <p className="history-subtitle">مـستر : مـحمود عـبدالـعزيز</p>
               <div className="social-linkss">
                 <a
-                  href="https://www.facebook.com/ali.alyan.92"
+                  href="https://www.facebook.com/people/MrMahmoud-Abdel-Aziz/100070094625467/?mibextid=ZbWKwL"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   <FaFacebook />
                 </a>
                 <a
-                  href="https://www.instagram.com/ali23121982/"
+                  href="http://www.youtube.com/@mahmoudAbdel_Aziz"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <FaInstagram />
+                  <FaYoutube />
                 </a>
                 <a
-                  href="https://www.linkedin.com/in/%D8%B9%D9%84%D9%8A-%D9%85%D8%AD%D9%85%D8%AF-%D8%B9%D9%84%D9%8A%D8%A7%D9%86-a42859105/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FaLinkedin />
-                </a>
-                <a
-                  href="https://wa.me/201126529544"
+                  href="https://wa.me/201125800332"
                   target="_blank"
                   rel="noopener noreferrer"
                 >

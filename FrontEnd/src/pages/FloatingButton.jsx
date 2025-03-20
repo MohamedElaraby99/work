@@ -11,12 +11,12 @@ const FloatingButton = () => {
   return (
     <div className="floating-button-container">
       <button className="floating-button" onClick={toggleIcons}>
-        {showIcons ? "إخفاء" : " منصة المنجز"}
+        {showIcons ? "إخــفــاء" : " مـنصة الـمنجز"}
       </button>
       {showIcons && (
         <div className="icon-container">
           <a
-            href="https://www.facebook.com/ali.alyan.92"
+            href="https://www.facebook.com/people/MrMahmoud-Abdel-Aziz/100070094625467/?mibextid=ZbWKwL"
             target="_blank"
             rel="noopener noreferrer"
             className="icon facebook"
@@ -24,28 +24,20 @@ const FloatingButton = () => {
             <i className="fab fa-facebook-f"></i>
           </a>
           <a
-            href="https://www.instagram.com/ali23121982/"
+            href="https://wa.me/201125800332"
             target="_blank"
             rel="noopener noreferrer"
-            className="icon instagram"
+            className="icon whatsapp"
           >
-            <i className="fab fa-instagram"></i>
+            <i className="fab fa-whatsapp"></i>
           </a>
           <a
-            href="https://www.youtube.com/@%D8%A3.%D8%B9%D9%84%D9%8A%D9%85%D8%AD%D9%85%D8%AF%D8%B9%D9%84%D9%8A%D8%A7%D9%86"
+            href="http://www.youtube.com/@mahmoudAbdel_Aziz"
             target="_blank"
             rel="noopener noreferrer"
             className="icon youtube"
           >
             <i className="fab fa-youtube"></i>
-          </a>
-          <a
-            href="https://www.linkedin.com/in/%D8%B9%D9%84%D9%8A-%D9%85%D8%AD%D9%85%D8%AF-%D8%B9%D9%84%D9%8A%D8%A7%D9%86-a42859105/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="icon linkedin"
-          >
-            <i className="fab fa-linkedin-in"></i>
           </a>
         </div>
       )}
