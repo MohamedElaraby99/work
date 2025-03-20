@@ -168,7 +168,7 @@ const AddUser = () => {
                         checked={user.subject.includes("science")}
                         onChange={handleChange}
                       />
-                      علوم طبيعية
+                      علوم متكاملة
                     </label>
                   </div>
                   <div></div>

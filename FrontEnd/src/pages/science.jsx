@@ -142,7 +142,7 @@ const Science = () => {
                   />
                 </div>
                 <div className="text-container">
-                  <h1> مـادة الـعلوم الـطبيعية </h1>
+                  <h1> مـادة الـعلوم مـتكاملة </h1>
                   <p>مـقدم الـمادة</p>
                   <p className="history-subtitle">مـستر : مـحمود عـبدالـعزيز</p>
                   <div className="social-linkss">

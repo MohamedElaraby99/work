@@ -151,7 +151,7 @@ const AddVideo = () => {
               اختر المادة
             </option>
             <option value="chemistry">كيمياء</option>
-            <option value="science">علوم طبيعية</option>
+            <option value="science">علوم متكاملة</option>
           </select>
         </div>
 

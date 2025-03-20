@@ -91,7 +91,7 @@ const Layout = ({ children, role }) => {
             <li className={location.pathname === "/science" ? "active" : ""}>
               <Link to="/science">
                 <span className="material-icons">biotech</span>
-                علوم طبيعية
+                علوم مـتكاملة
               </Link>
             </li>
 
@@ -113,7 +113,7 @@ const Layout = ({ children, role }) => {
               href="https://www.facebook.com/share/15yTFSwF4n/"
               target="_blank"
               rel="noopener noreferrer"
-              className="footer-link developer-link"
+              className="developer-link footer-link"
             >
               Fikra Software
             </a>

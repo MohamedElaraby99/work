@@ -18,7 +18,7 @@ const CreatePostComponent = () => {
       years: ["1 ثانوي", "2 ثانوي", "3 ثانوي"],
     },
     {
-      label: "علوم طبيعية",
+      label: "علوم متكاملة",
       value: "science",
       years: ["1 ثانوي", "2 ثانوي", "3 ثانوي"],
     },
