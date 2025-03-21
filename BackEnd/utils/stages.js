@@ -1,9 +1,3 @@
-const stages = [
-  "ثالثة ثانوي",
-  "ثانية ثانوي",
-  "أولى ثانوي",
-  "ثالثة اعدادي",
-];
+const stages = ["stage1", "stage2", "stage3"];
 
 module.exports = stages;
-

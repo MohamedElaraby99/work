@@ -9,14 +9,12 @@ const getAllLessons = async (req, res) => {
 
     let lessons;
     if (role === "admin") {
-      if (stage || subject || unit ) {
-        lessons = await Lesson.find({
-          stage: stage === "" ? { $exists: true } : stage,
-          subject: subject === "" ? { $exists: true } : subject,
-          unit: unit === "" ? { $exists: true } : unit,
-          lesson_number: lesson_number === "" ? { $exists: true } : lesson_number,
-        });
-      } else lessons = await Lesson.find();
+      const filter = {};
+      if (stage) filter.stage = stage;
+      if (subject) filter.subject = subject;
+      if (unit) filter.unit = unit;
+      if (lesson_number) filter.lesson_number = lesson_number;
+      lessons = await Lesson.find(filter);
     } else if (role !== "admin") {
       if (stage || subject || unit) {
         lessons = await Lesson.find({

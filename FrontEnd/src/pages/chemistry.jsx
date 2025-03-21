@@ -24,14 +24,11 @@ const Chemistry = () => {
   // Determine the number of units based on the stage
   let unitCount;
   switch (stage) {
-    case "ثالثة اعدادي":
-      unitCount = 4;
-      break;
-    case "أولى ثانوي":
-    case "ثانية ثانوي":
+    case "stage1":
+    case "stage2":
       unitCount = 2;
       break;
-    case "ثالثة ثانوي":
+    case "stage3":
       unitCount = 5;
       break;
     default:
@@ -40,7 +37,7 @@ const Chemistry = () => {
 
   // Check subscription
   useEffect(() => {
-    if (role === "student" && !subjects.includes("تاريخ")) {
+    if (role === "student" && !subjects.includes("chemistry")) {
       setIsSubscribed(false);
     }
   }, [role, subjects]);
@@ -76,9 +73,9 @@ const Chemistry = () => {
                 />
               </div>
               <div className="text-container">
-                <h1> مـادة الـلغة الـعربية </h1>
+                <h1> مـادة الـكيمياء </h1>
                 <p>مـقدم الـمادة</p>
-                <p className="history-subtitle">مـستر : عـلي عـليان</p>
+                <p className="history-subtitle">مـستر : مـحمود عـبدالـعزيز</p>
                 <div className="social-linkss">
                   <a
                     href="https://www.facebook.com/people/MrMahmoud-Abdel-Aziz/100070094625467/?mibextid=ZbWKwL"
@@ -197,7 +194,7 @@ const Chemistry = () => {
                             onClick={() =>
                               navigate("/courses", {
                                 state: {
-                                  subject: "تاريخ",
+                                  subject: "chemistry",
                                   unit: unit.id,
                                   lesson: lessonNumber, // تمرير رقم الدرس مباشرة
                                 },
@@ -211,7 +208,7 @@ const Chemistry = () => {
                             onClick={() =>
                               navigate("/exams", {
                                 state: {
-                                  subject: "تاريخ",
+                                  subject: "chemistry",
                                   unit: unit.id,
                                   lesson: lessonNumber, // تمرير رقم الدرس مباشرة
                                   type: "امتحان",
@@ -226,7 +223,7 @@ const Chemistry = () => {
                             onClick={() =>
                               navigate("/exams", {
                                 state: {
-                                  subject: "تاريخ",
+                                  subject: "chemistry",
                                   unit: unit.id,
                                   lesson: lessonNumber, // تمرير رقم الدرس مباشرة
                                   type: "تدريب",
@@ -241,7 +238,7 @@ const Chemistry = () => {
                             onClick={() =>
                               navigate("/pdf", {
                                 state: {
-                                  subject: "تاريخ",
+                                  subject: "chemistry",
                                   unit: unit.id,
                                   lesson: lessonNumber, // تمرير رقم الدرس مباشرة
                                 },

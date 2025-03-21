@@ -1,14 +1,3 @@
-const subjects = [
-  "فرنسي",
-  "انجليزي",
-  "تاريخ",
-  "إحصاء",
-  "تفاضل",
-  "مثلثات",
-  "هندسة",
-  "جبر",
-  "استاتيكا",
-  "ديناميكا",
-];
+const subjects = ["science", "chemistry"];
 
 module.exports = subjects;

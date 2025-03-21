@@ -18,7 +18,7 @@ const CoursesPage = () => {
   ); // المرحلة الافتراضية من localStorage
   const role = localStorage.getItem("role"); // جلب الدور من localStorage
 
-  const stages = ["ثالثة إعدادي", "أولى ثانوي", "ثانية ثانوي", "ثالثة ثانوي"];
+  const stages = ["stage1", "stage2", "stage3"];
 
   useEffect(() => {
     const fetchVideos = async () => {

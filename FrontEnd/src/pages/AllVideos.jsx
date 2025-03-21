@@ -145,8 +145,8 @@ const AllVideos = () => {
           className="subject-filter"
         >
           <option value="">كل المواد</option>
-          <option value="arabic1">لغة عربية</option>
-          <option value="arabic2">Arabic</option>
+          <option value="chemistry">كيمياء</option>
+          <option value="science">علوم متكاملة</option>
         </select>
       </div>
       <div className="videos-table">
@@ -208,10 +208,9 @@ const AllVideos = () => {
                       onChange={handleEditChange}
                       className="edit-input"
                     >
-                      <option value="ثالثة اعدادي ">ثالثة اعدادي </option>
-                      <option value="اولي ثانوي">اولي ثانوي</option>
-                      <option value="ثاني ثانوي">ثاني ثانوي</option>
-                      <option value="ثالث ثانوي">ثالث ثانوي</option>
+                      <option value="stage1">1 ثانوي</option>
+                      <option value="stage2">2 ثانوي</option>
+                      <option value="stage3">3 ثانوي</option>
                     </select>
                   ) : (
                     video.stage
@@ -224,14 +223,8 @@ const AllVideos = () => {
                       value={editingVideo.subject}
                       onChange={handleEditChange}
                     >
-                      <option value="تاريخ">تاريخ</option>
-                      <option value="انجليزي">لغة انجليزية</option>
-                      <option value="فرنسي">لغة فرنسية</option>
-                      <option value="جبر">جبر</option>
-                      <option value="هندسة">هندسة</option>
-                      <option value="مثلثات">مثلثات</option>
-                      <option value="تفاضل">تفاضل</option>
-                      <option value="إحصاء">إحصاء</option>
+                      <option value="chemistry">كيمياء</option>
+                      <option value="science">علوم متكاملة</option>
                     </select>
                   </td>
                 ) : (
@@ -269,9 +262,6 @@ const AllVideos = () => {
                       <option value="1">الدرس الاول</option>
                       <option value="2">الدرس الثاني</option>
                       <option value="3">الدرس الثالث</option>
-                      <option value="4">الدرس الرابع</option>
-                      <option value="5">الدرس الخامس</option>
-                      <option value="6">الدرس السادس</option>
                     </select>
                   </td>
                 ) : (
