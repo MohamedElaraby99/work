@@ -10,59 +10,78 @@ const CreatePostComponent = () => {
   const [selectedYears, setSelectedYears] = useState([]);
   const [selectedSubjects, setSelectedSubjects] = useState([]);
 
-  // المراحل العربية
-  const arabicYears = [
-    "1 ابتدائي",
-    "2 ابتدائي",
-    "3 ابتدائي",
-    "4 ابتدائي",
-    "5 ابتدائي",
-    "6 ابتدائي",
-    "1 إعدادي",
-    "2 إعدادي",
-    "3 إعدادي",
-    "1 ثانوي",
-    "2 ثانوي",
-    "3 ثانوي",
-  ];
-
-  // المراحل الإنجليزية
-  const englishYears = [
-    "KG 1",
-    "KG 2",
-    "Grade 1",
-    "Grade 2",
-    "Grade 3",
-    "Grade 4",
-    "Grade 5",
-    "Grade 6",
-    "Grade 7",
-    "Grade 8",
-    "Grade 9",
-    "Grade 10",
-    "Grade 11",
-  ];
-
-  // المواد الدراسية
+  // المواد الدراسية مع المراحل وقيمها
   const subjects = [
-    { label: "لغة عربية", value: "arabic1", years: arabicYears },
-    { label: "Arabic", value: "arabic2", years: englishYears },
+    {
+      label: "مجاني",
+      value: "مجاني",
+      years: [
+        { label: "مجاني", value: "free" },
+      ],
+    },
+    {
+      label: "لغة عربية",
+      value: "arabic1",
+      years: [
+        { label: "1 ابتدائي", value: "arabic1_grade1" },
+        { label: "2 ابتدائي", value: "arabic1_grade2" },
+        { label: "3 ابتدائي", value: "arabic1_grade3" },
+        { label: "4 ابتدائي", value: "arabic1_grade4" },
+        { label: "5 ابتدائي", value: "arabic1_grade5" },
+        { label: "6 ابتدائي", value: "arabic1_grade6" },
+        { label: "1 إعدادي", value: "arabic1_grade7" },
+        { label: "2 إعدادي", value: "arabic1_grade8" },
+        { label: "3 إعدادي", value: "arabic1_grade9" },
+        { label: "1 ثانوي", value: "arabic1_grade10" },
+        { label: "2 ثانوي", value: "arabic1_grade11" },
+        { label: "3 ثانوي", value: "arabic1_grade12" },
+      ],
+    },
+    {
+      label: "Arabic",
+      value: "arabic2",
+      years: [
+        { label: "KG 1", value: "arabic2_kg1" },
+        { label: "KG 2", value: "arabic2_kg2" },
+        { label: "Grade 1", value: "arabic2_grade1" },
+        { label: "Grade 2", value: "arabic2_grade2" },
+        { label: "Grade 3", value: "arabic2_grade3" },
+        { label: "Grade 4", value: "arabic2_grade4" },
+        { label: "Grade 5", value: "arabic2_grade5" },
+        { label: "Grade 6", value: "arabic2_grade6" },
+        { label: "Grade 7", value: "arabic2_grade7" },
+        { label: "Grade 8", value: "arabic2_grade8" },
+        { label: "Grade 9", value: "arabic2_grade9" },
+        { label: "Grade 10", value: "arabic2_grade10" },
+        { label: "Grade 11", value: "arabic2_grade11" },
+      ],
+    },
   ];
 
   // Toggle selected years
-  const handleYearToggle = (year) => {
+  const handleYearToggle = (yearValue) => {
     setSelectedYears((prev) =>
-      prev.includes(year) ? prev.filter((y) => y !== year) : [...prev, year]
+      prev.includes(yearValue)
+        ? prev.filter((y) => y !== yearValue)
+        : [...prev, yearValue]
     );
   };
 
   // Toggle selected subjects
-  const handleSubjectToggle = (subject) => {
+  const handleSubjectToggle = (subjectValue) => {
     setSelectedSubjects((prev) =>
-      prev.includes(subject)
-        ? prev.filter((s) => s !== subject)
-        : [...prev, subject]
+      prev.includes(subjectValue)
+        ? prev.filter((s) => s !== subjectValue)
+        : [...prev, subjectValue]
     );
+
+    // إذا تم إلغاء اختيار المادة، قم بإزالة جميع المراحل المرتبطة بها من selectedYears
+    if (selectedSubjects.includes(subjectValue)) {
+      const subjectYears = subjects
+        .find((s) => s.value === subjectValue)
+        .years.map((y) => y.value);
+      setSelectedYears((prev) => prev.filter((y) => !subjectYears.includes(y)));
+    }
   };
 
   // Handle form submission
@@ -81,15 +100,20 @@ const CreatePostComponent = () => {
 
     try {
       const accessToken = localStorage.getItem("accessToken");
+      if (!accessToken) {
+        throw new Error("Access token is missing.");
+      }
+
+      const newPost = {
+        title,
+        description: details, // تغيير "details" إلى "description" لتتناسب مع معظم واجهات الـ API
+        stages: selectedYears, // استخدام "stages" بدلاً من "years" للتوافق
+        subjects: selectedSubjects,
+      };
 
       await axios.post(
         `${process.env.REACT_APP_BASE_URL}/announcements`,
-        {
-          title,
-          details,
-          years: selectedYears,
-          subjects: selectedSubjects,
-        },
+        newPost,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -106,7 +130,9 @@ const CreatePostComponent = () => {
       toast.success("تم إنشاء الإعلان بنجاح!");
     } catch (error) {
       console.error("Error creating post:", error);
-      toast.error("حدث خطأ أثناء إنشاء الإعلان.");
+      toast.error(
+        error.response?.data?.message || "حدث خطأ أثناء إنشاء الإعلان."
+      );
     }
   };
 
@@ -143,7 +169,7 @@ const CreatePostComponent = () => {
 
         <div className="form-group years-subjects">
           <label>السنة الدراسية الموجهة والمادة الدراسية:</label>
-          <div className="years-checkboxes">
+          <div className="subjects-checkboxes">
             {subjects.map((subject) => (
               <div key={subject.value} className="subject-group">
                 <div className="checkbox-item">
@@ -156,18 +182,24 @@ const CreatePostComponent = () => {
                   <label htmlFor={subject.value}>{subject.label}</label>
                 </div>
                 {/* عرض المراحل المرتبطة بالمادة */}
-                {subject.years.map((year) => (
-                  <div key={year} className="checkbox-item year-subitem">
-                    <input
-                      type="checkbox"
-                      id={`${subject.value}-${year}`}
-                      checked={selectedYears.includes(year)}
-                      onChange={() => handleYearToggle(year)}
-                      disabled={!selectedSubjects.includes(subject.value)} // تعطيل الخيار إذا لم يتم اختيار المادة
-                    />
-                    <label htmlFor={`${subject.value}-${year}`}>{year}</label>
+                {selectedSubjects.includes(subject.value) && (
+                  <div className="years-suboptions">
+                    {subject.years.map((year) => (
+                      <div
+                        key={year.value}
+                        className="checkbox-item year-subitem"
+                      >
+                        <input
+                          type="checkbox"
+                          id={year.value}
+                          checked={selectedYears.includes(year.value)}
+                          onChange={() => handleYearToggle(year.value)}
+                        />
+                        <label htmlFor={year.value}>{year.label}</label>
+                      </div>
+                    ))}
                   </div>
-                ))}
+                )}
               </div>
             ))}
           </div>

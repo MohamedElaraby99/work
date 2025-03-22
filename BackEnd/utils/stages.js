@@ -1,9 +1,27 @@
 const stages = [
-  "ثالثة ثانوي",
-  "ثانية ثانوي",
-  "أولى ثانوي",
-  "ثالثة اعدادي",
+  "arabic1_grade1",
+  "arabic1_grade2",
+  "arabic1_grade3",
+  "arabic1_grade4",
+  "arabic1_grade5",
+  "arabic1_grade6",
+  "arabic1_grade7",
+  "arabic1_grade8",
+  "arabic1_grade9",
+  "arabic1_grade10",
+  "arabic1_grade11",
+  "arabic2_grade1",
+  "arabic2_grade2",
+  "arabic2_grade3",
+  "arabic2_grade4",
+  "arabic2_grade5",
+  "arabic2_grade6",
+  "arabic2_grade7",
+  "arabic2_grade8",
+  "arabic2_grade9",
+  "arabic2_grade10",
+  "arabic2_grade11",
+  "free",
 ];
 
 module.exports = stages;
-

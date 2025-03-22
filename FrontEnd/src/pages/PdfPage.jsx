@@ -21,13 +21,40 @@ const PdfPage = () => {
   const [error, setError] = useState(null);
   const [pdfPages, setPdfPages] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedStage, setSelectedStage] = useState(
-    localStorage.getItem("stage") || ""
-  ); // المرحلة الافتراضية من localStorage
+  const [selectedStage, setSelectedStage] = useState(""); // لا قيمة افتراضية عند التحميل
+  const [isFilterApplied, setIsFilterApplied] = useState(false); // حالة للتحكم في تطبيق الفلتر
   const role = localStorage.getItem("role"); // جلب الدور من localStorage
 
-  const stages = ["ثالثة إعدادي", "أولى ثانوي", "ثانية ثانوي", "ثالثة ثانوي"];
+  const stages = [
+    "free",
+    "arabic1_grade1",
+    "arabic1_grade2",
+    "arabic1_grade3",
+    "arabic1_grade4",
+    "arabic1_grade5",
+    "arabic1_grade6",
+    "arabic1_grade7",
+    "arabic1_grade8",
+    "arabic1_grade9",
+    "arabic1_grade10",
+    "arabic1_grade11",
+    "arabic1_grade12",
+    "arabic2_kg1",
+    "arabic2_kg2",
+    "arabic2_grade1",
+    "arabic2_grade2",
+    "arabic2_grade3",
+    "arabic2_grade4",
+    "arabic2_grade5",
+    "arabic2_grade6",
+    "arabic2_grade7",
+    "arabic2_grade8",
+    "arabic2_grade9",
+    "arabic2_grade10",
+    "arabic2_grade11",
+  ];
 
+  // جلب ملفات الـ PDF عند التحميل
   useEffect(() => {
     const fetchPdfs = async () => {
       try {
@@ -41,7 +68,7 @@ const PdfPage = () => {
           }
         );
         setPdfFiles(response.data);
-        setFilteredPdfFiles(response.data); // تعيين الملفات الأولية
+        setFilteredPdfFiles(response.data); // عرض جميع الملفات افتراضيًا عند التحميل
         setLoading(false);
       } catch (err) {
         setError("حدث خطأ أثناء تحميل الملفات.");
@@ -52,23 +79,27 @@ const PdfPage = () => {
     fetchPdfs();
   }, [subject, unit, lesson]);
 
-  // تصفية ملفات الـ PDF بناءً على المرحلة الدراسية
-  useEffect(() => {
-    if (role !== "admin" && selectedStage) {
+  // دالة لتطبيق الفلتر يدويًا
+  const applyFilter = (stage) => {
+    if (stage && role !== "admin") {
       // إذا لم يكن أدمن، استخدم المرحلة من localStorage فقط
-      setFilteredPdfFiles(
-        pdfFiles.filter((pdf) => pdf.stage === selectedStage)
-      );
-    } else if (selectedStage) {
+      setFilteredPdfFiles(pdfFiles.filter((pdf) => pdf.stage === stage));
+    } else if (stage) {
       // إذا كان أدمن وتم اختيار مرحلة، قم بالتصفية
-      setFilteredPdfFiles(
-        pdfFiles.filter((pdf) => pdf.stage === selectedStage)
-      );
+      setFilteredPdfFiles(pdfFiles.filter((pdf) => pdf.stage === stage));
     } else {
       // إذا لم يتم اختيار مرحلة (الكل)، اعرض جميع الملفات
       setFilteredPdfFiles(pdfFiles);
     }
-  }, [selectedStage, pdfFiles, role]);
+    setIsFilterApplied(true); // تم تطبيق الفلتر
+  };
+
+  // معالجة تغيير المرحلة عند النقر
+  const handleStageChange = (e) => {
+    const newStage = e.target.value;
+    setSelectedStage(newStage);
+    applyFilter(newStage); // تطبيق الفلتر فقط عند تغيير القيمة يدويًا
+  };
 
   const handleViewPdf = async (url) => {
     setPdfLoading(true);
@@ -144,7 +175,7 @@ const PdfPage = () => {
           <select
             id="stage-select"
             value={selectedStage}
-            onChange={(e) => setSelectedStage(e.target.value)}
+            onChange={handleStageChange} // تطبيق الفلتر فقط عند التغيير اليدوي
             className="stage-dropdown"
           >
             <option value="">الكل</option>

@@ -13,13 +13,41 @@ const CoursesPage = () => {
   const [filteredVideos, setFilteredVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedStage, setSelectedStage] = useState(
-    localStorage.getItem("stage") || ""
-  ); // المرحلة الافتراضية من localStorage
+  const [selectedStage, setSelectedStage] = useState(""); // لا قيمة افتراضية عند التحميل
+  const [isFilterApplied, setIsFilterApplied] = useState(false); // حالة للتحكم في تطبيق الفلتر
   const role = localStorage.getItem("role"); // جلب الدور من localStorage
 
-  const stages = ["ثالثة إعدادي", "أولى ثانوي", "ثانية ثانوي", "ثالثة ثانوي"];
+  const stages = [
+    "free",
 
+    "arabic1_grade1",
+    "arabic1_grade2",
+    "arabic1_grade3",
+    "arabic1_grade4",
+    "arabic1_grade5",
+    "arabic1_grade6",
+    "arabic1_grade7",
+    "arabic1_grade8",
+    "arabic1_grade9",
+    "arabic1_grade10",
+    "arabic1_grade11",
+    "arabic1_grade12",
+    "arabic2_kg1",
+    "arabic2_kg2",
+    "arabic2_grade1",
+    "arabic2_grade2",
+    "arabic2_grade3",
+    "arabic2_grade4",
+    "arabic2_grade5",
+    "arabic2_grade6",
+    "arabic2_grade7",
+    "arabic2_grade8",
+    "arabic2_grade9",
+    "arabic2_grade10",
+    "arabic2_grade11",
+  ];
+
+  // جلب الفيديوهات عند التحميل
   useEffect(() => {
     const fetchVideos = async () => {
       try {
@@ -34,7 +62,7 @@ const CoursesPage = () => {
         );
 
         setVideos(response.data);
-        setFilteredVideos(response.data); // تعيين الفيديوهات الأولية
+        setFilteredVideos(response.data); // عرض جميع الفيديوهات افتراضيًا عند التحميل
         setError(null);
       } catch (err) {
         setError("حدث خطأ أثناء تحميل الفيديوهات.");
@@ -46,23 +74,27 @@ const CoursesPage = () => {
     fetchVideos();
   }, [subject, unit, lesson]);
 
-  // تصفية الفيديوهات بناءً على المرحلة الدراسية
-  useEffect(() => {
-    if (role !== "admin" && selectedStage) {
+  // دالة لتطبيق الفلتر يدويًا
+  const applyFilter = (stage) => {
+    if (stage && role !== "admin") {
       // إذا لم يكن أدمن، استخدم المرحلة من localStorage فقط
-      setFilteredVideos(
-        videos.filter((video) => video.stage === selectedStage)
-      );
-    } else if (selectedStage) {
+      setFilteredVideos(videos.filter((video) => video.stage === stage));
+    } else if (stage) {
       // إذا كان أدمن وتم اختيار مرحلة، قم بالتصفية
-      setFilteredVideos(
-        videos.filter((video) => video.stage === selectedStage)
-      );
+      setFilteredVideos(videos.filter((video) => video.stage === stage));
     } else {
       // إذا لم يتم اختيار مرحلة (الكل)، اعرض جميع الفيديوهات
       setFilteredVideos(videos);
     }
-  }, [selectedStage, videos, role]);
+    setIsFilterApplied(true); // تم تطبيق الفلتر
+  };
+
+  // معالجة تغيير المرحلة عند النقر
+  const handleStageChange = (e) => {
+    const newStage = e.target.value;
+    setSelectedStage(newStage);
+    applyFilter(newStage); // تطبيق الفلتر فقط عند تغيير القيمة يدويًا
+  };
 
   const extractVideoId = (url) => {
     const regExp =
@@ -99,7 +131,7 @@ const CoursesPage = () => {
           <select
             id="stage-select"
             value={selectedStage}
-            onChange={(e) => setSelectedStage(e.target.value)}
+            onChange={handleStageChange} // تطبيق الفلتر فقط عند التغيير اليدوي
             className="stage-dropdown"
           >
             <option value="">الكل</option>

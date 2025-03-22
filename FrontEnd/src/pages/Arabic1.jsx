@@ -20,7 +20,7 @@ const Arabic1 = () => {
   // Retrieve the educational stage, role, and subjects from localStorage
   const stage = localStorage.getItem("stage");
   const role = localStorage.getItem("role");
-  const subjects = localStorage.getItem("subject");
+  const subjects = JSON.parse(localStorage.getItem("subject")); // تحويل إلى كائن لأنه JSON
 
   // Determine the number of units based on the stage
   let unitCount;
@@ -39,10 +39,16 @@ const Arabic1 = () => {
       unitCount = 8;
   }
 
-  // Check subscription
+  // Check subscription and admin access
   useEffect(() => {
-    if (role === "student" && !subjects.includes("تاريخ")) {
-      setIsSubscribed(false);
+    if (role === "admin") {
+      setIsSubscribed(true); // الأدمن لديه وصول دائمًا
+    } else if (role === "student") {
+      if (!subjects || !subjects.includes("arabic1")) {
+        setIsSubscribed(false); // الطالب غير مشترك إذا لم يكن arabic1 موجودًا
+      } else {
+        setIsSubscribed(true);
+      }
     }
   }, [role, subjects]);
 
@@ -212,9 +218,9 @@ const Arabic1 = () => {
                             onClick={() =>
                               navigate("/courses", {
                                 state: {
-                                  subject: "تاريخ",
+                                  subject: "arabic1",
                                   unit: unit.id,
-                                  lesson: lessonNumber, // تمرير رقم الدرس مباشرة
+                                  lesson: lessonNumber,
                                 },
                               })
                             }
@@ -226,9 +232,9 @@ const Arabic1 = () => {
                             onClick={() =>
                               navigate("/exams", {
                                 state: {
-                                  subject: "تاريخ",
+                                  subject: "arabic1",
                                   unit: unit.id,
-                                  lesson: lessonNumber, // تمرير رقم الدرس مباشرة
+                                  lesson: lessonNumber,
                                   type: "امتحان",
                                 },
                               })
@@ -241,9 +247,9 @@ const Arabic1 = () => {
                             onClick={() =>
                               navigate("/exams", {
                                 state: {
-                                  subject: "تاريخ",
+                                  subject: "arabic1",
                                   unit: unit.id,
-                                  lesson: lessonNumber, // تمرير رقم الدرس مباشرة
+                                  lesson: lessonNumber,
                                   type: "تدريب",
                                 },
                               })
@@ -256,9 +262,9 @@ const Arabic1 = () => {
                             onClick={() =>
                               navigate("/pdf", {
                                 state: {
-                                  subject: "تاريخ",
+                                  subject: "arabic1",
                                   unit: unit.id,
-                                  lesson: lessonNumber, // تمرير رقم الدرس مباشرة
+                                  lesson: lessonNumber,
                                 },
                               })
                             }

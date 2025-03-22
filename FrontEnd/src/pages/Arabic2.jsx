@@ -41,7 +41,7 @@ const Arabic2 = () => {
 
   // Check subscription
   useEffect(() => {
-    if (role === "student" && !subjects.includes("تاريخ")) {
+    if (role === "student" && !subjects.includes("arabic2")) {
       setIsSubscribed(false);
     }
   }, [role, subjects]);
@@ -216,7 +216,7 @@ const Arabic2 = () => {
                             onClick={() =>
                               navigate("/courses", {
                                 state: {
-                                  subject: "تاريخ",
+                                  subject: "arabic2",
                                   unit: unit.id,
                                   lesson: lessonNumber, // تمرير رقم الدرس مباشرة
                                 },
@@ -230,7 +230,7 @@ const Arabic2 = () => {
                             onClick={() =>
                               navigate("/exams", {
                                 state: {
-                                  subject: "تاريخ",
+                                  subject: "arabic2",
                                   unit: unit.id,
                                   lesson: lessonNumber, // تمرير رقم الدرس مباشرة
                                   type: "امتحان",
@@ -245,7 +245,7 @@ const Arabic2 = () => {
                             onClick={() =>
                               navigate("/exams", {
                                 state: {
-                                  subject: "تاريخ",
+                                  subject: "arabic2",
                                   unit: unit.id,
                                   lesson: lessonNumber, // تمرير رقم الدرس مباشرة
                                   type: "تدريب",
@@ -260,7 +260,7 @@ const Arabic2 = () => {
                             onClick={() =>
                               navigate("/pdf", {
                                 state: {
-                                  subject: "تاريخ",
+                                  subject: "arabic2",
                                   unit: unit.id,
                                   lesson: lessonNumber, // تمرير رقم الدرس مباشرة
                                 },

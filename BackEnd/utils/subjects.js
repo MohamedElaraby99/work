@@ -1,14 +1,3 @@
-const subjects = [
-  "فرنسي",
-  "انجليزي",
-  "تاريخ",
-  "إحصاء",
-  "تفاضل",
-  "مثلثات",
-  "هندسة",
-  "جبر",
-  "استاتيكا",
-  "ديناميكا",
-];
+const subjects = ["arabic1", "arabic2", "free"];
 
 module.exports = subjects;
